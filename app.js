@@ -5,7 +5,7 @@ const express = require("express");
 const https = require("https");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const { check, validationResult } = require('express-validator');
+// const { check, validationResult } = require('express-validator');
 const res = require("express/lib/response");
 // const { authenticate } = require("passport/lib");
 
@@ -52,10 +52,13 @@ app.get("/", function (req, res) {
 });
 
 app.get("/login", function (req, res) {
-    res.render("login");
+    res.render("login", {visited:visited});
 });
 app.get("/main", function (req, res) {
     res.render("main");
+});
+app.get("/adminportal", function (req, res) {
+    res.render("adminportal");
 });
 app.get("/reqbrgyid", function (req, res) {
     res.render("reqbrgyid");
@@ -66,6 +69,11 @@ app.get("/reqbrgyid", function (req, res) {
 app.get("/register", function (req, res) {
     res.render("register");
 });
+
+// app.delete('/logout', (req, res) => {
+//     req.logOut()
+//     res.redirect('/login')
+//   })
 
 app.get("/logout", async (req, res) => {
     res.redirect("/")
@@ -89,11 +97,11 @@ app.post("/login", function (req, res) {
         } else {
             if (foundUser) {
                 if (foundUser.role === role) {
-                    res.render("adminportal")
+                    res.render("adminportal");
                 }
 
                 else if (foundUser.password === password) {
-                    res.render("portal")
+                    res.render("portal" , {login: "true"});
                 }
 
             }
