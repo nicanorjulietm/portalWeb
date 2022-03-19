@@ -1,0 +1,25 @@
+
+<%- include('partials/header') %>
+
+<div class="login-page">
+          <!-- Makes POST request to /login route -->
+          <form action="/login" method="POST">
+            <h1> Sign In</h1>
+           
+              <label for="email">Email</label>
+              <input autocomplete="off" type="email"  name="username">
+           
+              <label for="password">Password</label>
+              <input type="password" name="password">
+           
+            <button type="submit" class="submit">Signin</button>
+          </form>
+          <div class="sign-up-link">
+          <a class="google-au" href="/auth/google" role="button">
+            <i class="fab fa-google"></i>
+            Sign In with Google
+          </a>
+        </div>
+        </div>
+
+

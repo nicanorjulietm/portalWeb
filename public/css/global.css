@@ -1,0 +1,99 @@
+@import url('styles.css');
+@import url('homestyles.css');
+@import url('newspage.css');
+@import url('faqpage.css');
+@import url('contacts.css');
+@import url('footerpage.css');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap');
+
+html {
+    Font-size: 100%;
+    Box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    Box-sizing: inherit;
+}
+
+body {
+    Margin: 0;
+    Padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    Line-height: 1.3;
+    /* color: #131c1a; */
+    background-image: url("/images/bground.png");
+    /* background-color: white; */
+    /* background-repeat: no-repeat;
+    background-size:cover; */
+    /* flex-direction: column; */
+
+    background-repeat: no-repeat, repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+
+
+}
+p{
+    color: black;
+}
+
+h1 {
+    font-size: 4rem;
+}
+h4{
+    text-align: left;
+    color: white;
+    font-weight: 500;
+}
+h5{
+    font-weight: bolder;
+    padding-top: 20px;
+
+}
+i{
+    font-size: 0.8rem;
+    
+}
+
+
+/* --------REQUEST FOR BRGY ID  ------------*/
+
+
+.req-list
+{
+    text-align: left;
+    color: white;
+    font-weight: 900;
+    font-size: 1rem;
+    padding-left: 50px;
+    margin-top: 10px;
+}
+.req-distance
+{
+    margin: 0;
+}
+
+.req-input{
+width: 100%;
+padding: 0;
+margin: 0;
+}
+.req-row
+{
+    width: 70%;
+    padding: 20px;
+    margin: 0 auto;
+}
+.form-label
+{
+    padding: 0;
+    margin:0;
+}
+.upload-file{
+    border: none;
+    text-align: right;
+}
+.submit-center
+{
+    text-align: center;
+}

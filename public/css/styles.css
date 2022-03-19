@@ -1,0 +1,150 @@
+
+/* NavBar Section  */
+.navbar {
+  font-size: 0.9rem;
+
+  /* padding: 10px 0 0 40px; */
+}
+
+.navbar-brand {
+  color: #1B999D !important;
+  font-weight: bolder;
+  font-size: 1.5rem;
+
+}
+
+.nav-border-without {
+  border: 1px solid #04684f;
+  border-radius: 5px;
+ 
+}
+
+.nav-border-with {
+  border: 1px solid #04684f;
+  background-color: #1B999D;
+  color: white !important;
+  border-radius: 5px;
+  opacity: 0.7;
+}
+
+.nav-border-without:hover {
+  background-color: #374441;
+  color: white !important;
+ 
+  
+}
+
+.nav-border-with:hover {
+  background-color: #374441;
+  
+  color: white !important;
+  
+  
+}
+.navbar-distance {
+  padding: 0 5px;
+  padding-top: 20px;
+  width: 6rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  color: black !important;
+  font-weight: 500 !important;
+
+}
+
+.dropdown-item {
+  font-size: 0.8rem;
+  color: #784546 !important;
+  ;
+}
+
+
+
+
+/* HOMEPAGE */
+#home {
+  padding: 5px 1em 5em 2em;
+  width:100%;
+}
+
+
+.home-title {
+  padding-top: 30px;
+
+  color: #04684f;
+
+}
+
+.home-text {
+  padding-left: 50px;
+  padding-bottom: 50px;
+}
+
+.front-title {
+  color: #004f3b;
+  font-size: 6rem;
+  font-weight: 700;
+  margin: 0;
+  padding-top: 70px;
+  /* text-shadow: 0px 4px 4px #04684f; */
+}
+
+.front-tagline {
+  color: #04684f;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 0.9;
+  /* text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); */
+}
+
+.btn-without {
+  border: 1px solid #04684f;
+  border-radius: 5px;
+  width: 30%;
+  padding: 10px;
+  font-size: 0.8rem;
+
+}
+
+.btn-with {
+  border: 1px solid #04684f;
+  background-color: #1B999D;
+  color: white;
+  border-radius: 5px;
+  width: 30%;
+  padding: 10px;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.btn-with:hover {
+  background-color: #374441;
+
+  
+}
+
+.btn-without:hover {
+  background-color: #374441;
+  color: white !important;
+  transition: 0.5s;
+  
+}
+
+
+.home-img {
+  text-align: center;
+  /* filter: drop-shadow(0px 4px 4px #41524F); */
+  filter: drop-shadow(0px 4px 4px #41524F);
+}
+
+.home-img-size {
+  width: 95%;
+  height: 100%;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+
+}
+

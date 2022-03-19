@@ -1,0 +1,19 @@
+
+  .contacts-f {
+    background-color: #1B999D !important;
+    opacity: 0.7;
+  
+  }
+  /* .btn:hover
+  {
+    color: white !important;
+    background-color: #928787 !important;
+    border: 1px solid #c7860db8;
+  } */
+  
+  input, textarea, iframe
+  {
+    filter: drop-shadow(0px 4px 4px #41524F);
+  }
+  
+  

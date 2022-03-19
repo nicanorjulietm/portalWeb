@@ -1,0 +1,72 @@
+
+
+/* -----Login Page---- */
+.login-page{
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    z-index: 15;
+    top: 30%;
+    left: 50%;
+    margin: -100px 0 0 -150px;
+  }
+  form{
+    background-color: none;
+  }
+  
+  input{
+    border: none;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #04684f;
+    width: 300px;
+    background: transparent !important;
+    
+  }
+
+  .submit{
+    width: 300px;
+    /* margin-top: 10px; */
+    margin: 10px 0 0 0;
+    padding: 5px;
+    background-color:#1B999D; 
+    
+    border: none;
+    opacity: 0.75;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .submit:hover{
+    background: none;
+    border: 1px solid #04684f;
+    color: #784546;
+    border-style: double;
+    transition: 0.5s;
+    
+  }
+  
+  .google-au
+  {
+    margin-top: 20px;
+    text-decoration: none;
+   
+    color: #04684f; 
+  }
+  .google-au:hover
+  {
+    margin-top: 20px;
+    text-decoration: none;
+    color: #784546; 
+  }
+
+.sign-up-link
+  {
+      /* margin-top: 10px; */
+      text-align: center;
+  }
+.alert-mode
+{
+  
+  padding:0px;
+  margin: 0px;
+  color: red;
+}
