@@ -1,7 +1,7 @@
 <%- include('partials/header') %>
 
 
-<script>
+<!-- <script>
   function check_pass() {
    if (document.getElementById('password').value == document.getElementById('conpassword').value) {
         document.getElementById('submit').disabled = false;
@@ -10,7 +10,7 @@
        }
   }
  
-  </script>
+  </script> -->
 
   <div class="login-page">
     <form autocomplete="off" action="/register" method="POST">
@@ -31,7 +31,7 @@
       <label for="password"> Confirm Password </label>
       <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' />
 
-      <button type="submit" class="submit" id="submit" disabled>Sign up</button>
+      <button type="submit" class="submit" id="submit">Sign up</button>
       <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
 
     </form>

@@ -1,6 +1,8 @@
-<%- include('partials/header') %>
 
-    <%- include('partials/navbar') %>
+<%- include('../partials/navbar') %>
+<%- include('../partials/header') %>
+
+
 
     <div class="news-container container-fluid">
         <div class="row row-news">
@@ -27,7 +29,8 @@
            
             <div class="col-lg-8 news-container">
                 <div class="news-inside">
-                    <form class="row g-3 req-row">
+                  
+                    <form class="row g-3 req-row" action="/reqbrgyid-req" method="POST">
                         <div class="col-12 req-distance">
                             <h5> Fill out this Application Form</h5>
                             <i> Note: Please make sure that all of the informations are true. </i>
@@ -64,11 +67,11 @@
                           </div>
                           <div class="col-12">
                             <label for="exampleFormControlFile1">Barangay ID Fee    :</label>
-                            <input type="file" class="upload-file" id="exampleFormControlFile1">
+                            <input type="file" class="upload-file" name="imgfilefee"  id="exampleFormControlFile1">
                           </div>
                           <div class="col-12">
                             <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
-                            <input type="file" class="upload-file" id="exampleFormControlFile1">
+                            <input type="file" class="upload-file" name="imgfileidorpsa" id="exampleFormControlFile1">
                           </div>
                         <div class="col-12 submit-center">
                           <button type="submit" class="btn submit ">Submit Application Form</button>

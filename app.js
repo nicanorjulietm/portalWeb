@@ -7,6 +7,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 // const { check, validationResult } = require('express-validator');
 const res = require("express/lib/response");
+const { redirect } = require("express/lib/response");
+const { features } = require("process");
 // const { authenticate } = require("passport/lib");
 
 // const session = require("express-session");
@@ -17,7 +19,10 @@ const app = express();
 
 
 app.use(express.static("public"));
+app.set('views', __dirname + '/views');
+// app.set('views','./views/pages');
 app.set("view engine", "ejs");
+// app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, './views/pages/')]);
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
@@ -44,15 +49,26 @@ const contactformSchema = {
 };
 const ContactForm = new mongoose.model("ContactForm", contactformSchema);
 
-
-
+const requseridSchema ={
+    fullname: String,
+    address: String,
+    email: String,
+    phone: Number,
+    age: Number,
+    civil: String,
+    purposeofreq: String,
+    ctc: String,
+    imgfilefee: { data: Buffer, contentType: String },
+    imgfileidorpsa: { data: Buffer, contentType: String },
+};
+const RequestID = new mongoose.model("RequestID", requseridSchema);
 
 app.get("/", function (req, res) {
     res.render("main");
 });
 
 app.get("/login", function (req, res) {
-    res.render("login", {visited:visited});
+    res.render("login");
 });
 app.get("/main", function (req, res) {
     res.render("main");
@@ -61,7 +77,8 @@ app.get("/adminportal", function (req, res) {
     res.render("adminportal");
 });
 app.get("/reqbrgyid", function (req, res) {
-    res.render("reqbrgyid");
+    res.render("./pages/reqbrgyid");
+   
 });
 
 
@@ -131,10 +148,35 @@ app.post("/register", function (req, res) {
 });
 
 
+// REQUEST FOR ID FORM 
+app.post("/reqbrgyid-req", function (req, res) {
+    const requestIDuser = new RequestID ({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        age: req.body.age,
+        civil: req.body.civilstatus,
+        purposeofreq: req.body.purposeofreq,
+        ctc: req.body.ctc,
+        imgfilefee: req.body.imgfilefee,
+        contentType: 'img/png',
+        imgfileidorpsa: req.body.imgfileidorpsa,
+        contentType: 'img/png'
+    });
+
+    requestIDuser.save(function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("main")
+        }
+    });
+
+});
+
 // CONTACT FORM 
 app.post("/contact-mail", function (req, res) {
-
-
     const contactUser = new ContactForm ({
         fullname: req.body.fullname,
         email: req.body.email,
