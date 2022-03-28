@@ -80,9 +80,10 @@ app.get("/adminportal", function (req, res) {
 });
 app.get("/reqbrgyid", function (req, res) {
     res.render("./pages/reqbrgyid");
-   
 });
-
+app.get("/donate", function (req, res) {
+    res.render("./pages/donate");
+});
 
 
 app.get("/register", function (req, res) {

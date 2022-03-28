@@ -6,16 +6,160 @@
     <div class="container">
       <div class="row home-title">
         <div class="col-lg home-text">
-          <h1 class="front-title"> UNITY</h2>
+          <h1 class="front-title"> UNITY</h1>
             <h2 class="front-tagline"> It starts with you if not you, then who? </h3>
               <p> Donate or be part of the volunteers that helps people who in needs in this pandemic.
                 All the proceeds will go straight into the charities.
               </p>
-              <button class="btn-without"> Donate </button>
+              <!-- <button class="btn-without" @onclick="/donate"> Donate </button> -->
+
+
+              <button class="btn-without" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Donate </button>
+
+              <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+                <div class="offcanvas-header">
+               
+      
+                  <h5 id="offcanvasTopLabel" > </h5>
+                  
+                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                
+                </div>
+                      <div class="offcanvas-body offcanvas-container">
+                            <div class="container donate-div">
+                              <img class="img-style" src="images/child.jpg" alt="">
+                                <div class="donate-title-container">
+                                <h1 class="donate-title"> LETS HELP THE KIDS </h1>
+                                <p class="donate-prgh"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                                </p>
+                                <hr/>
+
+                              </div>
+                                  <div class="Form-donation"> 
+                                      <h5 style="text-align: center;"> DONATE HERE </h5>
+                                      <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                        <label for="floatingInput">Full Name <span> (Optional) </span></label>
+                                      </div>
+                                      <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingPassword" placeholder="Password">
+                                        <label for="floatingPassword">Password</label>
+                                      </div>
+                                      <div class="form-floating">
+                                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                          <option selected>Open this select menu</option>
+                                          <option value="1">One</option>
+                                          <option value="2">Two</option>
+                                          <option value="3">Three</option>
+                                        </select>
+                                        <label for="floatingSelect">Works with selects</label>
+                                      </div>
+                                      <div class="form-floating">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                        <label for="floatingTextarea2">Notes:</label>
+                                      </div>
+                                      <button type="submit" class="submit submit-btn" id="submit">Sign up</button>
+                                </div>
+
+                                <h5 style="text-align: center;"> MEET THE TEAM </h5>
+
+
+
+
+
+
+                                
+                                <div class="container">
+                                  <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                      <div class="our-team">
+                                        <div class="picture">
+                                          <img class="img-fluid" src="https://picsum.photos/130/130?image=1027">
+                                        </div>
+                                        <div class="team-content">
+                                          <h3 class="name">Nicanor, Juliet M</h3>
+                                          <h4 class="title">Project Chairman</h4>
+                                        </div>
+                                        <ul class="social">
+                                          <li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-twitter" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                      <div class="our-team">
+                                        <div class="picture">
+                                          <img class="img-fluid" src="https://picsum.photos/130/130?image=839">
+                                        </div>
+                                        <div class="team-content">
+                                          <h3 class="name">Miranda, Maica </h3>
+                                          <h4 class="title">Project Coordinator</h4>
+                                        </div>
+                                        <ul class="social">
+                                          <li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-twitter" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                      <div class="our-team">
+                                        <div class="picture">
+                                          <img class="img-fluid" src="https://picsum.photos/130/130?image=856">
+                                        </div>
+                                        <div class="team-content">
+                                          <h3 class="name">Secretario, Marynisa</h3>
+                                          <h4 class="title">Head Volenteer</h4>
+                                        </div>
+                                        <ul class="social">
+                                          <li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-twitter" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                      <div class="our-team">
+                                        <div class="picture">
+                                          <img class="img-fluid" src="https://picsum.photos/130/130?image=836">
+                                        </div>
+                                        <div class="team-content">
+                                          <h3 class="name">Borres, Jeremie</h3>
+                                          <h4 class="title">Project Secretary</h4>
+                                        </div>
+                                        <ul class="social">
+                                          <li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-twitter" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                                          <li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+
+                                <div class="articles-container">
+                                 
+                                </div>
+                               
+                            </div>
+                            
+                            
+                      </div>
+
+                     
+              </div>
+
               <button class="btn-with">Be Volunteer</button>
         </div>
-        <div class="col-lg home-img">
-          <img src="images/sun.jpg" alt="" class="home-img-size">
+        <div class="col-lg home-img" >
+          <img src="images/sun.jpg" alt="" style="height: 500px;" class="home-img-size"/>
         </div>
       </div>
     </div>
