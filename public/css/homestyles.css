@@ -9,7 +9,9 @@
     top: 35%;
     left: 50%;
     margin: -100px 0 0 -150px;
+  
   }
+
   form{
     background-color: none;
   }
@@ -21,6 +23,15 @@
     width: 300px;
     background: transparent !important;
     
+  }
+  .title-design
+  {
+    /* background-color: #1B999D;
+    opacity: 0.75; */
+    text-align: center;
+    padding-bottom: 20px;
+    color:#1B999D;
+   
   }
 
   .submit{

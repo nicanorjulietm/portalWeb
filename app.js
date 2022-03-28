@@ -58,10 +58,12 @@ const requseridSchema ={
     civil: String,
     purposeofreq: String,
     ctc: String,
-    imgfilefee: { data: Buffer, contentType: String },
-    imgfileidorpsa: { data: Buffer, contentType: String },
+    // imgfilefee: { data: Buffer, contentType: String },
+    // imgfileidorpsa: { data: Buffer, contentType: String },
+
 };
 const RequestID = new mongoose.model("RequestID", requseridSchema);
+
 
 app.get("/", function (req, res) {
     res.render("main");
@@ -158,11 +160,11 @@ app.post("/reqbrgyid-req", function (req, res) {
         age: req.body.age,
         civil: req.body.civilstatus,
         purposeofreq: req.body.purposeofreq,
-        ctc: req.body.ctc,
-        imgfilefee: req.body.imgfilefee,
-        contentType: 'img/png',
-        imgfileidorpsa: req.body.imgfileidorpsa,
-        contentType: 'img/png'
+        ctc: req.body.ctc
+        // imgfilefee: req.body.imgfilefee,
+        // contentType: 'img/png',
+        // imgfileidorpsa: req.body.imgfileidorpsa,
+        // contentType: 'img/png'
     });
 
     requestIDuser.save(function (err) {
