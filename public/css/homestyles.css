@@ -12,11 +12,11 @@
   
   }
 
-  form{
+  /* form{
     background-color: none;
-  }
+  } */
   
-  input{
+  input, .txt-area, select{
     border: none;
     margin-bottom: 2px;
     border-bottom: 1px solid #04684f;
@@ -31,6 +31,7 @@
     text-align: center;
     padding-bottom: 20px;
     color:#1B999D;
+    width: 300px;
    
   }
 

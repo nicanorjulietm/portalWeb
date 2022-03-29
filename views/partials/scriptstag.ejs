@@ -10,4 +10,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="app.js" charset="utf-8"></script>
 
+ 
+  <script>
+   $(function () {
   
+  $('.md-trigger').on('click', function() {
+    $('.md-modal').addClass('md-show');
+  });
+  
+  $('.md-close').on('click', function() {
+    $('.md-modal').removeClass('md-show');
+  });
+  
+});
+  </script>

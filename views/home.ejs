@@ -35,32 +35,85 @@
                                 <hr/>
 
                               </div>
+                              <div class="section-donation"> 
                                   <div class="Form-donation"> 
-                                      <h5 style="text-align: center;"> DONATE HERE </h5>
-                                      <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                        <label for="floatingInput">Full Name <span> (Optional) </span></label>
+                                    <div class="containerforForm"> 
+                                      <div class="title-design">
+                                        <h5> Donation Form </h5>
+                                        <p> Thank you very for your kindness, We truly apprecite your commitment to kid's lives.</p>
+                                        <hr/>
+                                        </div>  
+                                      <form autocomplete="off" action="/register" method="POST">
+                                        
+                                          <div class="form-input" >
+                                            <label for="donatorsname"> I'm donating in the name of: </label>
+                                            <input  autocomplete="off" type="text" name="donatorsname" />
                                       </div>
-                                      <div class="form-floating">
-                                        <input type="text" class="form-control" id="floatingPassword" placeholder="Password">
-                                        <label for="floatingPassword">Password</label>
+                                      <div class="form-input" >
+                                        <label for="firstname"> Organization/Honoree name: </label>
+                                        <input autocomplete="off" type="text" name="firstname" />
                                       </div>
-                                      <div class="form-floating">
-                                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                          <option selected>Open this select menu</option>
-                                          <option value="1">One</option>
-                                          <option value="2">Two</option>
-                                          <option value="3">Three</option>
+                                      <div class="form-input" >
+                                        <label for="email"> Email </label>
+                                        <input autocomplete="off" type="email" name="username" />
+                                      </div>
+                                      <div class="form-input" >
+                                        <label for="amount"> Donation Amount </label>
+                                      
+                                        <!-- <input name="amount" id="amount" type="text" /> -->
+                                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                                          <option selected>Php 00,000</option>
+                                          <option value="10,000">Php 10,000</option>
+                                          <option value="20,000">Php 20,000</option>
+                                          <option value="30,000">Php 30,000</option>
                                         </select>
-                                        <label for="floatingSelect">Works with selects</label>
+                                  
                                       </div>
-                                      <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                                        <label for="floatingTextarea2">Notes:</label>
+                                      <div class="form-input" >
+                                        <label for="notes"> Leave us a commment: </label>
+                                        <textarea class="txt-area" rows="3"></textarea>
+                                        <!-- <label for="password"> Confirm Password </label>
+                                        <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
                                       </div>
-                                      <button type="submit" class="submit submit-btn" id="submit">Sign up</button>
-                                </div>
+                                        <!-- <button type="submit" class="submit" id="submit">Donate</button> -->
+                                        <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
+                                  
+                                      </form>
+                                  
+                                  
+                                  
+                                      <button type="submit" class="submit md-trigger" data-modal="modal-12" id="submit">Donate</button>
+                                      
+             
+                                    <!-- 
+                                    <button class="md-trigger" data-modal="modal-12">Show modal</button> -->
 
+                                    <div class="md-modal md-effect-12">
+                                        <div class="md-content">
+                                            <div class=content>
+                                              <div class="wrapper-1">
+                                                <div class="wrapper-2">
+                                                  
+                                                  <img src="images/icons8-love-64.png" style="width: 40%"alt=""/>
+                                                  <h1 class="modal-h1">Thank you!</h1>
+                                                  <p>Thanks for your joining and donating in our Project! We are looking forward to see you!  </p>
+                                                  <button  class="submit md-close" >Close </button>
+                                                  <!-- <button class="md-close">Close</button> -->
+                                                </div>
+
+                                            </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="md-overlay"></div>                  
+
+                                  
+                                    </div>
+                                    </div>
+                                </div>
+                                <hr/>
                                 <h5 style="text-align: center;"> MEET THE TEAM </h5>
 
 
@@ -144,9 +197,7 @@
 
 
 
-                                <div class="articles-container">
-                                 
-                                </div>
+                  
                                
                             </div>
                             
@@ -156,7 +207,191 @@
                      
               </div>
 
-              <button class="btn-with">Be Volunteer</button>
+              <!-- <button class="btn-with">Be Volunteer</button> -->
+
+              <button class="btn-with" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop2" aria-controls="offcanvasTop2"> Be a Volunteer </button>
+
+              <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop2" aria-labelledby="offcanvasTopLabel">
+                <div class="offcanvas-header">
+               
+      
+                  <h5 id="offcanvasTopLabel" > </h5>
+                  
+                  <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                
+                </div>
+                      <div class="offcanvas-body offcanvas-container">
+                            <div class="container donate-div">
+                                <img class="img-style" src="images/volunteer.jpg" alt="">
+                              <div class="donate-title-container">
+                                <h1 class="donate-title"> BE PART OF US! </h1>
+                                <p class="donate-prgh"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+                                </p>
+                                <hr/>
+                              </div>    
+                            </div>
+
+                            <div class="section-donation"> 
+                              <div class="Form-donation"> 
+                                <div class="containerforForm"> 
+                                  <div class="title-design">
+                                    <h5> Join our Project! </h5>
+                                    <p> Please Fill in the required information so we could contact you.</p>
+                                    <hr/>
+                                    </div>  
+                                  <form autocomplete="off" action="/register" method="POST">
+                                    
+                                      <div class="form-input" >
+                                        <label for="donatorsname"> Your Name: </label>
+                                        <input  autocomplete="off" type="text" name="donatorsname" />
+                                  </div>
+                                  <div class="form-input" >
+                                    <label for="firstname"> Organization: </label>
+                                    <input autocomplete="off" type="text" name="firstname" />
+                                  </div>
+                                  <div class="form-input" >
+                                    <label for="email"> Email </label>
+                                    <input autocomplete="off" type="email" name="username" />
+                                  </div>
+                                  
+                                  <div class="form-input" >
+                                    <label for="notes"> Leave us a commment: </label>
+                                    <textarea class="txt-area" rows="3"></textarea>
+                                    <!-- <label for="password"> Confirm Password </label>
+                                    <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
+                                  </div>
+                                    <!-- <button type="submit" class="submit" id="submit">Donate</button> -->
+                                    <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
+                              
+                                  </form>
+                              
+                              
+                              
+                                  <button type="submit" class="submit md-trigger" data-modal="modal-12" id="submit">Join</button>
+                                  
+         
+                                <!-- 
+                                <button class="md-trigger" data-modal="modal-12">Show modal</button> -->
+
+                                <div class="md-modal md-effect-12">
+                                    <div class="md-content">
+                                        <div class=content>
+                                          <div class="wrapper-1">
+                                            <div class="wrapper-2">
+                                              
+                                              <img src="images/icons8-love-64.png" style="width: 40%"alt=""/>
+                                              <h1 class="modal-h1">Thank you!</h1>
+                                              <p>Thanks for your joining and donating in our Project! We are looking forward to see you!  </p>
+                                              <button  class="submit md-close" >Close </button>
+                                              <!-- <button class="md-close">Close</button> -->
+                                            </div>
+
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="md-overlay"></div>                  
+
+                              
+                                </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <h5 style="text-align: center;"> MEET THE TEAM </h5>
+
+
+
+
+
+
+                            
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="our-team">
+                                    <div class="picture">
+                                      <img class="img-fluid" src="https://picsum.photos/130/130?image=1027">
+                                    </div>
+                                    <div class="team-content">
+                                      <h3 class="name">Nicanor, Juliet M</h3>
+                                      <h4 class="title">Project Chairman</h4>
+                                    </div>
+                                    <ul class="social">
+                                      <li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-twitter" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="our-team">
+                                    <div class="picture">
+                                      <img class="img-fluid" src="https://picsum.photos/130/130?image=839">
+                                    </div>
+                                    <div class="team-content">
+                                      <h3 class="name">Miranda, Maica </h3>
+                                      <h4 class="title">Project Coordinator</h4>
+                                    </div>
+                                    <ul class="social">
+                                      <li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-twitter" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="our-team">
+                                    <div class="picture">
+                                      <img class="img-fluid" src="https://picsum.photos/130/130?image=856">
+                                    </div>
+                                    <div class="team-content">
+                                      <h3 class="name">Secretario, Marynisa</h3>
+                                      <h4 class="title">Head Volenteer</h4>
+                                    </div>
+                                    <ul class="social">
+                                      <li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-twitter" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                  <div class="our-team">
+                                    <div class="picture">
+                                      <img class="img-fluid" src="https://picsum.photos/130/130?image=836">
+                                    </div>
+                                    <div class="team-content">
+                                      <h3 class="name">Borres, Jeremie</h3>
+                                      <h4 class="title">Project Secretary</h4>
+                                    </div>
+                                    <ul class="social">
+                                      <li><a href="" class="fa fa-facebook" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-twitter" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-google-plus" aria-hidden="true"></a></li>
+                                      <li><a href="" class="fa fa-linkedin" aria-hidden="true"></a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            
+                            
+                      </div>
+                      </div>  
+
+              
+
+
+
+
+
+
         </div>
         <div class="col-lg home-img" >
           <img src="images/sun.jpg" alt="" style="height: 500px;" class="home-img-size"/>
@@ -166,6 +401,8 @@
   
   </section>
   
+
+
   
   
   
