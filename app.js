@@ -5,7 +5,7 @@ const express = require("express");
 const https = require("https");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-// const { check, validationResult } = require('express-validator');
+// const { checkBody, validationResult } = require('express-validator');
 const res = require("express/lib/response");
 const { redirect } = require("express/lib/response");
 const { features } = require("process");
@@ -16,6 +16,8 @@ const { features } = require("process");
 // const passportLocalMongoose = require("passport-local-mongoose");
 // const { getMaxListeners } = require("process");
 const app = express();
+
+
 
 app.use(express.static("public"));
 app.set("views", __dirname + "/views");
@@ -64,10 +66,15 @@ const RequestID = new mongoose.model("RequestID", requseridSchema);
 
 app.get("/", function (req, res) {
   res.render("main");
+ 
 });
+
+
 
 app.get("/login", function (req, res) {
   res.render("login");
+
+
 });
 app.get("/main", function (req, res) {
   res.render("main");
@@ -75,6 +82,9 @@ app.get("/main", function (req, res) {
 app.get("/adminportal", function (req, res) {
   res.render("adminportal");
 });
+app.get("/portal", function (req, res) {
+    res.render("portal");
+  });
 app.get("/reqbrgyid", function (req, res) {
   res.render("./pages/reqbrgyid");
 });
@@ -112,13 +122,14 @@ app.post("/login", function (req, res) {
         if (foundUser.password === password) {
 
             if (foundUser.accountrole === "admin") {
-                res.render("adminportal");
+                res.redirect("adminportal");
             }
             else if(foundUser.accountrole === "employee"){
-                res.render("employeeportal");
+                res.redirect("employeeportal");
             }
             else if(foundUser.accountrole === "citizen"){
-                res.render("portal");
+                res.redirect("portal");
+                
             }
         }
         else {
@@ -142,7 +153,35 @@ app.post("/login", function (req, res) {
 //         res.render("portal");
 //     }
 
+
+
+
+
 app.post("/register", function (req, res) {
+
+    // const firstname= req.body.firstname;
+    // const lastname= req.body.lastname;
+    // const email= req.body.username;
+    // const password= req.body.password;
+    // const conpassword= req.body.conpassword;
+   
+    // checkBody('firstname', 'First Name is Required').notEmpty();
+    // checkBody('lastname', 'Last Name is Required').notEmpty();
+    // checkBody('email', 'Email is Required').notEmpty();
+    // checkBody('password', 'Password is Required').notEmpty();
+    // checkBody('conpassword', 'Password is Required').notEmpty().equals(req.body.password);
+
+
+    // const errors = req.validationResult();
+    // if(errors){
+    //     res.render('register', {
+    //         errors: errors
+    //     });
+    // } else{
+
+    
+
+
   const newUser = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -186,9 +225,11 @@ app.post("/register", function (req, res) {
             })
 
         }
-
+  
+    
 
   });
+// }
 });
 
 // REQUEST FOR ID FORM
@@ -211,6 +252,7 @@ app.post("/reqbrgyid-req", function (req, res) {
   requestIDuser.save(function (err) {
     if (err) {
       console.log(err);
+      res.redirect("./pages/reqbrgyid")
     } else {
       res.render("main");
     }
@@ -230,8 +272,9 @@ app.post("/contact-mail", function (req, res) {
   contactUser.save(function (err) {
     if (err) {
       console.log(err);
+      res.redirect("main")
     } else {
-      res.render("main");
+      res.redirect("main");
     }
   });
 });

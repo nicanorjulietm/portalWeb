@@ -1,86 +1,95 @@
+<%- include('../partials/header') %> <%- include('../partials/navbar') %>
 
-<%- include('../partials/navbar') %>
-<%- include('../partials/header') %>
-
-
-
-    <div class="news-container container-fluid">
-        <div class="row row-news">
-            <div class="col-lg-4 whats-happening px-0">
-                <div class="box-fluid">
-                    <h1 class="news-h1 req-h1"> Request for Barangay ID</h1>>
-                    <!-- <p class="news-par"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In diam, habitant eget
+<div class="news-container container-fluid">
+  <div class="row row-news">
+    <div class="col-lg-4 whats-happening px-0">
+      <div class="box-fluid">
+        <h1 class="news-h1 req-h1">Request for Barangay ID</h1>
+        >
+        <!-- <p class="news-par"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In diam, habitant eget
                         nunc, vel
                         amet nulla malesuada. Hendrerit enim, convallis tellus arcu velit. Dolor pulvinar tempor duis
                         ultrices sit
                         elementum viverra proin.</p> -->
-                    <!-- <a class="btn-with-news">Read More</a> -->
+        <!-- <a class="btn-with-news">Read More</a> -->
 
-                    <div class="req-list">
-                        <h4> REQUIREMENTS</h4>
-                        <ul>
-                            <li>Filled-out Application Form </li>
-                            <li>Barangay ID Fee </li>
-                            <li>Any Valid Id or PSA </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-           
-            <div class="col-lg-8 news-container">
-                <div class="news-inside">
-                  
-                    <form class="row g-3 req-row" action="/reqbrgyid-req" method="POST">
-                        <div class="col-12 req-distance">
-                            <h5> Fill out this Application Form</h5>
-                            <i> Note: Please make sure that all of the informations are true. </i>
-                            <label class="form-label">Full Name <i> (Last Name, First Name, Middle Name) </i></label>
-                            <input type="text"  class="req-input" name="fullname">
-                          </div>
-                          <div class="col-12 req-distance">
-                            <label class="form-label">Address</label>
-                            <input type="text"  class="req-input" name="address">
-                          </div>
-                        <div class="col-md-6 req-distance">
-                          <label  class="form-label">Email</label>
-                          <input type="email" class="req-input" name="Email">
-                        </div>
-                        <div class="col-md-6 req-distance">
-                          <label  class="form-label">Phone</label>
-                          <input type="number"  class="req-input" name="phone">
-                        </div>
-                        <div class="col-md-6 req-distance">
-                            <label  class="form-label">Age</label>
-                            <input type="text" class="req-input" name="age">
-                          </div>
-                          <div class="col-md-6 req-distance">
-                            <label  class="form-label">Civil Status</label>
-                            <input type="text"  class="req-input" name="civilstatus">
-                          </div>
-                          <div class="col-12 req-distance">
-                            <label class="form-label">Purpose</label>
-                            <input type="text"  class="req-input" name="purposeofreq">
-                          </div>
-                          <div class="col-12 req-distance">
-                            <label class="form-label">CTC</label>
-                            <input type="text"  class="req-input" name="ctc">
-                          </div>
-                          <div class="col-12">
-                            <label for="exampleFormControlFile1">Barangay ID Fee    :</label>
-                            <input type="file" class="upload-file" name="imgfilefee"  id="exampleFormControlFile1">
-                          </div>
-                          <div class="col-12">
-                            <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
-                            <input type="file" class="upload-file" name="imgfileidorpsa" id="exampleFormControlFile1">
-                          </div>
-                        <div class="col-12 submit-center">
-                          <button type="submit" class="btn submit ">Submit Application Form</button>
-                        </div>
-                      </form>
-                </div>
-                
-            </div>
-           
+        <div class="req-list">
+          <h4>REQUIREMENTS</h4>
+          <ul>
+            <li>Filled-out Application Form</li>
+            <li>Barangay ID Fee</li>
+            <li>Any Valid Id or PSA</li>
+          </ul>
         </div>
+      </div>
     </div>
 
+    <div class="col-lg-8 news-container">
+      <div class="news-inside">
+        <form class="row g-3 req-row" action="/reqbrgyid-req" method="POST">
+          <div class="col-12 req-distance">
+            <h5>Fill out this Application Form</h5>
+            <i>
+              Note: Please make sure that all of the informations are true.
+            </i>
+            <label class="form-label"
+              >Full Name <i> (Last Name, First Name, Middle Name) </i></label
+            >
+            <input type="text" class="req-input" name="fullname" />
+          </div>
+          <div class="col-12 req-distance">
+            <label class="form-label">Address</label>
+            <input type="text" class="req-input" name="address" />
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="form-label">Email</label>
+            <input type="email" class="req-input" name="Email" />
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="form-label">Phone</label>
+            <input type="number" class="req-input" name="phone" />
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="form-label">Age</label>
+            <input type="text" class="req-input" name="age" />
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="form-label">Civil Status</label>
+            <input type="text" class="req-input" name="civilstatus" />
+          </div>
+          <div class="col-12 req-distance">
+            <label class="form-label">Purpose</label>
+            <input type="text" class="req-input" name="purposeofreq" />
+          </div>
+          <div class="col-12 req-distance">
+            <label class="form-label">CTC</label>
+            <input type="text" class="req-input" name="ctc" />
+          </div>
+          <div class="col-12">
+            <label for="exampleFormControlFile1">Barangay ID Fee :</label>
+            <input
+              type="file"
+              class="upload-file"
+              name="imgfilefee"
+              id="exampleFormControlFile1"
+            />
+          </div>
+          <div class="col-12">
+            <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
+            <input
+              type="file"
+              class="upload-file"
+              name="imgfileidorpsa"
+              id="exampleFormControlFile1"
+            />
+          </div>
+          <div class="col-12 submit-center">
+            <button type="submit" class="btn submit">
+              Submit Application Form
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

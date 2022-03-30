@@ -1,0 +1,105 @@
+<div class="container adminportal">
+  <div class="row">
+    <div class="col-md-4">
+      <a class="datcard my-3" href="">
+        <span style="color: white" class="h4">Manage Admin</span>
+        <p style="color: rgb(172, 161, 161)">
+          Click here to go to the manage admin.
+        </p>
+        <div class="go-corner"></div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a class="datcard my-3" href="">
+        <span style="color: white" class="h4">See Reports</span>
+        <p style="color: rgb(172, 161, 161)">
+          View and download reports for all of your data.
+        </p>
+        <div class="go-corner"></div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <button
+        class="datcard my-3"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#addUserCanvas"
+        aria-controls="addUserCanvas"
+      >
+        <span style="color: white" class="h4">Add Users</span>
+        <p style="color: rgb(172, 161, 161)">Control who sees what.</p>
+        <div class="go-corner"></div>
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col-lg-4">
+      <div class="wrimagecard wrimagecard-topimage">
+        <div class="wrimagecard-topimage_header">
+          <i class="fas fa-users cardIcon"></i>
+        </div>
+        <div class="wrimagecard-topimage_title h-140">
+          <h2 class="h4 text-center">Big Event Staff</h2>
+          <p>Contains the list of staff members for The Big Event.</p>
+        </div>
+        <div class="card-action-bar">
+          <a class="float-lg-none link">View Staff</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="wrimagecard wrimagecard-topimage">
+        <div class="wrimagecard-topimage_header">
+          <i class="fas fa-desktop cardIcon"></i>
+        </div>
+        <div class="wrimagecard-topimage_title h-140">
+          <h2 class="h4 text-center">Dashboard</h2>
+          <p>View Event status and communicate with team members.</p>
+        </div>
+        <div class="card-action-bar">
+          <a class="float-right link">View Dashboard</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4">
+      <div class="wrimagecard wrimagecard-topimage">
+        <div class="wrimagecard-topimage_header">
+          <i class="far fa-envelope cardIcon"></i>
+        </div>
+        <div class="wrimagecard-topimage_title h-140">
+          <h2 class="h4 text-center">Email Hub</h2>
+          <p>Edit email templates sent by the application.</p>
+        </div>
+        <div class="card-action-bar">
+          <a class="float-right link">View Templates</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- --------FOR ADDUSERS------------ -->
+<div
+  class="offcanvas offcanvas-top"
+  tabindex="-1"
+  id="addUserCanvas"
+  aria-labelledby="offcanvasTopLabel"
+>
+  <div class="offcanvas-header">
+    <h5 id="offcanvasTopLabel"></h5>
+
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body offcanvas-container">
+    <div class="container">
+      <h5>BE PART OF US!</h5>
+
+      <hr />
+    </div>
+  </div>
+</div>
