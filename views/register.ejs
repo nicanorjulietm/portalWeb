@@ -1,6 +1,5 @@
 <%- include('partials/header') %>
 
-
 <!-- <script>
   function check_pass() {
    if (document.getElementById('password').value == document.getElementById('conpassword').value) {
@@ -12,39 +11,50 @@
  
   </script> -->
 
-  <div class="login-page">
-    <form autocomplete="off" action="/register" method="POST">
-      <div class="title-design">
-        <h5> Create New Account </h5>
-        <hr/>
-        </div>  
-      <label for="lastname"> Last Name </label>
-      <input autocomplete="off" type="text" name="lastname" />
+<div class="login-page">
+  <form autocomplete="off" action="/register" method="POST">
+    <div class="title-design">
+      <h5>Create New Account</h5>
+      <hr />
+    </div>
+    <div class="form-input">
+      <label for="accountrole"> Account Role </label>
 
-      <label for="firstname"> First Name </label>
-      <input autocomplete="off" type="text" name="firstname" />
+      <!-- <input name="amount" id="amount" type="text" /> -->
+      <select class="custom-select my-1 mr-sm-2" name="accountrole">
+        <!-- <option selected></option> -->
+        <option value="citizen">Barangay Citizen or others</option>
+        <option value="employee">Barangay Employee</option>
+        <option value="admin">Administrator</option>
+      </select>
+    </div>
+    <label for="lastname"> Last Name </label>
+    <input autocomplete="off" type="text" name="lastname" />
 
-      <label for="email"> Email </label>
-      <input autocomplete="off" type="email" name="username" />
+    <label for="firstname"> First Name </label>
+    <input autocomplete="off" type="text" name="firstname" />
 
-    
-      <label for="password"> Password </label>
-      <input name="password" id="password" type="password" onchange='check_pass()'/>
+    <label for="email"> Email </label>
+    <input autocomplete="off" type="email" name="username" />
 
-      <!-- <label for="password"> Confirm Password </label>
+    <label for="password"> Password </label>
+    <input name="password" id="password" type="password" />
+
+    <!-- <label for="password"> Confirm Password </label>
       <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
 
-      <button type="submit" class="submit" id="submit">Sign up</button>
-      <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
-
-    </form>
-    <div class="sign-up-link">
-     
-      <!-- <a class="employee" type="submit" > Register as an Employee </a> -->
-      <a class="btn btn-block btn-social btn-google" href="/auth/google" role="button">
-        <i class="fab fa-google"></i>
-        Sign Up with Google
-      </a>
-    </div>
+    <button type="submit" class="submit" id="submit">Sign up</button>
+    <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
+  </form>
+  <div class="sign-up-link">
+    <!-- <a class="employee" type="submit" > Register as an Employee </a> -->
+    <a
+      class="btn btn-block btn-social btn-google"
+      href="/auth/google"
+      role="button"
+    >
+      <i class="fab fa-google"></i>
+      Sign Up with Google
+    </a>
   </div>
- 
+</div>
