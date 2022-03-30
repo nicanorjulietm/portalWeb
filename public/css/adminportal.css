@@ -246,5 +246,27 @@
   }
    */
 
+  .spec-name{
+    width: 150px;
+  }
+   .nav-tabs{
+     text-align: center;
+     margin-bottom: 30px;
+    
+   }
+  
+   .adduser-div{
+     background-color: #5b8a8b;
+     opacity: 0.8;
+   }
 
-   
+
+   .citizen-table{
+    
+     width: 800px;
+     margin: 0 auto;
+   }
+
+   tr{
+     background-color: white;
+   }

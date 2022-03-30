@@ -65,8 +65,7 @@ const requseridSchema = {
 const RequestID = new mongoose.model("RequestID", requseridSchema);
 
 app.get("/", function (req, res) {
-  res.render("main");
- 
+res.render("main");
 });
 
 
@@ -80,7 +79,12 @@ app.get("/main", function (req, res) {
   res.render("main");
 });
 app.get("/adminportal", function (req, res) {
-  res.render("adminportal");
+//   res.render("adminportal");
+  User.find({}, function(err, users) {
+    res.render('adminportal',{users:users});
+   
+});
+
 });
 app.get("/portal", function (req, res) {
     res.render("portal");
@@ -102,7 +106,7 @@ app.get("/register", function (req, res) {
 //   })
 
 app.get("/logout", async (req, res) => {
-  res.redirect("/");
+  res.redirect("/login");
 });
 
 app.get("/contact-mail", async (req, res) => {
@@ -192,6 +196,10 @@ app.post("/register", function (req, res) {
   });
 
   const accountrole = req.body.accountrole;
+
+
+
+
   newUser.save(function (err) {
     if (err) {
       console.log(err);
