@@ -192,29 +192,6 @@ app.post("/login", function (req, res) {
 
 app.post("/register", function (req, res) {
 
-    // const firstname= req.body.firstname;
-    // const lastname= req.body.lastname;
-    // const email= req.body.username;
-    // const password= req.body.password;
-    // const conpassword= req.body.conpassword;
-   
-    // checkBody('firstname', 'First Name is Required').notEmpty();
-    // checkBody('lastname', 'Last Name is Required').notEmpty();
-    // checkBody('email', 'Email is Required').notEmpty();
-    // checkBody('password', 'Password is Required').notEmpty();
-    // checkBody('conpassword', 'Password is Required').notEmpty().equals(req.body.password);
-
-
-    // const errors = req.validationResult();
-    // if(errors){
-    //     res.render('register', {
-    //         errors: errors
-    //     });
-    // } else{
-
-    
-
-
   const newUser = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -268,6 +245,32 @@ app.post("/register", function (req, res) {
   });
 // }
 });
+
+
+//FOR ADDING NEW USER
+
+
+// app.post("/addUser", function (req, res) {
+
+//   const newUser = new User({
+//     firstname: req.body.firstname,
+//     lastname: req.body.lastname,
+//     email: req.body.username,
+//     password: req.body.password,
+//     conpassword: req.body.conpassword,
+//     accountrole: req.body.accountrole,
+//   });
+//   newUser.save(function (err){
+//    if (err){
+//    console.log(err);
+//     }
+//     else{
+//   res.render("adminportal"); 
+//    }
+//     })
+    
+
+// });
 
 // REQUEST FOR ID FORM
 app.post("/reqbrgyid-req", function (req, res) {

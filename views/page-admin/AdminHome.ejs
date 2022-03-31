@@ -209,6 +209,78 @@
             aria-labelledby="home-tab"
           >
             <table class="table table-hover citizen-table">
+              <div class="addButton">
+                <button
+                  type="button"
+                  class="btn btn-light addbtn md-trigger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#myModal"
+
+                  data-modal="modal-12"
+                >
+                  Add User
+                </button>
+
+                <!-- Modal for Add User -->
+
+                <div class="md-modal md-effect-12 addUserModal">
+                  <div class="md-content">
+                      <div class=content>
+                        <div class="wrapper-1">
+                          <div class="wrapper-2">
+                            
+<div class=" addUserSignup">
+  <form autocomplete="off" action="/addUser" method="POST">
+    <div class="title-design">
+      <h5>Create New Account</h5>
+      <hr />
+    </div>
+    <div class="form-input">
+      <label for="accountrole"> Account Role </label>
+
+      <!-- <input name="amount" id="amount" type="text" /> -->
+      <select class="custom-select my-1 mr-sm-2" name="accountrole">
+        <!-- <option selected></option> -->
+        <option value="citizen">Barangay Citizen or others</option>
+        <option value="employee">Barangay Employee</option>
+        <option value="admin">Administrator</option>
+      </select>
+    </div>
+    <label for="lastname"> Last Name </label>
+    <input autocomplete="off" type="text" name="lastname" />
+
+    <label for="firstname"> First Name </label>
+    <input autocomplete="off" type="text" name="firstname" />
+
+    <label for="email"> Email </label>
+    <input autocomplete="off" type="email" name="username" />
+
+    <label for="password"> Password </label>
+    <input name="password" id="password" type="password" />
+
+    <!-- <label for="password"> Confirm Password </label>
+      <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
+
+    <button type="submit" class="submit" id="submit">Sign up</button>
+    <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
+  </form>
+  
+</div>
+<div class="closebtn">
+<button type="button" class="btn-close md-close text-reset closebtn " data-bs-dismiss="offcanvas" aria-label="Close"></button>
+   </div>                          
+                            <!-- <button  class="submit md-close" >Close </button> -->
+                            <!-- <button class="md-close">Close</button> -->
+                          </div>
+
+                      </div>
+                      </div>
+                      
+                  </div>
+              </div>
+
+              <!-- End of Modal for Add User-->
+
               <thead class="table-dark">
                 <tr>
                   <!-- <th scope="col">#</th> -->
@@ -216,8 +288,8 @@
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col">Email</th>
-                  <th scope="col">View</th>
-                  <th scope="col">Edit</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
