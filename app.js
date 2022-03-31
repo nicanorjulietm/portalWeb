@@ -80,12 +80,41 @@ app.get("/main", function (req, res) {
 });
 app.get("/adminportal", function (req, res) {
 //   res.render("adminportal");
-  User.find({}, function(err, users) {
-    res.render('adminportal',{users:users});
-   
+  // User.find({accountrole: "citizen"}, function(err, users) {
+  //   res.render('adminportal',{users:users});
+  
+
+  //   try {
+  //     User.find({accountrole: "citizen"}, function (err, users) {
+  //         if (err)
+  //             res.send(err);
+  //         res.render('adminportal', { citizen: users });
+  //     });
+  // }
+  // catch (e) {
+  //     res.send(e);
+  // }
+
+  // Filter the users by role
+  User.find({ accountrole: 'citizen' }, function (err, usersUser) {
+    User.find({ accountrole: 'admin' }, function (err, usersAdmin) {
+      res.render('adminportal', { usersUser, usersAdmin });
+    });
+  });
+
+
+     
 });
 
-});
+
+
+
+// User.find({accountrole: "admin"}, function(err, users) {
+//   res.render('adminportal',{admin:admin});
+ 
+// });
+
+
 app.get("/portal", function (req, res) {
     res.render("portal");
   });
