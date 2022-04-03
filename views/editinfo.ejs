@@ -1,0 +1,135 @@
+<%- include('partials/header') %>
+<div class="login-page">
+  <form autocomplete="off" action="/editinfo/<%- users._id %>" method="POST">
+    <div class="title-design">
+      <h5>Edit Account Information</h5>
+      <hr />
+    </div>
+    <div class="form-input">
+      <label for="accountrole"> Account Role </label>
+
+      <!-- <input name="amount" id="amount" type="text" /> -->
+      <select class="custom-select my-1 mr-sm-2" name="accountrole" value="<%- users.accountrole %>">
+        <!-- <option selected></option> -->
+        <option value="citizen">Barangay Citizen or others</option>
+        <option value="employee">Barangay Employee</option>
+        <option value="admin">Administrator</option>
+      </select>
+    </div>
+    <label for="lastname"> Last Name </label>
+    <input autocomplete="off" type="text" name="lastname" value="<%- users.lastname %>"/>
+
+    <label for="firstname"> First Name </label>
+    <input autocomplete="off" type="text" name="firstname" value="<%- users.firstname %>" />
+
+    <label for="email"> Email </label>
+    <input autocomplete="off" type="email" name="username" value="<%- users.email %>" />
+
+    <label for="password"> Password </label>
+    <input name="password" id="password" type="password" value="<%- users.password %>"/>
+
+    <!-- <label for="password"> Confirm Password </label>
+      <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
+
+    <button type="submit" class="submit" id="submit">Done Edit </button>
+    <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
+  </form>
+ 
+</div>
+
+
+<style>
+    
+/* -----Login Page---- */
+.login-page{
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  z-index: 15;
+  top: 35%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+
+}
+body {
+    Margin: 0;
+    Padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    Line-height: 1.3;
+    background-image: url("/images/bground.png");
+    background-repeat: no-repeat, repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+
+
+}
+/* form{
+  background-color: none;
+} */
+
+input, .txt-area, select{
+  border: none;
+  margin-bottom: 2px;
+  border-bottom: 1px solid #04684f;
+  width: 300px;
+  background: transparent !important;
+  
+}
+.title-design
+{
+  /* background-color: #1B999D;
+  opacity: 0.75; */
+  text-align: center;
+  padding-bottom: 20px;
+  color:#1B999D;
+  width: 300px;
+ 
+}
+
+.submit{
+  width: 300px;
+  margin: 10px 0 0 0;
+  padding: 5px;
+  background-color:#1B999D; 
+  
+  border: none;
+  opacity: 0.75;
+  color: white;
+  margin-bottom: 10px;
+}
+.submit:hover{
+  background: none;
+  border: 1px solid #04684f;
+  color: #784546;
+  border-style: double;
+  transition: 0.5s;
+  
+}
+
+.google-au
+{
+  margin-top: 20px;
+  text-decoration: none;
+ 
+  color: #04684f; 
+}
+.google-au:hover
+{
+  margin-top: 20px;
+  text-decoration: none;
+  color: #784546; 
+}
+
+.sign-up-link
+{
+    text-align: center;
+}
+.alert-mode
+{
+
+padding:0px;
+margin: 0px;
+color: red;
+}
+</style>
+<%- include('partials/scriptstag') %>

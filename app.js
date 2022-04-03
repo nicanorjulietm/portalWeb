@@ -67,80 +67,103 @@ const RequestID = new mongoose.model("RequestID", requseridSchema);
 app.get("/", function (req, res) {
 res.render("main");
 });
-
-
-
 app.get("/login", function (req, res) {
   res.render("login");
-
-
-});
-app.get("/main", function (req, res) {
-  res.render("main");
-});
-app.get("/adminportal", function (req, res) {
-//   res.render("adminportal");
-  // User.find({accountrole: "citizen"}, function(err, users) {
-  //   res.render('adminportal',{users:users});
-  
-
-  //   try {
-  //     User.find({accountrole: "citizen"}, function (err, users) {
-  //         if (err)
-  //             res.send(err);
-  //         res.render('adminportal', { citizen: users });
-  //     });
-  // }
-  // catch (e) {
-  //     res.send(e);
-  // }
-
-  // Filter the users by role
-  User.find({ accountrole: 'citizen' }, function (err, usersUser) {
-    User.find({ accountrole: 'admin' }, function (err, usersAdmin) {
-      res.render('adminportal', { usersUser, usersAdmin });
-    });
-  });
-
-
-     
 });
 
-
-
-
-// User.find({accountrole: "admin"}, function(err, users) {
-//   res.render('adminportal',{admin:admin});
- 
+// app.get("/createaccount", function (req, res) {
+//   res.redirect("createaccount");
 // });
 
-
-app.get("/portal", function (req, res) {
-    res.render("portal");
+  app.get("/portal", function (req, res) {
+      res.render("portal");
+    });
+  app.get("/reqbrgyid", function (req, res) {
+    res.render("./pages/reqbrgyid");
   });
-app.get("/reqbrgyid", function (req, res) {
-  res.render("./pages/reqbrgyid");
+  app.get("/donate", function (req, res) {
+    res.render("./pages/donate");
+  });
+  
+  app.get("/registeraccount", function (req, res) {
+    res.render("register");
+  });
+  app.get("/register", function (req, res) {
+    res.render("register");
+  });
+
+  app.get("/logout", async (req, res) => {
+    res.redirect("main");
+  });
+  app.get("/main", function (req, res) {
+  res.render("main");
 });
-app.get("/donate", function (req, res) {
-  res.render("./pages/donate");
+  
+  app.get("/contact-mail", async (req, res) => {
+    res.redirect("main");
+  });
+  
+  app.get("/employeeportal", async (req, res) => {
+    res.redirect("employeeportal");
+  });
+  
+app.get("/deleteinfo/:id", (req, res, next)=> {
+    User.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
+      if(err){
+        console.log("Something went wrong");
+        next(err);
+      } else {
+        console.log("Delete Successfully");
+        res.redirect("/adminportal");
+      }
+    });
+  });
+  
+  
+
+app.get("/adminportal", function (req, res) {
+
+    User.find({}, function(err, allUser){
+      User.find({ accountrole: 'citizen' }, function (err, usersUser) {
+        User.find({ accountrole: 'employee' }, function (err, usersEmployee) {
+          User.find({ accountrole: 'admin' }, function (err, usersAdmin) {
+            res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin});
+          });
+        });
+      });
+    });
 });
 
-app.get("/register", function (req, res) {
-  res.render("register");
+// EDIT USER
+
+app.get("/editinfo/:id", (req,res, next ) =>{
+const id = req.params.id;
+  User.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+    if(err){
+      console.log("Can't retrieve data and edit because of some database problem.")
+      next(err);
+    } else {
+      res.render("editinfo",  { users: users });
+    }
+    
 });
 
-// app.delete('/logout', (req, res) => {
-//     req.logOut()
-//     res.redirect('/login')
-//   })
-
-app.get("/logout", async (req, res) => {
-  res.redirect("/login");
 });
 
-app.get("/contact-mail", async (req, res) => {
-  res.redirect("main");
+app.post("/editinfo/:id", (req,res, next ) =>{
+
+  User.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+    if (err){
+      console.log("Something went wrong to update your data");
+      next(err);
+    }else{
+      res.redirect("/adminportal")
+
+    }
+  })
 });
+
+
 
 app.post("/login", function (req, res) {
   const username = req.body.username;
@@ -172,25 +195,10 @@ app.post("/login", function (req, res) {
     }
   });
 });
-
-// if (foundUser.accountrole === "admin") {
-//     res.render("adminportal");
-// }
-
-// if (foundUser.password === password) {
-
-//     if (foundUser.accountrole === "admin") {
-//         res.render("adminportal");
-//     }
-//     else {
-//         res.render("portal");
-//     }
+ 
 
 
-
-
-
-app.post("/register", function (req, res) {
+app.post("/registeraccount", function (req, res) {
 
   const newUser = new User({
     firstname: req.body.firstname,
@@ -203,74 +211,40 @@ app.post("/register", function (req, res) {
 
   const accountrole = req.body.accountrole;
 
-
-
-
   newUser.save(function (err) {
     if (err) {
       console.log(err);
-      res.redirect("register");
+      // res.redirect("register");
     } 
-    // else {
-    //   res.render("portal");
-    //         }
      else {
-
-            User.findOne({ accountrole: accountrole }, function (err, foundUser) {
-                    if (err) {
-                    console.log(err);
-                    } else {
-                    
-                            if (foundUser.accountrole === "admin") {
-                                res.render("adminportal");
-                            }
-                            else if(foundUser.accountrole === "employee"){
-                                res.render("employeeportal");
-                            }
-
-                            else if(foundUser.accountrole === "citizen"){
-                                res.render("portal");
-                            }
-                            else {
-                            res.redirect("register");
-                            }
-                        }
-                
-            })
-
+           res.redirect("login")
         }
-  
-    
 
   });
-// }
 });
 
+// User.findOne({ accountrole: accountrole }, function (err, foundUser) {
+//   if (err) {
+//   console.log(err);
+//   } else {
+  
+//           if(foundUser.accountrole === "admin") {
+//               res.render("adminportal");
+//           }
+//           else if(foundUser.accountrole === "employee"){
+//               res.render("adminportal");
+//           }
 
-//FOR ADDING NEW USER
-
-
-// app.post("/addUser", function (req, res) {
-
-//   const newUser = new User({
-//     firstname: req.body.firstname,
-//     lastname: req.body.lastname,
-//     email: req.body.username,
-//     password: req.body.password,
-//     conpassword: req.body.conpassword,
-//     accountrole: req.body.accountrole,
-//   });
-//   newUser.save(function (err){
-//    if (err){
-//    console.log(err);
-//     }
-//     else{
-//   res.render("adminportal"); 
-//    }
-//     })
-    
+//           else if(foundUser.accountrole === "citizen"){
+//               res.render("portal");
+//           }
+//           else {
+//           res.redirect("register");
+//           }
+//       }
 
 // });
+
 
 // REQUEST FOR ID FORM
 app.post("/reqbrgyid-req", function (req, res) {

@@ -1,18 +1,9 @@
 <%- include('partials/header') %>
 
-<!-- <script>
-  function check_pass() {
-   if (document.getElementById('password').value == document.getElementById('conpassword').value) {
-        document.getElementById('submit').disabled = false;
-       }else {
-       document.getElementById('submit').disabled = true;
-       }
-  }
- 
-  </script> -->
+
 
 <div class="login-page">
-  <form autocomplete="off" action="/register" method="POST">
+  <form autocomplete="off" action="/registeraccount" method="POST">
     <div class="title-design">
       <h5>Create New Account</h5>
       <hr />
@@ -21,7 +12,7 @@
       <label for="accountrole"> Account Role </label>
 
       <!-- <input name="amount" id="amount" type="text" /> -->
-      <select class="custom-select my-1 mr-sm-2" name="accountrole">
+      <select class="custom-select my-1 mr-sm-2" name="accountrole" required>
         <!-- <option selected></option> -->
         <option value="citizen">Barangay Citizen or others</option>
         <option value="employee">Barangay Employee</option>
@@ -29,25 +20,25 @@
       </select>
     </div>
     <label for="lastname"> Last Name </label>
-    <input autocomplete="off" type="text" name="lastname" />
+    <input autocomplete="off" type="text" name="lastname" required/>
 
     <label for="firstname"> First Name </label>
-    <input autocomplete="off" type="text" name="firstname" />
+    <input autocomplete="off" type="text" name="firstname" required/>
 
     <label for="email"> Email </label>
-    <input autocomplete="off" type="email" name="username" />
+    <input autocomplete="off" type="email" name="username" required/>
 
     <label for="password"> Password </label>
-    <input name="password" id="password" type="password" />
+    <input name="password" id="password" type="password" required/>
 
     <!-- <label for="password"> Confirm Password </label>
       <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
 
-    <button type="submit" class="submit" id="submit">Sign up</button>
+    <button type="submit" class="submit" id="submit">Create Account</button>
     <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
   </form>
-  <div class="sign-up-link">
-    <!-- <a class="employee" type="submit" > Register as an Employee </a> -->
+  <!-- <div class="sign-up-link">
+ 
     <a
       class="btn btn-block btn-social btn-google"
       href="/auth/google"
@@ -56,5 +47,5 @@
       <i class="fab fa-google"></i>
       Sign Up with Google
     </a>
-  </div>
+  </div> -->
 </div>
