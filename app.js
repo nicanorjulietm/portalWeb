@@ -5,10 +5,12 @@ const express = require("express");
 const https = require("https");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const moment = require ("moment");
 // const { checkBody, validationResult } = require('express-validator');
 const res = require("express/lib/response");
 const { redirect } = require("express/lib/response");
 const { features } = require("process");
+
 // const { authenticate } = require("passport/lib");
 
 // const session = require("express-session");
@@ -51,13 +53,14 @@ const contactformSchema = {
 const ContactForm = new mongoose.model("ContactForm", contactformSchema);
 
 const requseridSchema = {
-  dateapply: {type: Date, default: Date.now},
+  dateapply:  {type: String, 
+  default: () => moment().format("MMMM Do YYYY") },
   fullname: String,
   address: String,
   email: String,
   phone: Number,
   age: Number,
-  civil: String,
+  civilstatus: String,
   purposeofreq: String,
   ctc: String,
   // imgfilefee: { data: Buffer, contentType: String },
@@ -82,7 +85,7 @@ app.get("/login", function (req, res) {
   app.get("/reqbrgyid", function (req, res) {
     res.render("./pages/reqbrgyid");
   });
-  app.get("/reqbrgyidform", function (req, res) {
+  app.get("/RequestIdForm", function (req, res) {
     res.render("./page-admin/RequestIdForm");
   });
   app.get("/donate", function (req, res) {
@@ -165,7 +168,7 @@ app.post("/editinfo/:id", (req,res, next ) =>{
       console.log("Something went wrong to update your data");
       next(err);
     }else{
-      res.redirect("/adminportal")
+      res.redirect("/adminportal");
 
     }
   })
@@ -182,6 +185,8 @@ app.post("/editinfo/:id", (req,res, next ) =>{
 // });
 
 app.get("/deleteinfo", (req, res, next)=> {
+
+  RequestID.deleteMany({accountrole: "citizen"}, (err, users)=>{
   User.deleteMany({accountrole: "citizen"}, (err, users)=>{
     if(err){
       console.log("Something went wrong");
@@ -190,15 +195,15 @@ app.get("/deleteinfo", (req, res, next)=> {
       console.log("Delete Successfully");
       res.redirect("/adminportal");
     }
-  });
+  });});
 });
 
 app.post("/login", function (req, res) {
-  const username = req.body.username;
+  const email = req.body.email;
   const password = req.body.password;
 //   const accountrole = req.body.accountrole;
 
-  User.findOne({ email: username }, function (err, foundUser) {
+  User.findOne({ email: email }, function (err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -231,7 +236,7 @@ app.post("/registeraccount", function (req, res) {
   const newUser = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
-    email: req.body.username,
+    email: req.body.email,
     password: req.body.password,
     conpassword: req.body.conpassword,
     accountrole: req.body.accountrole,
@@ -251,6 +256,7 @@ app.post("/registeraccount", function (req, res) {
 
 
 //ADMIN PERKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//this is for Account User
 app.get("/createnewaccount", (req, res) => {
   res.render("createnewaccount");
 });
@@ -260,7 +266,7 @@ app.post("/createnewaccount", function (req, res) {
   const newUser = new User({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
-    email: req.body.username,
+    email: req.body.email,
     password: req.body.password,
     conpassword: req.body.conpassword,
     accountrole: req.body.accountrole,
@@ -305,15 +311,6 @@ app.post("/createnewaccount", function (req, res) {
 // REQUEST FOR ID FORM
 app.post("/reqbrgyid-req", function (req, res) {
 
-
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear();
-  
-  const dateapplied = mm + '/' + dd + '/' + yyyy;
-
-
   const requestIDuser = new RequestID({
     fullname: req.body.fullname,
     address: req.body.address,
@@ -323,13 +320,12 @@ app.post("/reqbrgyid-req", function (req, res) {
     civil: req.body.civilstatus,
     purposeofreq: req.body.purposeofreq,
     ctc: req.body.ctc,
-    dateapply: dateapplied
+    
     // imgfilefee: req.body.imgfilefee,
     // contentType: 'img/png',
     // imgfileidorpsa: req.body.imgfileidorpsa,
     // contentType: 'img/png'
   });
-
 
   requestIDuser.save(function (err) {
     if (err) {
@@ -341,6 +337,37 @@ app.post("/reqbrgyid-req", function (req, res) {
   });
 });
 
+// Admin Add Request Form!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+app.post("/RequestIdForm", function (req, res) {
+
+  const requestIDuser = new RequestID({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    age: req.body.age,
+    civil: req.body.civilstatus,
+    purposeofreq: req.body.purposeofreq,
+    ctc: req.body.ctc,
+    
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestIDuser.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./page-admin/RequestIdForm")
+    } else {
+      res.redirect("adminportal");
+    }
+  });
+});
+
+
+//--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY ID Application Form
 app.get("/adminviewreqid/:id", (req,res, next ) =>{
   const id = req.params.id;
     RequestID.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
