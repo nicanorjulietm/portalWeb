@@ -1,0 +1,92 @@
+.divhome-tab{
+    margin-bottom: 20px;
+}
+
+
+.div-tab{
+    margin-bottom: 5px;
+}
+
+.request-tab{
+    margin: 0 auto;
+}
+.request-card{
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+/* ------FOR SWITCHING---- */
+
+.container-tab {
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    border: 1px solid #1B999D;
+    width: 100%;
+    max-width: 500px;
+}
+
+.tab {
+    font-size: 16px;
+    padding: 10px 95px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #1B999D;
+    opacity: 0.7;
+    color: white;
+}
+
+.content {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 25px;
+}
+
+.content-item {
+    display: none;
+    padding: 0;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.content-item.active {
+    display: flex;
+    /* justify-content: center; */
+}
+
+.request-table{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.request-link{
+    color:#1B999D;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 400;
+
+}
+.request-add{
+    width: 230px;
+    
+}
+.request-add-div{
+   text-align: center;
+    
+}
+
+
+
+
+/* ------------REQUEST ID FORM ----------- */

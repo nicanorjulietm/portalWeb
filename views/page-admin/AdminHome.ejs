@@ -104,12 +104,18 @@
                       <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                         <ul class="navbar-nav">
-                          <li class="nav-item navbar-distance">
-                            <a class="nav-link" href="/logout">Sign out</a>
+                          <li class="nav-item navbar-distance signout-distance">
+                            <a class="nav-link" href="/logout" >Sign out</a>
                           </li>
+                          
                           <li class="nav-item navbar-distance">
-                            <a class="nav-link" href="/adminportal"> Administrator</a>
+                           <a class="nav-link nav-border-without" href="/adminportal" > <i class="fa-solid fa-user fa-1x"></i> Hi! Admin </a>
+                
                           </li>
+                        
+                          <!-- <li class="nav-item navbar-distance">
+                            <a class="nav-link" href="/adminportal"> Hi! Administrator</a>
+                          </li> -->
                         </ul>
                       </div>
                     </div>
@@ -189,7 +195,7 @@
                     aria-labelledby="v-pills-profile-tab"
                   >
                       <div class="container">
-                          <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                          <ul class="nav nav-tabs justify-content-center divhome-tab" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                               <button class="nav-link active" id="allusers-tab" data-bs-toggle="tab" data-bs-target="#allusers" type="button" role="tab" aria-controls="allusers" aria-selected="true">All Users</button>
                             </li>
@@ -213,16 +219,23 @@
                                   <button
                                         type="button"
                                         class="btn addbtn submit"
-                                      ><a style=" text-decoration: none;" class="a-link"  href="/registeraccount" >
+                                      ><a style=" text-decoration: none;" class="a-link"  href="/createnewaccount" >
                                         Add User</a>
                                       </button>
+
+                                    
                                     <button
                                       type="button"
                                       class="btn addbtn submit"
-                                    ><a style=" text-decoration: none;" class="a-link"  href="/registeraccount" >
+                                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL citizens users?');"  >
                                       Delete All</a>
                                     </button>
+                                   
                                 </div>
+
+
+                           
+
                                 
                                   <!-- =========MODAL FOR ADDUSER============= -->
                                   
@@ -254,7 +267,7 @@
                                            <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
                                              Edit
                                            </a> </td>
-                                           <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" >
+                                           <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.lastname %> account?');"  >
                                              
                                           Delete </a> </td>
                                          </tr>
@@ -263,11 +276,6 @@
                                        </tbody>
                                   </table>
                                  </div>
-
-
-
-
-
 
 
                                   </div>
@@ -299,10 +307,15 @@
                                       <td><%= users.firstname %></td>
                                       <td><%= users.lastname %></td>
                                       <td><%= users.email %></td>
-                                      <td>Edit</td>
-                                      <td>Delete</td>
+                                      <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
+                                        Edit
+                                      </a> </td>
+                                      <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr.  <%= users.firstname %>  account?');"  >
+                                        
+                                     Delete </a> </td>
                                     </tr>
-                                    <% }); %>
+                                    <% }); %> 
+                                   
                                   </tbody>
                                 </table>
                               </div>
@@ -334,10 +347,13 @@
                                       <td><%= users.firstname %></td>
                                       <td><%= users.lastname %></td>
                                       <td><%= users.email %></td>
-                                      <td>Edit</td>
-                                      <td>Delete</td>
+                                      <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
+                                        Edit
+                                      </a> </td>
+                                      <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr.  <%= users.firstname %>  account?');"  >
+                                     Delete </a> </td>
                                     </tr>
-                                    <% }); %>
+                                    <% }); %> 
                                   </tbody>
                                 </table>
                               </div>
@@ -367,10 +383,14 @@
                                       <td><%= users.firstname %></td>
                                       <td><%= users.lastname %></td>
                                       <td><%= users.email %></td>
-                                      <td>Edit</td>
-                                      <td>Delete</td>
+                                      <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
+                                        Edit
+                                      </a> </td>
+                                      <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr.  <%= users.firstname %>  account?');"  >
+                                        
+                                     Delete </a> </td>
                                     </tr>
-                                    <% }); %>
+                                    <% }); %> 
                                   </tbody>
                                 </table>
                               </div>
@@ -391,7 +411,7 @@
                   role="tabpanel"
                   aria-labelledby="v-pills-messages-tab"
                 >
-                  ...
+                <%- include('../page-admin/request') %>
                 </div>
                 <!-- --------------END OF REQUEST (SIDEBAR)------------- -->
 
@@ -410,52 +430,7 @@
 </div>
 
 
-<!-- Modal for Add User -->
-<div class="md-modal md-effect-12 addUserModal">
-  <div class="md-content">
-      <div class=content>
-        <div class="wrapper-1">
-          <div class="wrapper-2">
-            <div class=" addUserSignup">
-                        <form autocomplete="off" action="/adminportal" method="POST">
-                            <div class="title-design">
-                              <h5>Create New User</h5>
-                              <hr />
-                            </div>
-                                <div class="form-input">
-                                  <label for="accountrole"> Account Role </label>
-                                  <select class="custom-select my-1 mr-sm-2" name="accountrole">
-                                    <!-- <option selected></option> -->
-                                    <option value="citizen">Barangay Citizen or others</option>
-                                    <option value="employee">Barangay Employee</option>
-                                    <option value="admin">Administrator</option>
-                                  </select>
-                                </div>
-                                    <label for="lastname"> Last Name </label>
-                                    <input autocomplete="off" type="text" name="lastname" />
-  
-                                    <label for="firstname"> First Name </label>
-                                    <input autocomplete="off" type="text" name="firstname" />
-  
-                                    <label for="email"> Email </label>
-                                    <input autocomplete="off" type="email" name="username" />
-  
-                                    <label for="password"> Password </label>
-                                    <input name="password" id="password" type="password" />
 
-                                    <button type="submit" class="submit" id="submit">Create</button>
-                        </form>
-                    </div>
-                                  <div class="closebtn">
-                                  <button type="button" class="btn-close md-close text-reset closebtn " data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                  </div>
-                  </div>
-              </div>
-          </div>
-          
-      </div>
-  </div>
-<!-- Enf of Modal for Add User -->
 
 
 

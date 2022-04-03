@@ -28,14 +28,14 @@
 }
 
 .nav-border-without:hover {
-  background-color: #374441;
+  -webkit-box-shadow: -210px 0 0 #31708f inset;
   color: white !important;
  
   
 }
 
 .nav-border-with:hover {
-  background-color: #374441;
+  -webkit-box-shadow: -210px 0 0 #31708f inset;
   
   color: white !important;
   
@@ -44,7 +44,7 @@
 .navbar-distance {
   padding: 0 5px;
   padding-top: 20px;
-  width: 6rem;
+  width: 9rem;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -121,13 +121,13 @@
 }
 
 .btn-with:hover {
-  background-color: #374441;
+  -webkit-box-shadow: -210px 0 0 #31708f inset;
 
   
 }
 
 .btn-without:hover {
-  background-color: #374441;
+  -webkit-box-shadow: -210px 0 0 #31708f inset;
   color: white !important;
   transition: 0.5s;
   

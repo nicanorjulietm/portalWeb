@@ -1,0 +1,171 @@
+<%- include('../partials/header') %> 
+
+    <div class="news-container req-view-div">
+      <div class="news-inside">
+        <form class="row g-3 req-row" action="/adminviewreqid/<%- users._id %>" method="POST">
+          <div class="col-12 req-distance">
+            <div class="title-design" style="width: 100%;" >
+                <h5>Request for Barangay ID </h5>
+                <hr />
+              </div>
+
+              <!-- <div class="date-req " style="text-align: right;">
+              <label class="req-label"> Date Applied : <%- users.dateapply %> </label> 
+            </div> -->
+            <h5>Fill out this Application Form</h5>
+            <i class="req-note" style="font-size: 15px; color: red">
+              Note: Please make sure that all of the informations are true.
+            </i>
+            
+            <label class="req-label" style="margin-top: 7px;"
+              >Full Name <i style="font-size: 13px;"> (Last Name, First Name, Middle Name) </i></label
+            >
+            <input type="text" class="req-view-input" name="fullname" required value="<%- users.fullname%>"/>
+          </div>
+          <div class="col-12 req-distance">
+            <label class="req-label">Address</label>
+            <input type="text" class="req-view-input" name="address" required value="<%- users.address %>"/>
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="req-label">Email</label>
+            <input type="email" class="req-view-input" name="email" required value="<%- users.email %>"/>
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="req-label">Phone</label>
+            <input type="text" class="req-view-input" name="phone" required value="<%- users.phone %>"/>
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="req-label">Age</label>
+            <input type="text" class="req-view-input" name="age" required value="<%- users.age %>"/>
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="req-label">Civil Status</label>
+            <input type="text" class="req-view-input" name="civilstatus" required value="<%- users.civilstatus %>"/>
+          </div>
+          <div class="col-12 req-distance">
+            <label class="req-label">Purpose</label>
+            <input type="text" class="req-view-input" name="purposeofreq" required value="<%- users.purposeofreq %>"/>
+          </div>
+          <div class="col-12 req-distance">
+            <label class="req-label">CTC</label>
+            <input type="text" class="req-view-input" name="ctc" required value="<%- users.ctc %>"/>
+          </div>
+          <div class="col-12">
+            <label for="exampleFormControlFile1">Barangay ID Fee :</label>
+            <input
+              type="file"
+              class="upload-file"
+              name="imgfilefee"
+              id="exampleFormControlFile1" 
+              style="border: none;"
+            />
+          </div>
+          <div class="col-12">
+            <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
+            <input
+              type="file"
+              class="upload-file"
+              name="imgfileidorpsa"
+              id="exampleFormControlFile1" 
+              style="border: none;"
+            />
+          </div>
+         
+
+          <div class="col-12 submit-center ">
+            <button type="submit" class="btn submit " style="width: 100%;">
+              Save Application Form
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
+<style>
+
+body {
+    Margin: 0;
+    Padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    Line-height: 1.3;
+    background-image: url("/images/bground.png");
+    background-repeat: no-repeat, repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+
+
+}
+.req-view-input{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.req-view-div{
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 50px;
+    line-height: 0.9;
+}
+
+  input, .txt-area, select{
+    border: none;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #04684f;
+    width: 300px;
+    background: transparent !important;
+    
+  }
+  .title-design
+  {
+    /* background-color: #1B999D;
+    opacity: 0.75; */
+    text-align: center;
+    padding-bottom: 20px;
+    color:#1B999D;
+    width: 300px;
+   
+  }
+
+  .submit{
+    width: 300px;
+    margin: 10px 0 0 0;
+    padding: 5px;
+    background-color:#1B999D; 
+    
+    border: none;
+    opacity: 0.75;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .submit:hover{
+    background: none;
+    border: 1px solid #04684f;
+    color: #784546;
+    border-style: double;
+    transition: 0.5s;
+    
+  }
+  
+  .google-au
+  {
+    margin-top: 20px;
+    text-decoration: none;
+   
+    color: #04684f; 
+  }
+  .google-au:hover
+  {
+    margin-top: 20px;
+    text-decoration: none;
+    color: #784546; 
+  }
+
+.sign-up-link
+  {
+      text-align: center;
+  }
+
+</style>

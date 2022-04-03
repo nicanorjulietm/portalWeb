@@ -51,6 +51,7 @@ const contactformSchema = {
 const ContactForm = new mongoose.model("ContactForm", contactformSchema);
 
 const requseridSchema = {
+  dateapply: {type: Date, default: Date.now},
   fullname: String,
   address: String,
   email: String,
@@ -81,6 +82,9 @@ app.get("/login", function (req, res) {
   app.get("/reqbrgyid", function (req, res) {
     res.render("./pages/reqbrgyid");
   });
+  app.get("/reqbrgyidform", function (req, res) {
+    res.render("./page-admin/RequestIdForm");
+  });
   app.get("/donate", function (req, res) {
     res.render("./pages/donate");
   });
@@ -108,30 +112,34 @@ app.get("/login", function (req, res) {
   });
   
 app.get("/deleteinfo/:id", (req, res, next)=> {
-    User.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
-      if(err){
-        console.log("Something went wrong");
-        next(err);
-      } else {
-        console.log("Delete Successfully");
-        res.redirect("/adminportal");
-      }
-    });
+  RequestID.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+      User.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
+        if(err){
+          console.log("Something went wrong");
+          next(err);
+        } else {
+          console.log("Delete Successfully");
+          res.redirect("/adminportal");
+        }
+      });
   });
+});
   
   
-
 app.get("/adminportal", function (req, res) {
 
+
+  RequestID.find({}, function(err, requestIds){ 
     User.find({}, function(err, allUser){
       User.find({ accountrole: 'citizen' }, function (err, usersUser) {
         User.find({ accountrole: 'employee' }, function (err, usersEmployee) {
           User.find({ accountrole: 'admin' }, function (err, usersAdmin) {
-            res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin});
+            res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds});
           });
         });
       });
     });
+  });
 });
 
 // EDIT USER
@@ -163,7 +171,27 @@ app.post("/editinfo/:id", (req,res, next ) =>{
   })
 });
 
+// app.get("/deleteallaccounts", (req,res){
+//   User.deleteMany({}, function(err){
+//     if(err) {
+//       console.log(err);
+//     } else {
+//       res.render("adminportal");
+//     }
+//   });
+// });
 
+app.get("/deleteinfo", (req, res, next)=> {
+  User.deleteMany({accountrole: "citizen"}, (err, users)=>{
+    if(err){
+      console.log("Something went wrong");
+      next(err);
+    } else {
+      console.log("Delete Successfully");
+      res.redirect("/adminportal");
+    }
+  });
+});
 
 app.post("/login", function (req, res) {
   const username = req.body.username;
@@ -209,8 +237,6 @@ app.post("/registeraccount", function (req, res) {
     accountrole: req.body.accountrole,
   });
 
-  const accountrole = req.body.accountrole;
-
   newUser.save(function (err) {
     if (err) {
       console.log(err);
@@ -222,6 +248,36 @@ app.post("/registeraccount", function (req, res) {
 
   });
 });
+
+
+//ADMIN PERKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+app.get("/createnewaccount", (req, res) => {
+  res.render("createnewaccount");
+});
+
+app.post("/createnewaccount", function (req, res) {
+
+  const newUser = new User({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.username,
+    password: req.body.password,
+    conpassword: req.body.conpassword,
+    accountrole: req.body.accountrole,
+  });
+
+  newUser.save(function (err) {
+    if (err) {
+      console.log(err);
+      // res.redirect("register");
+    } 
+     else {
+           res.redirect("adminportal")
+        }
+
+  });
+});
+
 
 // User.findOne({ accountrole: accountrole }, function (err, foundUser) {
 //   if (err) {
@@ -248,6 +304,16 @@ app.post("/registeraccount", function (req, res) {
 
 // REQUEST FOR ID FORM
 app.post("/reqbrgyid-req", function (req, res) {
+
+
+  var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = today.getFullYear();
+  
+  const dateapplied = mm + '/' + dd + '/' + yyyy;
+
+
   const requestIDuser = new RequestID({
     fullname: req.body.fullname,
     address: req.body.address,
@@ -257,11 +323,13 @@ app.post("/reqbrgyid-req", function (req, res) {
     civil: req.body.civilstatus,
     purposeofreq: req.body.purposeofreq,
     ctc: req.body.ctc,
+    dateapply: dateapplied
     // imgfilefee: req.body.imgfilefee,
     // contentType: 'img/png',
     // imgfileidorpsa: req.body.imgfileidorpsa,
     // contentType: 'img/png'
   });
+
 
   requestIDuser.save(function (err) {
     if (err) {
@@ -272,6 +340,22 @@ app.post("/reqbrgyid-req", function (req, res) {
     }
   });
 });
+
+app.get("/adminviewreqid/:id", (req,res, next ) =>{
+  const id = req.params.id;
+    RequestID.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+      if(err){
+        console.log("Can't retrieve data and edit because of some database problem.")
+        next(err);
+      } else {
+        res.render("./page-admin/adminviewreqid",  { users: users });
+      }
+      
+  });
+  
+  });
+  
+
 
 // CONTACT FORM
 app.post("/contact-mail", function (req, res) {
@@ -292,6 +376,9 @@ app.post("/contact-mail", function (req, res) {
     }
   });
 });
+
+
+
 
 //---------------------------------------
 
