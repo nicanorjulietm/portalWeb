@@ -2,7 +2,7 @@
 
     <div class="news-container req-view-div">
               <div class="news-inside">
-                <form class="row g-3 req-row" action="/adminviewreqid/<%- users._id %>" method="POST">
+                <form class="row g-3 req-row" action="/adminviewreqclearance/<%- users._id %>" method="POST">
                   <div class="col-12 req-distance">
                     <div class="title-design" style="width: 100%;" >
                         <h5>Request for Barangay ID </h5>
@@ -14,7 +14,7 @@
                       <label class="req-label"><b> Request : </b> </label> 
                       <select class="custom-select my-1 mr-sm-2" name="request" value="<%- users.request %>" style="width: 100px">
                         <!-- <option selected></option> -->
-                        <option value="Pending">Pending</option>
+                        <!-- <option value="Pending">Pending</option> -->
                         <option value="Approved">Approved</option>
                       
                       </select>

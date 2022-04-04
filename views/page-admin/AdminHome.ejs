@@ -48,40 +48,42 @@
 
                   <button
                     class="nav-btn"
-                    id="v-pills-settings-tab"
+                    id="v-pills-projects-tab"
                     data-bs-toggle="pill"
-                    data-bs-target="#v-pills-settings"
+                    data-bs-target="#v-pills-projects"
                     type="button"
                     role="tab"
-                    aria-controls="v-pills-settings"
+                    aria-controls="v-pills-projects"
                     aria-selected="false"
                   >
                     Projects
                   </button>
-                  <button
-                  class="nav-btn"
-                  id="v-pills-emailhub-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills-settings"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills-settings"
-                  aria-selected="false"
-                >
-                  Email Hub
-                </button>
+                 
                   <button
                     class="nav-btn"
                     id="v-pills-suggestions-tab"
                     data-bs-toggle="pill"
-                    data-bs-target="#v-pills-settings"
+                    data-bs-target="#v-pills-suggestions"
                     type="button"
                     role="tab"
-                    aria-controls="v-pills-settings"
+                    aria-controls="v-pills-suggestions"
                     aria-selected="false"
                   >
                     Suggestion Records
                   </button>
+
+                  <button
+                  class="nav-btn"
+                  id="v-pills-backuprecords-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-backuprecords"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-backuprecords"
+                  aria-selected="false"
+                >
+                  Records
+                </button>
           </div>
 
           <!-- --------SIDEBAR MENUS ----------- -->
@@ -411,21 +413,45 @@
                   role="tabpanel"
                   aria-labelledby="v-pills-messages-tab"
                 >
-                <%- include('../page-admin/request') %>
+
+                      <%- include('../page-admin/request') %>
+
                 </div>
                 <!-- --------------END OF REQUEST (SIDEBAR)------------- -->
 
 
-                  <!-- --------------SETTING  (SIDEBAR)------------- -->
+                  <!-- --------------PROJECT (SIDEBAR)------------- -->
                 <div
                   class="tab-pane fade"
-                  id="v-pills-settings"
+                  id="v-pills-projects"
                   role="tabpanel"
-                  aria-labelledby="v-pills-settings-tab"
+                  aria-labelledby="v-pills-projects-tab"
                 >
-                  ...
+                  projects
                 </div>
-                 <!-- --------------END OF SETTING  (SIDEBAR)------------- -->
+                 <!-- --------------END OF PROJECT  (SIDEBAR)------------- -->
+
+                  <!-- --------------SUGGESTIONS (SIDEBAR)------------- -->
+                <div
+                class="tab-pane fade"
+                id="v-pills-suggestions"
+                role="tabpanel"
+                aria-labelledby="v-pills-suggestions-tab"
+              >
+                Suggestion
+              </div>
+               <!-- --------------END OF SUGGESTIONS  (SIDEBAR)------------- -->
+
+                <!-- --------------BACKUP RECORDS(SIDEBAR)------------- -->
+                <div
+                  class="tab-pane fade"
+                  id="v-pills-backuprecords"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-backuprecords-tab"
+                >
+                <%- include('../page-admin/backuprecords') %>
+                </div>
+                 <!-- --------------END OF BACKUP RECORDS (SIDEBAR)------------- -->
    <!-- ==========END OF SIDEBAR CONTENT============ -->
 </div>
 
@@ -440,4 +466,10 @@
 $('.tableFixHead').on('scroll', function() {
   $th.css('transform', 'translateY('+ this.scrollTop +'px)');
 });
+
+
+
+
+
+
 </script>

@@ -3,12 +3,11 @@
       <button class="nav-link active" id="nav-brgyid-tab" data-bs-toggle="tab" data-bs-target="#nav-brgyid" type="button" role="tab" aria-controls="nav-brgyid" aria-selected="true">Barangay ID</button>
       <button class="nav-link" id="nav-brgyclearance-tab" data-bs-toggle="tab" data-bs-target="#nav-brgyclearance" type="button" role="tab" aria-controls="nav-brgyclearance" aria-selected="false"> Barangay Clearance</button>
       <button class="nav-link" id="nav-businessclearance-tab" data-bs-toggle="tab" data-bs-target="#nav-businessclearance" type="button" role="tab" 
-      aria-controls="nav-businessclearance" aria-selected="false">Business Clearance</button>
-      <button class="nav-link" id="nav-exacpermit-tab" data-bs-toggle="tab" data-bs-target="#nav-exacpermit" type="button" role="tab" aria-controls="nav-exacpermit" aria-selected="false"> Exacavation Permit</button>
+      aria-controls="nav-businessclearance" aria-selected="false">Business Permit</button>
+      
       <button class="nav-link" id="nav-indigency-tab" data-bs-toggle="tab" data-bs-target="#nav-indigency" type="button" role="tab" 
       aria-controls="nav-indigency" aria-selected="false">Certificate for Indigency</button>
-      <button class="nav-link" id="nav-soloparent-tab" data-bs-toggle="tab" data-bs-target="#nav-soloparent" type="button" role="tab" 
-      aria-controls="nav-soloparent" aria-selected="false">Certificate for Solo Parent</button>
+      
       <button class="nav-link" id="nav-wiring-tab" data-bs-toggle="tab" data-bs-target="#nav-wiring" type="button" role="tab" aria-controls="nav-wiring" aria-selected="false"> Wiring Clearance</button>
      
     </div>
@@ -19,6 +18,7 @@
           <div class="container-tab">
             <div class="tabs">
                 <div class="tab active">Pending </div>
+              
                 <div class="tab">Approved</div>
               
             </div>
@@ -43,7 +43,7 @@
                                       <th scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
                                     <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
                                       <i class="fa-solid fa-xmark"></i> </a> </td>
-                                      <td style="width: 10px;text-align: center;"> <a class="td-link" href="#" >
+                                      <td style="width: 10px;text-align: center;"> <a class="td-link" href="/adminviewreqidapproved/<%= users._id %>" >
                                         <i class="fa-solid fa-check"></i></a> </td>
                                     </tr>
                                     <% }); %> 
@@ -71,7 +71,7 @@
                                         <th scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
                                       <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
                                         <i class="fa-solid fa-xmark"></i> </a> </td>
-                                        <td style="width: 10px;text-align: center;"> <a class="td-link" href="#" >
+                                        <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
                                           <i class="fa-solid fa-paper-plane"></i></a> </td>
                                       </tr>
                                       <% }); %> 
@@ -95,29 +95,239 @@
                      
                      </div>
                 
-            
+                     <!-- <button type="submit" class="submit md-trigger" data-modal="modal-12" id="submit">Donate</button>
+                                      
+              -->
+                     <!-- 
+                     <button class="md-trigger" data-modal="modal-12">Show modal</button> -->
+                     
+                    
           </div>
-    </div>
     
     
     
+       <div class="ms-modal md-effect-12 md-content-div" >
+      <div class="ms-content damn-md">
+         
+            <div class="wrapper-1 ">
+              <div class="wrapper-2 md-send-request" >
+               <div style="text-align: right; padding: 5px 20px; cursor: pointer;"> <i class="fa-solid fa-xmark fa-1x ms-close"></i>  </div> 
+                <div class="title-design" style="width: 100%;">
+                  <h5 style="text-align: left; padding-left: 10px; padding-bottom: 0;"> Send this Certificate to Email </h5>
+                  
+                  <hr />
+                </div>
+                
+                <div >
+                  <table  width="600" height="auto" align="center" cellpadding="0" cellspacing="0" style="background-color:#fdfdfd; ">
+                    <tr class="email-box">
+                      <td class="email-title-cont">
+                        <h1 class="email-title" > Hello, I got your request now! </h1>
+                      </td>
+                    </tr>
+                    <tr class="tr-email">
+                      <td class="email-paragraph"width="600" style=" padding-bottom: 0px;">
+                        <p style="margin:0 0 16px;">Thank you for using our website and following our protocol. </p>
+                        <p style="margin:0 0 16px;">As promised, Here's the copy of your Request and please before downloading the file, I would like you to click the link first and read our Terms and Conditions in receiving this file.  <b>Terms and Conditions</b></p>
+                        <p style="margin:0 0 16px;">Download your file : <b> Here </b> </p>
+                      </td>
+                    </tr>
+                   
+                  </table>
+                </div>
+               
+                <button  class="submit" > Send </button>
+                <!-- <button class="md-close">Close</button> -->
+              </div>
+
+         
+          </div>
+          
+      </div>
+    </div> 
+
+
     <!-- ------------------- END OF BRGY ID---------------------------- -->
+
+
+
     <!-- -------------------BRGY CLEARANCE---------------------------- -->
-    <div class="tab-pane fade" id="nav-brgyclearance" role="tabpanel" aria-labelledby="nav-brgyclearance-tab">Clearance</div>
+    <div class="tab-pane fade" id="nav-brgyclearance" role="tabpanel" aria-labelledby="nav-brgyclearance-tab">
+      <div class="container-tab">
+        <div class="tabx">
+            <div class="taby active">Pending </div>
+            <div class="taby">Approved</div>
+          
+        </div>
+
+        
+              <div class="contentx">
+                  <div class="content-itemx active">
+                          <div class="tableFixHead request-table">
+                                          
+                            <table class="table table-hover table-striped">
+                              <thead class="table-dark">
+                                  <!-- <th scope="col">#</th> -->
+                                  <th scope="col">Full Name</th>  
+                                  <!-- <th scope="col"> View </th> -->
+                                  <th scope="col"> Remove</th>
+                                  <th scope="col"> Approve </th>
+                                </tr>
+                              </thead>
+                              <tbody>      
+                              <% requestsClearances.forEach(function(users){ %>
+                                <tr>
+                                  <th scope="row"><a class="request-link" href="/adminviewreqclearance/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                  <i class="fa-solid fa-xmark"></i> </a> </td>
+                                  <td style="width: 10px;text-align: center;"> <a class="td-link" href="/adminviewreqclearanceapproved/<%= users._id %>" >
+                                    <i class="fa-solid fa-check"></i></a> </td>
+                                </tr>
+                                <% }); %> 
+                                
+                              </tbody>
+                        </table>
+                        </div>
+                  </div>
+                 
+                          <div class="content-itemx"style="width: 500px">
+                            <div class="tableFixHead request-table">
+                                                  
+                              <table class="table table-hover table-striped">
+                                <thead class="table-dark">
+                                    <!-- <th scope="col">#</th> -->
+                                    <th scope="col">Full Name</th>  
+                                    <!-- <th scope="col"> View </th> -->
+                                    <th scope="col"> Remove </th>
+                                    <th scope="col" style="text-align: center;"> Send Request </th>
+                                  </tr>
+                                </thead>
+                                <tbody>      
+                                <% approvedClearances.forEach(function(users){ %>
+                                  <tr>
+                                    <th scope="row"><a class="request-link" href="/adminviewreqidapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                  <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                    <i class="fa-solid fa-xmark"></i> </a> </td>
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
+                                      <i class="fa-solid fa-paper-plane"></i></a> </td>
+                                  </tr>
+                                  <% }); %> 
+                                  
+                                </tbody>
+                          </table>
+                            </div>
+                            
+                          </div>
+                         
+                    </div>
+
+                  <div class="request-add-div">
+                    <button type="button" class="submit request-add" >
+                      <a style=" text-decoration: none;" class="a-link"  href="./RequestClearanceForm" >
+                      Add Request</button></a>
+                    <button type="button" class="submit request-add"> <a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL request?');"  >
+                      Remove All</a></button>
+                   
+                  </div>
+                 
+                 </div>
+
+
+    </div>
     <!-- -------------------END OF BRGY CLEARANCE---------------------------- -->
-    <!-- -------------------BUSINESS CLEARANCE---------------------------- -->
-    <div class="tab-pane fade" id="nav-businessclearance" role="tabpanel" aria-labelledby="nav-businessclearance-tab">Business</div>
+
+    
+    <!-- -------------------BUSINESS PERMIT---------------------------- -->
+    <div class="tab-pane fade" id="nav-businessclearance" role="tabpanel" aria-labelledby="nav-businessclearance-tab">
+      <div class="container-tab">
+        <div class="tabq">
+            <div class="tabyq active">Pending </div>
+            <div class="tabyq">Approved</div>
+          
+        </div>
+
+        
+              <div class="contentxq">
+                  <div class="content-itemxq active">
+                          <div class="tableFixHead request-table">
+                                          
+                            <table class="table table-hover table-striped">
+                              <thead class="table-dark">
+                                  <!-- <th scope="col">#</th> -->
+                                  <th scope="col">Full Name</th>  
+                                  <!-- <th scope="col"> View </th> -->
+                                  <th scope="col"> Remove</th>
+                                  <th scope="col"> Approve </th>
+                                </tr>
+                              </thead>
+                              <tbody>      
+                              <% requestsBusinessPermit.forEach(function(users){ %>
+                                <tr>
+                                  <th scope="row"><a class="request-link" href="/adminviewbusinesspermit/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                  <i class="fa-solid fa-xmark"></i> </a> </td>
+                                  <td style="width: 10px;text-align: center;"> <a class="td-link" href="/adminviewbusinesspermitapproved/<%= users._id %>" >
+                                    <i class="fa-solid fa-check"></i></a> </td>
+                                </tr>
+                                <% }); %> 
+                                
+                              </tbody>
+                        </table>
+                        </div>
+                  </div>
+                 
+                          <div class="content-itemxq"style="width: 500px">
+                            <div class="tableFixHead request-table">
+                                                  
+                              <table class="table table-hover table-striped">
+                                <thead class="table-dark">
+                                    <!-- <th scope="col">#</th> -->
+                                    <th scope="col">Full Name</th>  
+                                    <!-- <th scope="col"> View </th> -->
+                                    <th scope="col"> Remove </th>
+                                    <th scope="col" style="text-align: center;"> Send Request </th>
+                                  </tr>
+                                </thead>
+                                <tbody>      
+                                <% approvedBusinessPermit.forEach(function(users){ %>
+                                  <tr>
+                                    <th scope="row"><a class="request-link" href="/adminviewbusinesspermitapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                  <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                    <i class="fa-solid fa-xmark"></i> </a> </td>
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="">
+                                      <i class="fa-solid fa-paper-plane"></i></a> </td>
+                                  </tr>
+                                  <% }); %> 
+                                  
+                                </tbody>
+                          </table>
+                            </div>
+                            
+                          </div>
+                         
+                    </div>
+
+                  <div class="request-add-div">
+                    <button type="button" class="submit request-add" >
+                      <a style=" text-decoration: none;" class="a-link"  href="./BusinessPermitForm" >
+                      Add Request</button></a>
+                    <button type="button" class="submit request-add"> <a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL request?');"  >
+                      Remove All</a></button>
+                   
+                  </div>
+                 
+                 </div>
+
+
+
+    </div>
      <!-- ------------------- END OF BUSINESS CLEARANCE---------------------------- -->
-      <!-- -------------------EXACAVATION PERMIT---------------------------- -->
-    <div class="tab-pane fade" id="nav-exacpermit" role="tabpanel" aria-labelledby="nav-exacpermit-tab">Exacavation</div>
-    <!-- -------------------END OF EXACAVATION PERMIT---------------------------- -->
+      
     <!-- -------------------INDIGENCY--------------------------- -->
     <div class="tab-pane fade" id="nav-indigency" role="tabpanel" aria-labelledby="nav-indigency-tab">Indigency</div>
     <!-- -------------------END OF INDIGENCY--------------------------- -->
-    <!-- -------------------SOLO PARENT--------------------------- -->
-
-    <div class="tab-pane fade" id="nav-soloparent" role="tabpanel" aria-labelledby="nav-soloparent-tab">Solo Parent</div>
-     <!-- ------------------- END OF SOLO PARENT--------------------------- -->
+  
+    
       <!-- -------------------WIRING CLEARANCE--------------------------- -->
     <div class="tab-pane fade" id="nav-wiring" role="tabpanel" aria-labelledby="nav-wiring-tab">Wiring</div>
      <!-- -------------------END OF WIRING CLEARANCE--------------------------- -->
@@ -126,6 +336,7 @@
 
 <script>
 
+function requestid(){ 
 let tabs = document.querySelectorAll('.tab');
         let content = document.querySelectorAll('.content-item');
         for (let i = 0; i < tabs.length; i++) {            
@@ -145,5 +356,55 @@ let tabs = document.querySelectorAll('.tab');
                 content[i].classList.remove('active');
             }
         }
+  }
 
+  requestid();
+function requestclearance(){ 
+  let tabx = document.querySelectorAll('.taby');
+        let contentx = document.querySelectorAll('.content-itemx');
+        for (let i = 0; i < tabx.length; i++) {            
+            tabx[i].addEventListener('click', () => tabClick(i));
+        }
+
+        function tabClick(currentTab) {
+            removeActive();
+            tabx[currentTab].classList.add('active');
+            contentx[currentTab].classList.add('active');
+            console.log(currentTab);
+        }
+
+        function removeActive() {
+            for (let i = 0; i < tabx.length; i++) {
+                tabx[i].classList.remove('active');
+                contentx[i].classList.remove('active');
+            }
+        }
+      }
+
+    requestclearance();
+
+
+  function buildingpermit(){ 
+    let tabq = document.querySelectorAll('.tabyq');
+        let contentxq = document.querySelectorAll('.content-itemxq');
+        for (let i = 0; i < tabq.length; i++) {            
+            tabq[i].addEventListener('click', () => tabClick(i));
+        }
+
+        function tabClick(currentTab) {
+            removeActive();
+            tabq[currentTab].classList.add('active');
+            contentxq[currentTab].classList.add('active');
+            console.log(currentTab);
+        }
+
+        function removeActive() {
+            for (let i = 0; i < tabq.length; i++) {
+                tabq[i].classList.remove('active');
+                contentxq[i].classList.remove('active');
+            }
+        }
+      }
+
+   buildingpermit();
 </script>

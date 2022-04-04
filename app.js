@@ -34,7 +34,7 @@ mongoose.connect("mongodb://localhost:27017/barangayportalDB", {
   useNewUrlParser: true,
 });
 
-const userSchema = {
+const useraccountsSchema = {
   firstname: String,
   lastname: String,
   email: String,
@@ -42,18 +42,19 @@ const userSchema = {
   conpassword: String,
   accountrole: String,
 };
-const User = new mongoose.model("User", userSchema);
+const Account = new mongoose.model("Account", useraccountsSchema);
 
-const contactformSchema = {
+
+const suggestionsSchema = {
   fullname: String,
   email: String,
   phone: Number,
   subject: String,
   text: String,
 };
-const ContactForm = new mongoose.model("ContactForm", contactformSchema);
+const Suggestion = new mongoose.model("Suggestion", suggestionsSchema);
 
-const requseridSchema = {
+const requestforbrgyidSchema = {
   dateapply:  {type: String, 
   default: () => moment().format("MMMM Do YYYY") },
   fullname: String,
@@ -68,7 +69,42 @@ const requseridSchema = {
   // imgfilefee: { data: Buffer, contentType: String },
   // imgfileidorpsa: { data: Buffer, contentType: String },
 };
-const RequestID = new mongoose.model("RequestID", requseridSchema);
+const RequestBrgyId = new mongoose.model("RequestBrgyId", requestforbrgyidSchema);
+
+const requestforbrgyclearanceSchema = {
+  dateapply:  {type: String, 
+  default: () => moment().format("MMMM Do YYYY") },
+  fullname: String,
+  address: String,
+  email: String,
+  phone: Number,
+  age: Number,
+  civilstatus: String,
+  purposeofreq: String,
+  ctc: String,
+  request: String
+  // imgfilefee: { data: Buffer, contentType: String },
+  // imgfileidorpsa: { data: Buffer, contentType: String },
+};
+const RequestClearance = new mongoose.model("RequestClearance", requestforbrgyclearanceSchema);
+
+const businesspermitSchema = {
+  dateapply:  {type: String, 
+  default: () => moment().format("MMMM Do YYYY") },
+  fullname: String,
+  address: String,
+  email: String,
+  phone: Number,
+  businessname: String,
+  businessaddress: String,
+  request: String
+  // imgfilefee: { data: Buffer, contentType: String },
+  // imgfileidorpsa: { data: Buffer, contentType: String },
+};
+const BusinessPermit = new mongoose.model("BusinessPermit", businesspermitSchema);
+
+
+
 
 app.get("/", function (req, res) {
 res.render("main");
@@ -87,8 +123,21 @@ app.get("/login", function (req, res) {
   app.get("/reqbrgyid", function (req, res) {
     res.render("./pages/reqbrgyid");
   });
+  app.get("/reqbrgyclearance", function (req, res) {
+    res.render("./pages/reqbrgyclearance");
+  });
+  app.get("/businesspermit", function (req, res) {
+    res.render("./pages/businesspermit");
+  });
+
   app.get("/RequestIdForm", function (req, res) {
     res.render("./page-admin/RequestIdForm");
+  });
+  app.get("/RequestClearanceForm", function (req, res) {
+    res.render("./page-admin/RequestClearanceForm");
+  });
+  app.get("/BusinessPermitForm", function (req, res) {
+    res.render("./page-admin/BusinessPermitForm");
   });
   app.get("/donate", function (req, res) {
     res.render("./pages/donate");
@@ -117,29 +166,41 @@ app.get("/login", function (req, res) {
   });
   
 app.get("/deleteinfo/:id", (req, res, next)=> {
-  RequestID.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-      User.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
-        if(err){
-          console.log("Something went wrong");
-          next(err);
-        } else {
-          console.log("Delete Successfully");
-          res.redirect("/adminportal");
-        }
+  BusinessPermit.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+    RequestClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+      RequestBrgyId.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+          Account.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
+            if(err){
+              console.log("Something went wrong");
+              next(err);
+            } else {
+              console.log("Delete Successfully");
+              res.redirect("/adminportal");
+            }
+          });
+        });
       });
-  });
+    });
 });
   
   
 app.get("/adminportal", function (req, res) {
-
-  RequestID.find({request: 'Approved'}, function(err, approvedIds){ 
-    RequestID.find({request: 'Pending'}, function(err, requestIds){ 
-      User.find({}, function(err, allUser){
-        User.find({ accountrole: 'citizen' }, function (err, usersUser) {
-          User.find({ accountrole: 'employee' }, function (err, usersEmployee) {
-            User.find({ accountrole: 'admin' }, function (err, usersAdmin) {
-              res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds});
+  BusinessPermit.find({request: 'Approved'}, function(err, approvedBusinessPermit){ 
+    BusinessPermit.find({request: 'Pending'}, function(err, requestsBusinessPermit){ 
+      RequestClearance.find({request: 'Approved'}, function(err, approvedClearances){
+        RequestClearance.find({request: 'Pending'}, function(err, requestsClearances){ 
+          RequestBrgyId.find({request: 'Approved'}, function(err, approvedIds){ 
+            RequestBrgyId.find({request: 'Pending'}, function(err, requestIds){ 
+              Account.find({}, function(err, allUser){
+                Account.find({ accountrole: 'citizen' }, function (err, usersUser) {
+                  Account.find({ accountrole: 'employee' }, function (err, usersEmployee) {
+                    Account.find({ accountrole: 'admin' }, function (err, usersAdmin) {
+                      res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
+                      , approvedBusinessPermit});
+                    });
+                  });
+                });
+              });
             });
           });
         });
@@ -152,7 +213,7 @@ app.get("/adminportal", function (req, res) {
 
 app.get("/editinfo/:id", (req,res, next ) =>{
 const id = req.params.id;
-  User.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+  Account.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
     if(err){
       console.log("Can't retrieve data and edit because of some database problem.")
       next(err);
@@ -166,7 +227,7 @@ const id = req.params.id;
 
 app.post("/editinfo/:id", (req,res, next ) =>{
 
-  User.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+  Account.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
     if (err){
       console.log("Something went wrong to update your data");
       next(err);
@@ -188,9 +249,10 @@ app.post("/editinfo/:id", (req,res, next ) =>{
 // });
 
 app.get("/deleteinfo", (req, res, next)=> {
-
-  RequestID.deleteMany({accountrole: "citizen"}, (err, users)=>{
-  User.deleteMany({accountrole: "citizen"}, (err, users)=>{
+  BusinessPermit.deleteMany({}, (err, users)=>{
+  RequestClearance.deleteMany({}, (err, users)=>{
+  RequestBrgyId.deleteMany({}, (err, users)=>{
+  Account.deleteMany({accountrole: "citizen"}, (err, users)=>{
     if(err){
       console.log("Something went wrong");
       next(err);
@@ -198,15 +260,17 @@ app.get("/deleteinfo", (req, res, next)=> {
       console.log("Delete Successfully");
       res.redirect("/adminportal");
     }
-  });});
+  });});});});
 });
 
+
+/// lOGIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 app.post("/login", function (req, res) {
   const email = req.body.email;
   const password = req.body.password;
 //   const accountrole = req.body.accountrole;
 
-  User.findOne({ email: email }, function (err, foundUser) {
+  Account.findOne({ email: email }, function (err, foundUser) {
     if (err) {
       console.log(err);
     } else {
@@ -233,10 +297,10 @@ app.post("/login", function (req, res) {
 });
  
 
-
+/// SIGN UPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 app.post("/registeraccount", function (req, res) {
 
-  const newUser = new User({
+  const newUser = new Account({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -266,7 +330,7 @@ app.get("/createnewaccount", (req, res) => {
 
 app.post("/createnewaccount", function (req, res) {
 
-  const newUser = new User({
+  const newUser = new Account({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -311,11 +375,268 @@ app.post("/createnewaccount", function (req, res) {
 // });
 
 
-// REQUEST FOR ID FORM -- use for user
+
+
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------REQUEST FOR BUSINESS PERMIT-- use for user
+app.post("/reqbusinesspermit-req", function (req, res) {
+
+  const result = "Pending"
+  const requestBusinessPermit = new BusinessPermit({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    businessname: req.body.businessname,
+    businessaddress: req.body.businessaddress,
+    request: result
+    
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestBusinessPermit.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./pages/reqbusinesspermit")
+    } else {
+      res.render("main");
+    }
+  });
+});
+
+// Admin Add Request Form for Business Permit --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+app.post("/BusinessPermitForm", function (req, res) {
+
+  const result = "Pending"
+  const requestBusinessPermit = new BusinessPermit({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    businessname: req.body.businessname,
+    businessaddress: req.body.businessaddress,
+    request: result
+    
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestBusinessPermit.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./page-admin/BusinessPermitForm")
+    } else {
+      res.redirect("adminportal");
+    }
+  });
+});
+
+//--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY ID Application Form
+app.get("/adminviewbusinesspermit/:id", (req,res, next ) =>{
+  const id = req.params.id;
+  BusinessPermit.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+      if(err){
+        console.log("Can't retrieve data and edit because of some database problem.")
+        next(err);
+      } else {
+        res.render("./page-admin/adminviewbusinesspermit",  { users: users });
+      }
+      
+  });
+  
+  });
+
+app.post("/adminviewbusinesspermit/:id", (req,res, next ) =>{
+
+    BusinessPermit.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+      if (err){
+        console.log("Something went wrong to update your data");
+        next(err);
+      }else{
+        res.redirect("/adminportal");
+  
+      }
+    })
+  });
+
+
+  app.get("/adminviewbusinesspermitapproved/:id", (req,res, next ) =>{
+    const id = req.params.id;
+    BusinessPermit.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          res.render("./page-admin/adminviewbusinesspermitapproved",  { users: users });
+        }
+        
+    });
+    
+    });
+
+// app.post("/adminviewbusinesspermitapproved/:id", (req,res, next ) =>{
+
+//     BusinessPermit.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+//       if (err){
+//         console.log("Something went wrong to update your data");
+//         next(err);
+//       }else{
+//         res.redirect("/adminportal");
+  
+//       }
+//     })
+//   });
+
+
+// ------------------------------------------------------------------------------------------REQUEST FOR BRGY CLEARANCE FORM -- use for user
+app.post("/reqbrgyclerance-req", function (req, res) {
+
+  const result = "Pending"
+  const requestClearanceuser = new RequestClearance({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    age: req.body.age,
+    civilstatus: req.body.civilstatus,
+    purposeofreq: req.body.purposeofreq,
+    ctc: req.body.ctc,
+    request: result
+    
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestClearanceuser.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./pages/reqbrgyclearance")
+    } else {
+      res.render("main");
+    }
+  });
+});
+
+// Admin Add Request Form for Clearance --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+app.post("/RequestClearanceForm", function (req, res) {
+  const result = "Pending"
+  const requestClearanceuser = new RequestClearance({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    age: req.body.age,
+    civilstatus: req.body.civilstatus,
+    purposeofreq: req.body.purposeofreq,
+    ctc: req.body.ctc,
+    request: result
+    
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestClearanceuser.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./page-admin/RequestClearanceForm")
+    } else {
+      res.redirect("adminportal");
+    }
+  });
+});
+
+
+//--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY  CLEARANCE Application Form
+app.get("/adminviewreqclearance/:id", (req,res, next ) =>{
+  const id = req.params.id;
+  RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+      if(err){
+        console.log("Can't retrieve data and edit because of some database problem.")
+        next(err);
+      } else {
+        res.render("./page-admin/adminviewreqclearance",  { users: users });
+      }
+      
+  });
+  
+  });
+
+app.post("/adminviewreqclearance/:id", (req,res, next ) =>{
+
+    RequestClearance.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+      if (err){
+        console.log("Something went wrong to update your data");
+        next(err);
+      }else{
+        res.redirect("/adminportal");
+  
+      }
+    })
+  });
+
+app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
+    const id = req.params.id;
+    RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          res.render("./page-admin/adminviewreqclearanceapproved",  { users: users });
+        }
+        
+    });
+    
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------------------------------------------------------------------REQUEST FOR ID FORM -- use for user
 app.post("/reqbrgyid-req", function (req, res) {
 
   const result = "Pending"
-  const requestIDuser = new RequestID({
+  const requestIDuser = new RequestBrgyId({
     fullname: req.body.fullname,
     address: req.body.address,
     email: req.body.email,
@@ -345,7 +666,7 @@ app.post("/reqbrgyid-req", function (req, res) {
 // Admin Add Request Form  --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 app.post("/RequestIdForm", function (req, res) {
   const result = "Pending"
-  const requestIDuser = new RequestID({
+  const requestIDuser = new RequestBrgyId({
     fullname: req.body.fullname,
     address: req.body.address,
     email: req.body.email,
@@ -376,21 +697,21 @@ app.post("/RequestIdForm", function (req, res) {
 //--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY ID Application Form
 app.get("/adminviewreqid/:id", (req,res, next ) =>{
   const id = req.params.id;
-    RequestID.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+  RequestBrgyId.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
       if(err){
         console.log("Can't retrieve data and edit because of some database problem.")
         next(err);
       } else {
         res.render("./page-admin/adminviewreqid",  { users: users });
       }
-      
+
   });
   
   });
 
   app.post("/adminviewreqid/:id", (req,res, next ) =>{
 
-    RequestID.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+    RequestBrgyId.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
       if (err){
         console.log("Something went wrong to update your data");
         next(err);
@@ -402,9 +723,70 @@ app.get("/adminviewreqid/:id", (req,res, next ) =>{
   });
 
 
-// CONTACT FORM
+  //--------ADMIN VIEW for APPROVED REQUEST FOR BRGY ID Application Form
+app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
+  const id = req.params.id;
+  RequestBrgyId.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+      if(err){
+        console.log("Can't retrieve data and edit because of some database problem.")
+        next(err);
+      } else {
+        res.render("./page-admin/adminviewreqidapproved",  { users: users });
+      }
+      
+  });
+  
+  });
+
+  // app.post("/adminviewreqidapproved/:id", (req,res, next ) =>{
+
+  //   RequestClearance.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+  //     if (err){
+  //       console.log("Something went wrong to update your data");
+  //       next(err);
+  //     }else{
+  //       res.redirect("/adminportal");
+  
+  //     }
+  //   })
+  // });
+  
+
+// //--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY ID Application Form
+// app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
+//   const id = req.params.id;
+//   RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+//       if(err){
+//         console.log("Can't retrieve data and edit because of some database problem.")
+//         next(err);
+//       } else {
+//         res.render("./page-admin/adminviewreqidapproved",  { users: users });
+//       }
+      
+//   });
+  
+  // });
+
+
+
+// app.post("/adminviewreqidapproved/:id", (req,res, next ) =>{
+//   const id = req.params.id;
+//   RequestBrgyId.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+//       if (err){
+//         console.log("Something went wrong to update your data");
+//         next(err);
+//       }else{
+//         res.redirect("/adminportal");
+  
+//       }
+//     })
+//   });
+
+
+
+// SUGGESTION FORM
 app.post("/contact-mail", function (req, res) {
-  const contactUser = new ContactForm({
+  const contactUser = new Suggestion({
     fullname: req.body.fullname,
     email: req.body.email,
     phone: req.body.phone,
