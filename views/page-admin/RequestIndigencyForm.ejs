@@ -1,20 +1,24 @@
-<%- include('../partials/header') %> <%- include('../partials/navbar') %>
+<%- include('../partials/header') %>  <%- include('../partials/navbaradmin') %> 
 
-<div class="news-container container-fluid">
+<div class="news-container container-fluid reqid-form-div">
   <div class="row row-news">
     <div class="col-lg-4 whats-happening px-0">
       <div class="box-fluid">
-        <h1 class="news-h1 req-h1">Request for Certification of Indigency</h1>
+        <h1 class="news-h1 req-h1">Request for Barangay Certification for Indigency</h1>
         >
-      
+        <!-- <p class="news-par"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In diam, habitant eget
+                        nunc, vel
+                        amet nulla malesuada. Hendrerit enim, convallis tellus arcu velit. Dolor pulvinar tempor duis
+                        ultrices sit
+                        elementum viverra proin.</p> -->
+        <!-- <a class="btn-with-news">Read More</a> -->
 
         <div class="req-list">
           <h4>REQUIREMENTS</h4>
           <ul>
             <li>Filled-out Application Form</li>
-            <li>Certificate of Residency</li>
             <li>Barangay ID Fee</li>
-            <li>Any Valid ID or PSA</li>
+            <li>Any Valid Id or PSA</li>
           </ul>
         </div>
       </div>
@@ -22,13 +26,12 @@
 
     <div class="col-lg-8 news-container">
       <div class="news-inside">
-        <form class="row g-3 req-row" action="/reqindigency-req" method="POST">
+        <form class="row g-3 req-row" action="/RequestIndigencyForm" method="POST">
           <div class="col-12 req-distance">
             <h5>Fill out this Application Form</h5>
             <i>
               Note: Please make sure that all of the informations are true.
             </i>
-            
             <label class="form-label"
               >Full Name <i> (Last Name, First Name, Middle Name) </i></label
             >
@@ -47,12 +50,12 @@
             <input type="text" class="req-input" name="phone" required/>
           </div>
           <div class="col-md-6 req-distance">
-            <label class="form-label"> Birthday <i style="font-size: 13px;"> (MM/DD/YYYY) </i>: </label>
-            <input type="text" class="req-input" name="birthday" required/>
+            <label class="form-label">Age</label>
+            <input type="text" class="req-input" name="age" required/>
           </div>
           <div class="col-md-6 req-distance">
-            <label class="form-label">Date Residing at BSI  <i style="font-size: 13px;"> (MM/DD/YYYY) </i>:</label>
-            <input type="text" class="req-input" name="datestarted" required/>
+            <label class="form-label">Civil Status</label>
+            <input type="text" class="req-input" name="civilstatus" required/>
           </div>
           <div class="col-12 req-distance">
             <label class="form-label">Purpose</label>
@@ -80,8 +83,6 @@
               id="exampleFormControlFile1" 
             />
           </div>
-         
-
           <div class="col-12 submit-center">
             <button type="submit" class="btn submit">
               Submit Application Form

@@ -8,7 +8,7 @@
       <button class="nav-link" id="nav-indigency-tab" data-bs-toggle="tab" data-bs-target="#nav-indigency" type="button" role="tab" 
       aria-controls="nav-indigency" aria-selected="false">Certificate for Indigency</button>
       
-      <button class="nav-link" id="nav-wiring-tab" data-bs-toggle="tab" data-bs-target="#nav-wiring" type="button" role="tab" aria-controls="nav-wiring" aria-selected="false"> Wiring Clearance</button>
+      <button class="nav-link" id="nav-wiring-tab" data-bs-toggle="tab" data-bs-target="#nav-wiring" type="button" role="tab" aria-controls="nav-wiring" aria-selected="false"> Wiring and Excavation Clearance</button>
      
     </div>
   </nav>
@@ -294,7 +294,7 @@
                                     <th scope="row"><a class="request-link" href="/adminviewbusinesspermitapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
                                   <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
                                     <i class="fa-solid fa-xmark"></i> </a> </td>
-                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="">
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
                                       <i class="fa-solid fa-paper-plane"></i></a> </td>
                                   </tr>
                                   <% }); %> 
@@ -317,19 +317,186 @@
                   </div>
                  
                  </div>
-
+          
 
 
     </div>
      <!-- ------------------- END OF BUSINESS CLEARANCE---------------------------- -->
       
     <!-- -------------------INDIGENCY--------------------------- -->
-    <div class="tab-pane fade" id="nav-indigency" role="tabpanel" aria-labelledby="nav-indigency-tab">Indigency</div>
+    <div class="tab-pane fade" id="nav-indigency" role="tabpanel" aria-labelledby="nav-indigency-tab">
+
+      <div class="container-tab">
+        <div class="tabw">
+            <div class="tabyqw active">Pending </div>
+            <div class="tabyqw">Approved</div>
+          
+        </div>
+
+        
+              <div class="contentxqw">
+                  <div class="content-itemxqw active">
+                          <div class="tableFixHead request-table">
+                                          
+                            <table class="table table-hover table-striped">
+                              <thead class="table-dark">
+                                  <!-- <th scope="col">#</th> -->
+                                  <th scope="col">Full Name</th>  
+                                  <!-- <th scope="col"> View </th> -->
+                                  <th scope="col"> Remove</th>
+                                  <th scope="col"> Approve </th>
+                                </tr>
+                              </thead>
+                              <tbody>      
+                              <% requestsIndigency.forEach(function(users){ %>
+                                <tr>
+                                  <th scope="row"><a class="request-link" href="/adminviewreqindigency/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                  <i class="fa-solid fa-xmark"></i> </a> </td>
+                                  <td style="width: 10px;text-align: center;"> <a class="td-link" href="/adminviewreqindigencyapproved/<%= users._id %>" >
+                                    <i class="fa-solid fa-check"></i></a> </td>
+                                </tr>
+                                <% }); %> 
+                                
+                              </tbody>
+                        </table>
+                        </div>
+                  </div>
+                 
+                          <div class="content-itemxqw"style="width: 500px">
+                            <div class="tableFixHead request-table">
+                                                  
+                              <table class="table table-hover table-striped">
+                                <thead class="table-dark">
+                                    <!-- <th scope="col">#</th> -->
+                                    <th scope="col">Full Name</th>  
+                                    <!-- <th scope="col"> View </th> -->
+                                    <th scope="col"> Remove </th>
+                                    <th scope="col" style="text-align: center;"> Send Request </th>
+                                  </tr>
+                                </thead>
+                                <tbody>      
+                                <% approvedIndigency.forEach(function(users){ %>
+                                  <tr>
+                                    <th scope="row"><a class="request-link" href="/adminviewreqindigencyapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                  <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                    <i class="fa-solid fa-xmark"></i> </a> </td>
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
+                                      <i class="fa-solid fa-paper-plane"></i></a> </td>
+                                  </tr>
+                                  <% }); %> 
+                                  
+                                </tbody>
+                          </table>
+                            </div>
+                            
+                          </div>
+                         
+                    </div>
+
+                  <div class="request-add-div">
+                    <button type="button" class="submit request-add" >
+                      <a style=" text-decoration: none;" class="a-link"  href="./RequestIndigencyForm" >
+                      Add Request</button></a>
+                    <button type="button" class="submit request-add"> <a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL request?');"  >
+                      Remove All</a></button>
+                   
+                  </div>
+                 
+                 </div>
+
+
+
+    </div>
     <!-- -------------------END OF INDIGENCY--------------------------- -->
   
-    
+
       <!-- -------------------WIRING CLEARANCE--------------------------- -->
-    <div class="tab-pane fade" id="nav-wiring" role="tabpanel" aria-labelledby="nav-wiring-tab">Wiring</div>
+    <div class="tab-pane fade" id="nav-wiring" role="tabpanel" aria-labelledby="nav-wiring-tab">
+
+      <div class="container-tab">
+        <div class="tabws">
+            <div class="tabyqws active">Pending </div>
+            <div class="tabyqws">Approved</div>
+          
+        </div>
+
+        
+              <div class="contentxqws">
+                  <div class="content-itemxqws active">
+                          <div class="tableFixHead request-table">
+                                          
+                            <table class="table table-hover table-striped">
+                              <thead class="table-dark">
+                                  <!-- <th scope="col">#</th> -->
+                                  <th scope="col">Full Name</th>  
+                                  <!-- <th scope="col"> View </th> -->
+                                  <th scope="col"> Remove</th>
+                                  <th scope="col"> Approve </th>
+                                </tr>
+                              </thead>
+                              <tbody>      
+                              <% requestsWirings.forEach(function(users){ %>
+                                <tr>
+                                  <th scope="row"><a class="request-link" href="/adminviewwirings/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                  <i class="fa-solid fa-xmark"></i> </a> </td>
+                                  <td style="width: 10px;text-align: center;"> <a class="td-link" href="/adminviewwiringsapproved/<%= users._id %>" >
+                                    <i class="fa-solid fa-check"></i></a> </td>
+                                </tr>
+                                <% }); %> 
+                                
+                              </tbody>
+                        </table>
+                        </div>
+                  </div>
+                 
+                          <div class="content-itemxqws"style="width: 500px">
+                            <div class="tableFixHead request-table">
+                                                  
+                              <table class="table table-hover table-striped">
+                                <thead class="table-dark">
+                                    <!-- <th scope="col">#</th> -->
+                                    <th scope="col">Full Name</th>  
+                                    <!-- <th scope="col"> View </th> -->
+                                    <th scope="col"> Remove </th>
+                                    <th scope="col" style="text-align: center;"> Send Request </th>
+                                  </tr>
+                                </thead>
+                                <tbody>      
+                                <% approvedWirings.forEach(function(users){ %>
+                                  <tr>
+                                    <th scope="row"><a class="request-link" href="/adminviewwiringsapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                  <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                    <i class="fa-solid fa-xmark"></i> </a> </td>
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
+                                      <i class="fa-solid fa-paper-plane"></i></a> </td>
+                                  </tr>
+                                  <% }); %> 
+                                  
+                                </tbody>
+                          </table>
+                            </div>
+                            
+                          </div>
+                         
+                    </div>
+
+                  <div class="request-add-div">
+                    <button type="button" class="submit request-add" >
+                      <a style=" text-decoration: none;" class="a-link"  href="./WiringandExcavationForm" >
+                      Add Request</button></a>
+                    <button type="button" class="submit request-add"> <a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL request?');"  >
+                      Remove All</a></button>
+                   
+                  </div>
+                 
+                 </div>
+
+
+
+
+    </div>
      <!-- -------------------END OF WIRING CLEARANCE--------------------------- -->
    
   </div>
@@ -407,4 +574,52 @@ function requestclearance(){
       }
 
    buildingpermit();
+
+   function Indigency(){ 
+    let tabw = document.querySelectorAll('.tabyqw');
+        let contentxqw = document.querySelectorAll('.content-itemxqw');
+        for (let i = 0; i < tabw.length; i++) {            
+            tabw[i].addEventListener('click', () => tabClick(i));
+        }
+
+        function tabClick(currentTab) {
+            removeActive();
+            tabw[currentTab].classList.add('active');
+            contentxqw[currentTab].classList.add('active');
+            console.log(currentTab);
+        }
+
+        function removeActive() {
+            for (let i = 0; i < tabw.length; i++) {
+                tabw[i].classList.remove('active');
+                contentxqw[i].classList.remove('active');
+            }
+        }
+      }
+
+   Indigency();
+   
+   function wirings(){ 
+    let tabws = document.querySelectorAll('.tabyqws');
+        let contentxqws = document.querySelectorAll('.content-itemxqws');
+        for (let i = 0; i < tabws.length; i++) {            
+            tabws[i].addEventListener('click', () => tabClick(i));
+        }
+
+        function tabClick(currentTab) {
+            removeActive();
+            tabws[currentTab].classList.add('active');
+            contentxqws[currentTab].classList.add('active');
+            console.log(currentTab);
+        }
+
+        function removeActive() {
+            for (let i = 0; i < tabws.length; i++) {
+                tabws[i].classList.remove('active');
+                contentxqws[i].classList.remove('active');
+            }
+        }
+      }
+
+   wirings();
 </script>

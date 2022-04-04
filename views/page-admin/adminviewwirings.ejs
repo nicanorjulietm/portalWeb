@@ -2,10 +2,10 @@
 
     <div class="news-container req-view-div">
               <div class="news-inside">
-                <form class="row g-3 req-row" action="/adminviewreqclearance/<%- users._id %>" method="POST">
+                <form class="row g-3 req-row" action="/adminviewwirings/<%- users._id %>" method="POST">
                   <div class="col-12 req-distance">
                     <div class="title-design" style="width: 100%;" >
-                        <h5>Request for Barangay Clearance </h5>
+                        <h5>Request for Certification for Indigency </h5>
                         <hr />
                       </div>
 
@@ -42,14 +42,7 @@
                     <label class="req-label">Phone</label>
                     <input type="text" class="req-view-input" name="phone" required value="<%- users.phone %>"/>
                   </div>
-                  <div class="col-md-6 req-distance">
-                    <label class="req-label">Age</label>
-                    <input type="text" class="req-view-input" name="age" required value="<%- users.age %>"/>
-                  </div>
-                  <div class="col-md-6 req-distance">
-                    <label class="req-label">Civil Status</label>
-                    <input type="text" class="req-view-input" name="civilstatus" required value="<%- users.civilstatus %>"/>
-                  </div>
+                  
                   <div class="col-12 req-distance">
                     <label class="req-label">Purpose</label>
                     <input type="text" class="req-view-input" name="purposeofreq" required value="<%- users.purposeofreq %>"/>

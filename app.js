@@ -103,7 +103,40 @@ const businesspermitSchema = {
 };
 const BusinessPermit = new mongoose.model("BusinessPermit", businesspermitSchema);
 
+const certificateofindigencySchema = {
+  dateapply:  {type: String, 
+  default: () => moment().format("MMMM Do YYYY") },
+  fullname: String,
+  address: String,
+  email: String,
+  phone: Number,
+  birthday: String,
+  datestarted: String,
+  purposeofreq: String,
+  ctc: String,
+  request: String
+  // imgfilefee: { data: Buffer, contentType: String },
+  // imgfileidorpsa: { data: Buffer, contentType: String },
+};
+const CertificateIndigency = new mongoose.model("CertificateIndigency", certificateofindigencySchema);
 
+
+const wiringandexcavationclearanceSchema = {
+  dateapply:  {type: String, 
+  default: () => moment().format("MMMM Do YYYY") },
+  fullname: String,
+  address: String,
+  email: String,
+  phone: Number,
+  birthday: String,
+  datestarted: String,
+  purposeofreq: String,
+  ctc: String,
+  request: String
+  // imgfilefee: { data: Buffer, contentType: String },
+  // imgfileidorpsa: { data: Buffer, contentType: String },
+};
+const WiringandExcavationClearance = new mongoose.model("WiringandExcavationClearance", wiringandexcavationclearanceSchema);
 
 
 app.get("/", function (req, res) {
@@ -126,12 +159,26 @@ app.get("/login", function (req, res) {
   app.get("/reqbrgyclearance", function (req, res) {
     res.render("./pages/reqbrgyclearance");
   });
+  app.get("/reqwiringsclearance", function (req, res) {
+    res.render("./pages/reqwiringsclearance");
+  });
+
   app.get("/businesspermit", function (req, res) {
     res.render("./pages/businesspermit");
   });
-
+  app.get("/reqindigency", function (req, res) {
+    res.render("./pages/reqindigency");
+  });
   app.get("/RequestIdForm", function (req, res) {
     res.render("./page-admin/RequestIdForm");
+  });
+  app.get("/RequestIndigencyForm", function (req, res) {
+    res.render("./page-admin/RequestIndigencyForm");
+  });
+
+  
+  app.get("/WiringandExcavationForm", function (req, res) {
+    res.render("./page-admin/WiringandExcavationForm");
   });
   app.get("/RequestClearanceForm", function (req, res) {
     res.render("./page-admin/RequestClearanceForm");
@@ -166,17 +213,21 @@ app.get("/login", function (req, res) {
   });
   
 app.get("/deleteinfo/:id", (req, res, next)=> {
-  BusinessPermit.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-    RequestClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-      RequestBrgyId.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-          Account.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
-            if(err){
-              console.log("Something went wrong");
-              next(err);
-            } else {
-              console.log("Delete Successfully");
-              res.redirect("/adminportal");
-            }
+  WiringandExcavationClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+    CertificateIndigency.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+      BusinessPermit.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+        RequestClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+          RequestBrgyId.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+              Account.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
+                if(err){
+                  console.log("Something went wrong");
+                  next(err);
+                } else {
+                  console.log("Delete Successfully");
+                  res.redirect("/adminportal");
+                }
+              });
+            });
           });
         });
       });
@@ -185,18 +236,26 @@ app.get("/deleteinfo/:id", (req, res, next)=> {
   
   
 app.get("/adminportal", function (req, res) {
-  BusinessPermit.find({request: 'Approved'}, function(err, approvedBusinessPermit){ 
-    BusinessPermit.find({request: 'Pending'}, function(err, requestsBusinessPermit){ 
-      RequestClearance.find({request: 'Approved'}, function(err, approvedClearances){
-        RequestClearance.find({request: 'Pending'}, function(err, requestsClearances){ 
-          RequestBrgyId.find({request: 'Approved'}, function(err, approvedIds){ 
-            RequestBrgyId.find({request: 'Pending'}, function(err, requestIds){ 
-              Account.find({}, function(err, allUser){
-                Account.find({ accountrole: 'citizen' }, function (err, usersUser) {
-                  Account.find({ accountrole: 'employee' }, function (err, usersEmployee) {
-                    Account.find({ accountrole: 'admin' }, function (err, usersAdmin) {
-                      res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
-                      , approvedBusinessPermit});
+  WiringandExcavationClearance.find({request: 'Approved'}, function(err, approvedWirings){ 
+    WiringandExcavationClearance.find({request: 'Pending'}, function(err, requestsWirings){ 
+      CertificateIndigency.find({request: 'Approved'}, function(err, approvedIndigency){ 
+        CertificateIndigency.find({request: 'Pending'}, function(err, requestsIndigency){ 
+          BusinessPermit.find({request: 'Approved'}, function(err, approvedBusinessPermit){ 
+            BusinessPermit.find({request: 'Pending'}, function(err, requestsBusinessPermit){ 
+              RequestClearance.find({request: 'Approved'}, function(err, approvedClearances){
+                RequestClearance.find({request: 'Pending'}, function(err, requestsClearances){ 
+                  RequestBrgyId.find({request: 'Approved'}, function(err, approvedIds){ 
+                    RequestBrgyId.find({request: 'Pending'}, function(err, requestIds){ 
+                      Account.find({}, function(err, allUser){
+                        Account.find({ accountrole: 'citizen' }, function (err, usersUser) {
+                          Account.find({ accountrole: 'employee' }, function (err, usersEmployee) {
+                            Account.find({ accountrole: 'admin' }, function (err, usersAdmin) {
+                              res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
+                              , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings});
+                            });
+                          });
+                        });
+                      });
                     });
                   });
                 });
@@ -208,6 +267,7 @@ app.get("/adminportal", function (req, res) {
     });
   });
 });
+
 
 // EDIT USER
 
@@ -249,6 +309,7 @@ app.post("/editinfo/:id", (req,res, next ) =>{
 // });
 
 app.get("/deleteinfo", (req, res, next)=> {
+  CertificateIndigency.deleteMany({}, (err, users)=>{
   BusinessPermit.deleteMany({}, (err, users)=>{
   RequestClearance.deleteMany({}, (err, users)=>{
   RequestBrgyId.deleteMany({}, (err, users)=>{
@@ -260,7 +321,7 @@ app.get("/deleteinfo", (req, res, next)=> {
       console.log("Delete Successfully");
       res.redirect("/adminportal");
     }
-  });});});});
+  });});});});});
 });
 
 
@@ -375,11 +436,225 @@ app.post("/createnewaccount", function (req, res) {
 // });
 
 
+// -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF WIRINGS-- use for user
+app.post("/reqwiringsclearance-req", function (req, res) {
+
+  const result = "Pending"
+  const requestWiring= new WiringandExcavationClearance({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    purposeofreq: req.body.purposeofreq,
+    ctc: req.body.ctc,
+    request: result
+    
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestWiring.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./pages/reqwiringsclearance")
+    } else {
+      res.render("main");
+    }
+  });
+});
+
+app.post("/WiringandExcavationForm", function (req, res) {
+
+  const result = "Pending"
+  const requestWiring= new WiringandExcavationClearance({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    purposeofreq: req.body.purposeofreq,
+    ctc: req.body.ctc,
+    request: result
+    
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestWiring.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./page-admin/WiringandExcavationForm")
+    } else {
+      res.redirect("adminportal");
+    }
+  });
+});
+
+
+app.get("/adminviewwirings/:id", (req,res, next ) =>{
+  const id = req.params.id;
+  WiringandExcavationClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+      if(err){
+        console.log("Can't retrieve data and edit because of some database problem.")
+        next(err);
+      } else {
+        res.render("./page-admin/adminviewwirings",  { users: users });
+      }
+      
+  });
+  
+  });
+
+app.post("/adminviewwirings/:id", (req,res, next ) =>{
+
+    WiringandExcavationClearance.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+      if (err){
+        console.log("Something went wrong to update your data");
+        next(err);
+      }else{
+        res.redirect("/adminportal");
+  
+      }
+    })
+  });
+
+
+  app.get("/adminviewwiringsapproved/:id", (req,res, next ) =>{
+    const id = req.params.id;
+    WiringandExcavationClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          res.render("./page-admin/adminviewwiringsapproved",  { users: users });
+        }
+        
+    });
+    
+    });
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF INDIGENCY-- use for user
+app.post("/reqindigency-req", function (req, res) {
+
+  const result = "Pending"
+  const requestIndigency= new CertificateIndigency({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    birthday: req.body.birthday,
+    datestarted: req.body.datestarted,
+    purposeofreq: req.body.purposeofreq,
+    ctc: req.body.ctc,
+    request: result
+    
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestIndigency.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./pages/reqindigency")
+    } else {
+      res.render("main");
+    }
+  });
+});
+
+
+// Admin Add Request Form for Certificate for Indigency--- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+app.post("/RequestIndigencyForm", function (req, res) {
+
+  const result = "Pending"
+  const requestIndigency = new CertificateIndigency({
+    fullname: req.body.fullname,
+    address: req.body.address,
+    email: req.body.email,
+    phone: req.body.phone,
+    birthday: req.body.birthday,
+    datestarted: req.body.datestarted,
+    purposeofreq: req.body.purposeofreq,
+    ctc: req.body.ctc,
+    request: result
+    // imgfilefee: req.body.imgfilefee,
+    // contentType: 'img/png',
+    // imgfileidorpsa: req.body.imgfileidorpsa,
+    // contentType: 'img/png'
+  });
+
+  requestIndigency.save(function (err) {
+    if (err) {
+      console.log(err);
+      res.redirect("./page-admin/RequestIndigencyForm")
+    } else {
+      res.redirect("adminportal");
+    }
+  });
+});
+
+
+app.get("/adminviewreqindigency/:id", (req,res, next ) =>{
+  const id = req.params.id;
+  CertificateIndigency.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+      if(err){
+        console.log("Can't retrieve data and edit because of some database problem.")
+        next(err);
+      } else {
+        res.render("./page-admin/adminviewreqindigency",  { users: users });
+      }
+      
+  });
+  
+  });
+
+app.post("/adminviewreqindigency/:id", (req,res, next ) =>{
+
+    CertificateIndigency.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+      if (err){
+        console.log("Something went wrong to update your data");
+        next(err);
+      }else{
+        res.redirect("/adminportal");
+  
+      }
+    })
+  });
+
+
+  app.get("/adminviewreqindigencyapproved/:id", (req,res, next ) =>{
+    const id = req.params.id;
+    CertificateIndigency.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          res.render("./page-admin/adminviewreqindigencyapproved",  { users: users });
+        }
+        
+    });
+    
+    });
 
 
 
@@ -496,6 +771,10 @@ app.post("/adminviewbusinesspermit/:id", (req,res, next ) =>{
 //       }
 //     })
 //   });
+
+
+
+
 
 
 // ------------------------------------------------------------------------------------------REQUEST FOR BRGY CLEARANCE FORM -- use for user
