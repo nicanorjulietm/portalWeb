@@ -23,7 +23,7 @@
               
             </div>
 
-          
+            
                   <div class="content">
                       <div class="content-item active">
                               <div class="tableFixHead request-table">
@@ -33,7 +33,7 @@
                                       <!-- <th scope="col">#</th> -->
                                       <th scope="col">Full Name</th>  
                                       <!-- <th scope="col"> View </th> -->
-                                      <th scope="col"> Delete </th>
+                                      <th scope="col"> Remove</th>
                                       <th scope="col"> Approve </th>
                                     </tr>
                                   </thead>
@@ -52,22 +52,50 @@
                             </table>
                             </div>
                       </div>
-                      <div class="content-item">
-                          Content 2
-                      </div>
+                     
+                              <div class="content-item"style="width: 500px">
+                                <div class="tableFixHead request-table">
+                                                      
+                                  <table class="table table-hover table-striped">
+                                    <thead class="table-dark">
+                                        <!-- <th scope="col">#</th> -->
+                                        <th scope="col">Full Name</th>  
+                                        <!-- <th scope="col"> View </th> -->
+                                        <th scope="col"> Remove </th>
+                                        <th scope="col" style="text-align: center;"> Send Request </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>      
+                                    <% approvedIds.forEach(function(users){ %>
+                                      <tr>
+                                        <th scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                                        <i class="fa-solid fa-xmark"></i> </a> </td>
+                                        <td style="width: 10px;text-align: center;"> <a class="td-link" href="#" >
+                                          <i class="fa-solid fa-paper-plane"></i></a> </td>
+                                      </tr>
+                                      <% }); %> 
+                                      
+                                    </tbody>
+                              </table>
+                                </div>
+                                
+                              </div>
+                             
+                        </div>
 
                       <div class="request-add-div">
                         <button type="button" class="submit request-add" >
                           <a style=" text-decoration: none;" class="a-link"  href="./RequestIdForm" >
                           Add Request</button></a>
                         <button type="button" class="submit request-add"> <a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL request?');"  >
-                          Delete All</a></button>
+                          Remove All</a></button>
                        
                       </div>
                      
-
-                    
-                    </div>
+                     </div>
+                
+            
           </div>
     </div>
     

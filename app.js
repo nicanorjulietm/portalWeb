@@ -10,6 +10,7 @@ const moment = require ("moment");
 const res = require("express/lib/response");
 const { redirect } = require("express/lib/response");
 const { features } = require("process");
+const { PerformanceNodeTiming } = require("perf_hooks");
 
 // const { authenticate } = require("passport/lib");
 
@@ -63,6 +64,7 @@ const requseridSchema = {
   civilstatus: String,
   purposeofreq: String,
   ctc: String,
+  request: String
   // imgfilefee: { data: Buffer, contentType: String },
   // imgfileidorpsa: { data: Buffer, contentType: String },
 };
@@ -131,13 +133,14 @@ app.get("/deleteinfo/:id", (req, res, next)=> {
   
 app.get("/adminportal", function (req, res) {
 
-
-  RequestID.find({}, function(err, requestIds){ 
-    User.find({}, function(err, allUser){
-      User.find({ accountrole: 'citizen' }, function (err, usersUser) {
-        User.find({ accountrole: 'employee' }, function (err, usersEmployee) {
-          User.find({ accountrole: 'admin' }, function (err, usersAdmin) {
-            res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds});
+  RequestID.find({request: 'Approved'}, function(err, approvedIds){ 
+    RequestID.find({request: 'Pending'}, function(err, requestIds){ 
+      User.find({}, function(err, allUser){
+        User.find({ accountrole: 'citizen' }, function (err, usersUser) {
+          User.find({ accountrole: 'employee' }, function (err, usersEmployee) {
+            User.find({ accountrole: 'admin' }, function (err, usersAdmin) {
+              res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds});
+            });
           });
         });
       });
@@ -308,18 +311,20 @@ app.post("/createnewaccount", function (req, res) {
 // });
 
 
-// REQUEST FOR ID FORM
+// REQUEST FOR ID FORM -- use for user
 app.post("/reqbrgyid-req", function (req, res) {
 
+  const result = "Pending"
   const requestIDuser = new RequestID({
     fullname: req.body.fullname,
     address: req.body.address,
     email: req.body.email,
     phone: req.body.phone,
     age: req.body.age,
-    civil: req.body.civilstatus,
+    civilstatus: req.body.civilstatus,
     purposeofreq: req.body.purposeofreq,
     ctc: req.body.ctc,
+    request: result
     
     // imgfilefee: req.body.imgfilefee,
     // contentType: 'img/png',
@@ -337,18 +342,19 @@ app.post("/reqbrgyid-req", function (req, res) {
   });
 });
 
-// Admin Add Request Form!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Admin Add Request Form  --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 app.post("/RequestIdForm", function (req, res) {
-
+  const result = "Pending"
   const requestIDuser = new RequestID({
     fullname: req.body.fullname,
     address: req.body.address,
     email: req.body.email,
     phone: req.body.phone,
     age: req.body.age,
-    civil: req.body.civilstatus,
+    civilstatus: req.body.civilstatus,
     purposeofreq: req.body.purposeofreq,
     ctc: req.body.ctc,
+    request: result
     
     // imgfilefee: req.body.imgfilefee,
     // contentType: 'img/png',
@@ -381,7 +387,19 @@ app.get("/adminviewreqid/:id", (req,res, next ) =>{
   });
   
   });
+
+  app.post("/adminviewreqid/:id", (req,res, next ) =>{
+
+    RequestID.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+      if (err){
+        console.log("Something went wrong to update your data");
+        next(err);
+      }else{
+        res.redirect("/adminportal");
   
+      }
+    })
+  });
 
 
 // CONTACT FORM

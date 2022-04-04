@@ -10,8 +10,16 @@
               </div>
 
               <div class="date-req " style="text-align: right;">
-              <label class="req-label"> Date Applied : <%- users.dateapply %> </label> 
+              <label class="req-label"> <b>Date Applied : </b><%- users.dateapply %> </label>  <br>
+              <label class="req-label"><b> Request : </b> </label> 
+              <select class="custom-select my-1 mr-sm-2" name="request" value="<%- users.request %>" style="width: 100px">
+                <!-- <option selected></option> -->
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+               
+              </select>
             </div>
+           
             <h5>Fill out this Application Form</h5>
             <i class="req-note" style="font-size: 15px; color: red">
               Note: Please make sure that all of the informations are true.
@@ -72,9 +80,12 @@
           </div>
          
 
-          <div class="col-12 submit-center ">
-            <button type="submit" class="btn submit " style="width: 100%;">
+          <div class="col-12 submit-center req-btns " style="text-align: center;">
+            <button type="submit" class="btn submit  " style="width: 230px;">
               Save Application Form
+            </button>
+            <button type="submit" class="btn submit  " style="width: 230px;">
+              Approved Application Form
             </button>
           </div>
         </form>
@@ -106,7 +117,7 @@ body {
 .req-view-div{
     width: 500px;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 20px;
     line-height: 0.9;
 }
 
