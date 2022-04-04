@@ -141,6 +141,9 @@ const WiringandExcavationClearance = new mongoose.model("WiringandExcavationClea
 
 app.get("/", function (req, res) {
 res.render("main");
+
+
+
 });
 app.get("/login", function (req, res) {
   res.render("login");
@@ -236,6 +239,8 @@ app.get("/deleteinfo/:id", (req, res, next)=> {
   
   
 app.get("/adminportal", function (req, res) {
+  const query = Account.find();  query.count(function (err, countAccounts) {
+  const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
   WiringandExcavationClearance.find({request: 'Approved'}, function(err, approvedWirings){ 
     WiringandExcavationClearance.find({request: 'Pending'}, function(err, requestsWirings){ 
       CertificateIndigency.find({request: 'Approved'}, function(err, approvedIndigency){ 
@@ -251,7 +256,7 @@ app.get("/adminportal", function (req, res) {
                           Account.find({ accountrole: 'employee' }, function (err, usersEmployee) {
                             Account.find({ accountrole: 'admin' }, function (err, usersAdmin) {
                               res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
-                              , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings});
+                              , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts, countSuggestions });
                             });
                           });
                         });
@@ -266,6 +271,9 @@ app.get("/adminportal", function (req, res) {
       });
     });
   });
+});
+  
+});
 });
 
 
@@ -310,17 +318,17 @@ app.post("/editinfo/:id", (req,res, next ) =>{
 
 app.get("/deleteinfo", (req, res, next)=> {
   CertificateIndigency.deleteMany({}, (err, users)=>{
-  BusinessPermit.deleteMany({}, (err, users)=>{
-  RequestClearance.deleteMany({}, (err, users)=>{
-  RequestBrgyId.deleteMany({}, (err, users)=>{
-  Account.deleteMany({accountrole: "citizen"}, (err, users)=>{
-    if(err){
-      console.log("Something went wrong");
-      next(err);
-    } else {
-      console.log("Delete Successfully");
-      res.redirect("/adminportal");
-    }
+    BusinessPermit.deleteMany({}, (err, users)=>{
+      RequestClearance.deleteMany({}, (err, users)=>{
+        RequestBrgyId.deleteMany({}, (err, users)=>{
+          Account.deleteMany({accountrole: "citizen"}, (err, users)=>{
+            if(err){
+              console.log("Something went wrong");
+              next(err);
+            } else {
+              console.log("Delete Successfully");
+              res.redirect("/adminportal");
+            }
   });});});});});
 });
 
@@ -381,6 +389,7 @@ app.post("/registeraccount", function (req, res) {
 
   });
 });
+
 
 
 //ADMIN PERKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
