@@ -56,7 +56,7 @@
                     aria-controls="v-pills-projects"
                     aria-selected="false"
                   >
-                    Projects
+                    Blotter Records
                   </button>
                  
                   <button
@@ -82,15 +82,15 @@
                   aria-controls="v-pills-backuprecords"
                   aria-selected="false"
                 >
-                  Records
+                  History Records
                 </button>
           </div>
-
+ 
           <!-- --------SIDEBAR MENUS ----------- -->
 
       <div class="tab-content" id="v-pills-tabContent">
               <!-- --------ORIGINAL MENUS ----------- -->
-                  <nav class="navbar navbar-expand-lg navbar-light">
+                  <nav class="navbar navbar-expand-lg navbar-light" style="padding: 0;">
                     <div class="container">
                       <button
                         class="navbar-toggler"
@@ -106,11 +106,11 @@
                       <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                         <ul class="navbar-nav">
-                          <li class="nav-item navbar-distance signout-distance">
+                          <li class="nav-item navbar-distance signout-distance" style="padding: 7px;">
                             <a class="nav-link" href="/logout" >Sign out</a>
                           </li>
                           
-                          <li class="nav-item navbar-distance">
+                          <li class="nav-item navbar-distance" style="padding: 7px;">
                            <a class="nav-link nav-border-without" href="/adminportal" > <i class="fa-solid fa-user fa-1x"></i> Hi! Admin </a>
                 
                           </li>
@@ -142,7 +142,7 @@
                                 <div class="card">
                                   <div class="card-body">
                                     <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i> <%= countAccounts %> </h2>
+                                      <h2><i class="fa-solid fa-user fa-1x"></i>    <%= countAccounts %> </h2>
                                       <h5 class="card-title">Users</h5>
                                     </div>
                                   </div>
@@ -152,7 +152,7 @@
                                 <div class="card">
                                   <div class="card-body">
                                     <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i> <%= countSuggestions %> </h2>
+                                      <h2><i class="fa-solid fa-user fa-1x"></i>    <%= countSuggestions %> </h2>
                                       <h5 class="card-title">Suggestions</h5>
                                     </div>
                                   </div>
@@ -162,8 +162,8 @@
                                 <div class="card">
                                   <div class="card-body">
                                     <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i> 140</h2>
-                                      <h5 class="card-title">Request</h5>
+                                      <h2><i class="fa-solid fa-user fa-1x"></i>    <%= countBlotter %></h2>
+                                      <h5 class="card-title">Blotter</h5>
                                     </div>
                                   </div>
                                 </div>
@@ -196,6 +196,7 @@
                     role="tabpanel"
                     aria-labelledby="v-pills-profile-tab"
                   >
+                 
                       <div class="container">
                           <ul class="nav nav-tabs justify-content-center divhome-tab" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -427,7 +428,7 @@
                   role="tabpanel"
                   aria-labelledby="v-pills-projects-tab"
                 >
-                  projects
+                <%- include('../page-admin/Blotter') %>
                 </div>
                  <!-- --------------END OF PROJECT  (SIDEBAR)------------- -->
 
@@ -438,7 +439,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-suggestions-tab"
               >
-                Suggestion
+              <%- include('../page-admin/Suggestions') %>
               </div>
                <!-- --------------END OF SUGGESTIONS  (SIDEBAR)------------- -->
 

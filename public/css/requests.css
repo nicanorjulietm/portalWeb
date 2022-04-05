@@ -367,3 +367,27 @@
     display: flex;
     /* justify-content: center; */
 }
+
+
+/* 
+--------SUGGESTIONS--------- */
+
+
+.suggestions-div{
+   margin: 0 auto;
+   height: 550px;
+   overflow-y: scroll;
+   
+   
+}
+.suggestions-content{
+    background-color: white;
+    padding: 10px;
+    /* margin: 5px; */
+    width: 30%;
+    margin: 5px auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}   
+
+
+

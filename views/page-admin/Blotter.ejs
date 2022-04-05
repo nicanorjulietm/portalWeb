@@ -1,0 +1,262 @@
+<div class="title-design"style="width: 100%; padding: 0;margin: 0;">
+    <h5 style="padding: 0;">Blotter Records</h5>
+  
+  </div>
+  <nav>
+      
+        <div class="nav nav-tabs justify-content-center div-tab" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-allrecord-tab" data-bs-toggle="tab" data-bs-target="#nav-allrecord" type="button" role="tab" 
+            aria-controls="nav-allrecord" aria-selected="true">All Records</button>
+            <button class="nav-link" id="nav-ongoing-tab" data-bs-toggle="tab" data-bs-target="#nav-ongoing" type="button" role="tab" 
+            aria-controls="nav-ongoing" aria-selected="false"> On-Going</button>
+            <button class="nav-link" id="nav-finished-tab" data-bs-toggle="tab" data-bs-target="#nav-finished" type="button" role="tab" 
+            aria-controls="nav-finished" aria-selected="false"> Finished</button>
+       
+      </div>
+    </nav>
+    <div class="tab-content request-tab" id="nav-tabContent" >
+      
+                <!-- -------------------BRGY ID---------------------------- -->
+                <div class="tab-pane fade show active" id="nav-allrecord" role="tabpanel" aria-labelledby="nav-allrecord-tab">
+                    <div class="container-for-allusers"> 
+       
+                        <div class="btn-add"> 
+                          <button
+                                type="button"
+                                class="btn addbtn submit" data-modal="modal-12" 
+                              ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                                Add Blotter</a>
+                              </button>
+              
+                            
+                            <button
+                              type="button"
+                              class="btn addbtn submit"
+                            ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL citizens users?');"  >
+                              Delete All</a>
+                            </button>
+                           
+                        </div>
+              
+                          <!-- ============MODAL================ -->
+                        <div class="ms-modal md-effect-12 md-content-div" >
+                          <div class="ms-content damn-md">
+                         
+                            <div class="wrapper-1 ">
+                              <div class="wrapper-2 md-send-request" >
+                               <div style="text-align: right; padding: 5px 20px; cursor: pointer;"> <i class="fa-solid fa-xmark fa-1x ms-close"></i>  </div> 
+                                      <div class="title-design" style="width: 100%; padding-bottom: 0;">
+                                          <h5 style="text-align: center; padding-left: 10px; padding-bottom: 0;"> Blotter Form </h5>
+                                          
+                                          <hr style="padding: 0" />
+                                      </div>
+                                      
+                        
+                                      <div class="news-inside blotter-side">
+                                          <form class="row g-3 req-row blotter-w" action="/blotter" method="POST">
+                                            <div class="col-12 req-distance">
+                                              
+                          
+                                                <div class="date-req " style="text-align: right;">
+                                                <label class="req-label"> <b>Date : <input style="width: 100px;" name="daterecorded" placeholder="MM/DD/YYYY" /> </b> </label>  <br>
+                                                <label class="req-label"><b> Request : </b> </label> 
+                                                <select class="custom-select my-1 mr-sm-2" name="request" style="width: 100px">
+                                                  <!-- <option selected></option> -->
+                                                  <option value="Pending">On-going</option>
+                                                  <option value="Approved">Finished</option>
+                                                
+                                                </select>
+                                              </div>      
+                                              <label class="req-label" style="margin-top: 7px;"
+                                                >Full Name of Complainant<i style="font-size: 13px;"> (Last Name, First Name, Middle Name) </i></label
+                                              >
+                                              <input type="text" class="req-view-input" name="fullnamecomplainant" required />
+                                            </div>                          
+                                            <div class="col-md-6 req-distance">
+                                              <label class="req-label">Email</label>
+                                              <input type="email" class="req-view-input" name="email"style="width: 100%;" required />
+                                            </div>
+                                            <div class="col-md-6 req-distance">
+                                              <label class="req-label">Phone</label>
+                                              <input type="text" class="req-view-input" name="phone" style="width: 100%;" required />
+                                            </div>
+                                            <div class="col-md-12 req-distance">
+                                            <label class="req-label">Full Name of Defendant :</label>
+                                              <input type="text" class="req-view-input" style="width: 100%;" name="fullnamedefendant" required />
+                                            </div>
+                                            <div class="col-12 req-distance">
+                                              <label class="req-label">Address where Incident happened :</label>
+                                              <input type="text" class="req-view-input" name="address" required />
+                                            </div>
+                                            
+                                              <div class="col-md-6 req-distance">
+                                                  <label class="req-label">Date :</label>
+                                                  <input type="text" class="req-view-input" placeholder="MM/DD/YYYY" name="date"style="width: 100%;" required />
+                                                </div>
+                                                <div class="col-md-6 req-distance">
+                                                  <label class="req-label">Time :</label>
+                                                  <input type="text" class="req-view-input" placeholder="HH:MM AM" name="time" style="width: 100%;" required />
+                                                </div>
+                                                <div class="col-12 req-distance">
+                                              <label class="form-label">Incidents/Events</label> <br>
+                                              <input type="text" class="req-input"style="width: 100%;"  name="incident" required  />
+                                            </div>
+                                            
+                                          
+                          
+                                            <div class="col-12 submit-center req-btns " style="text-align: center;">
+                                              <button type="submit" class="btn submit  " style="width: 230px;">
+                                                Save Blotter Form
+                                              </button>
+                                              
+                                            </div>
+                                          </form>
+                                        </div>
+                                      
+                                      
+                               
+                                          
+                              </div>     
+                            </div>
+                              </div>
+                              </div> 
+                              <!-- ============MODAL================ -->
+                   
+              
+                        
+                          <!-- =========MODAL FOR ADDUSER============= -->
+                          
+                         
+                           <div class="tableFixHead">
+                         
+                             
+                             <table class="table table-hover citizen-table">
+                               <thead class="table-dark">
+                                   <!-- <th scope="col">#</th> -->
+                                   <th scope="col">Date Recorded: </th>
+                                  
+                                   <th scope="col">Complainant</th>
+                                   <th scope="col">Defendant</th>
+                                   <th scope="col">Request</th>
+                                   <th scope="col"></th>
+                                   <th scope="col"></th>
+                                 </tr>
+                               </thead>
+                               <tbody>
+                                
+                               <% blotters.forEach(function(users){ %>
+                                 <tr>
+                                   <th scope="row"><%= users.daterecorded %></th>
+                                   
+                                   <td><%= users.fullnamecomplainant %></td>
+                                   <td><%= users.fullnamedefendant %></td>
+                                   <td><%= users.request %></td>
+                                   <td> <a class="td-link"  href="/adminsviewblotter/<%= users._id %>" >
+                                     Edit
+                                   </a> </td>
+                                   <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullnamecomplainant %> complaint?');"  >
+                                     
+                                  Delete </a> </td>
+                                 </tr>
+                                 <% }); %> 
+                                 
+                               </tbody>
+                          </table>
+                          </div>
+                      </div>
+                </div> 
+            
+            
+                <!-- ------------------- END OF BRGY ID---------------------------- -->
+
+            
+                <!-- -------------------BRGY CLEARANCE---------------------------- -->
+                <div class="tab-pane fade" id="nav-ongoing" role="tabpanel" aria-labelledby="nav-ongoing-tab">
+                    <div class="tableFixHead">
+           
+               
+                        <table class="table table-hover citizen-table">
+                          <thead class="table-dark">
+                              <!-- <th scope="col">#</th> -->
+                              <th scope="col">Date Recorded: </th>
+                             
+                              <th scope="col">Complainant</th>
+                              <th scope="col">Defendant</th>
+                              <th scope="col">Request</th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                           
+                          <% blottersOngoing.forEach(function(users){ %>
+                            <tr>
+                              <th scope="row"><%= users.daterecorded %></th>
+                              
+                              <td><%= users.fullnamecomplainant %></td>
+                              <td><%= users.fullnamedefendant %></td>
+                              <td><%= users.request %></td>
+                              <td> <a class="td-link"  href="/adminsviewblotter/<%= users._id %>" >
+                                Edit
+                              </a> </td>
+                              <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullnamecomplainant %> complaint?');"  >
+                                
+                             Delete </a> </td>
+                            </tr>
+                            <% }); %> 
+                            
+                          </tbody>
+                     </table>
+                    </div>
+
+                </div>
+                <!-- -------------------END OF BRGY CLEARANCE---------------------------- -->
+            
+                
+                <!-- -------------------BUSINESS PERMIT---------------------------- -->
+                <div class="tab-pane fade" id="nav-finished" role="tabpanel" aria-labelledby="nav-finished-tab">
+                    <div class="tableFixHead">
+           
+               
+                        <table class="table table-hover citizen-table">
+                          <thead class="table-dark">
+                              <!-- <th scope="col">#</th> -->
+                              <th scope="col">Date Recorded: </th>
+                             
+                              <th scope="col">Complainant</th>
+                              <th scope="col">Defendant</th>
+                              <th scope="col">Request</th>
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                           
+                          <% blottersFinished.forEach(function(users){ %>
+                            <tr>
+                              <th scope="row"><%= users.daterecorded %></th>
+                              
+                              <td><%= users.fullnamecomplainant %></td>
+                              <td><%= users.fullnamedefendant %></td>
+                              <td><%= users.request %></td>
+                              <td> <a class="td-link"  href="/adminsviewblotter/<%= users._id %>" >
+                                Edit
+                              </a> </td>
+                              <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullnamecomplainant %> complaint?');"  >
+                                
+                             Delete </a> </td>
+                            </tr>
+                            <% }); %> 
+                            
+                          </tbody>
+                     </table>
+                    </div>
+
+            
+                </div>
+                <!-- ------------------- END OF BUSINESS CLEARANCE---------------------------- -->
+        
+     
+     
+    </div>
+  

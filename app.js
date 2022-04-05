@@ -1,5 +1,6 @@
 //jshint esversion:6
 //my nodejs starter pack
+
 const express = require("express");
 // const request = require("request")
 const https = require("https");
@@ -11,6 +12,7 @@ const res = require("express/lib/response");
 const { redirect } = require("express/lib/response");
 const { features } = require("process");
 const { PerformanceNodeTiming } = require("perf_hooks");
+
 
 // const { authenticate } = require("passport/lib");
 
@@ -29,20 +31,39 @@ app.set("view engine", "ejs");
 // app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, './views/pages/')]);
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//TODO
+
+
 mongoose.connect("mongodb://localhost:27017/barangayportalDB", {
   useNewUrlParser: true,
 });
 
+
+
 const useraccountsSchema = {
+  
   firstname: String,
   lastname: String,
   email: String,
   password: String,
   conpassword: String,
   accountrole: String,
+
 };
 const Account = new mongoose.model("Account", useraccountsSchema);
+const BackUpAccount = new mongoose.model("BackUpAccount", useraccountsSchema);
+// const backupaccountSchema = {
+//   firstname: String,
+//   lastname: String,
+//   email: String,
+//   password: String,
+//   conpassword: String,
+//   accountrole: String,
+
+// };
+
+
+
+
 
 
 const suggestionsSchema = {
@@ -53,6 +74,8 @@ const suggestionsSchema = {
   text: String,
 };
 const Suggestion = new mongoose.model("Suggestion", suggestionsSchema);
+const BackUpSuggestion = new mongoose.model("BackUpSuggestion", suggestionsSchema);
+
 
 const requestforbrgyidSchema = {
   dateapply:  {type: String, 
@@ -70,6 +93,7 @@ const requestforbrgyidSchema = {
   // imgfileidorpsa: { data: Buffer, contentType: String },
 };
 const RequestBrgyId = new mongoose.model("RequestBrgyId", requestforbrgyidSchema);
+const BackUpRequestBrgyId = new mongoose.model("BackUpRequestBrgyId", requestforbrgyidSchema);
 
 const requestforbrgyclearanceSchema = {
   dateapply:  {type: String, 
@@ -87,6 +111,7 @@ const requestforbrgyclearanceSchema = {
   // imgfileidorpsa: { data: Buffer, contentType: String },
 };
 const RequestClearance = new mongoose.model("RequestClearance", requestforbrgyclearanceSchema);
+const BackUpRequestClearance = new mongoose.model("BackUpRequestClearance", requestforbrgyclearanceSchema);
 
 const businesspermitSchema = {
   dateapply:  {type: String, 
@@ -102,6 +127,7 @@ const businesspermitSchema = {
   // imgfileidorpsa: { data: Buffer, contentType: String },
 };
 const BusinessPermit = new mongoose.model("BusinessPermit", businesspermitSchema);
+const BackUpBusinessPermit = new mongoose.model("BackUpBusinessPermit", businesspermitSchema);
 
 const certificateofindigencySchema = {
   dateapply:  {type: String, 
@@ -119,7 +145,7 @@ const certificateofindigencySchema = {
   // imgfileidorpsa: { data: Buffer, contentType: String },
 };
 const CertificateIndigency = new mongoose.model("CertificateIndigency", certificateofindigencySchema);
-
+const BackUpCertificateIndigency = new mongoose.model("BackUpCertificateIndigency", certificateofindigencySchema);
 
 const wiringandexcavationclearanceSchema = {
   dateapply:  {type: String, 
@@ -137,10 +163,27 @@ const wiringandexcavationclearanceSchema = {
   // imgfileidorpsa: { data: Buffer, contentType: String },
 };
 const WiringandExcavationClearance = new mongoose.model("WiringandExcavationClearance", wiringandexcavationclearanceSchema);
+const BackUpWiringandExcavationClearance = new mongoose.model("BackUpWiringandExcavationClearance", wiringandexcavationclearanceSchema);
 
+
+const blotterSchema ={
+daterecorded: String,
+fullnamecomplainant: String,
+email: String,
+phone: String,
+fullnamedefendant: String,
+address: String,
+date: String,
+time: String,
+incident: String,
+request: String,
+};
+const Blotter = new mongoose.model("Blotter", blotterSchema);
+const BackUpBlotter = new mongoose.model("BackUpBlotter", blotterSchema);
 
 app.get("/", function (req, res) {
 res.render("main");
+
 
 
 
@@ -175,6 +218,7 @@ app.get("/login", function (req, res) {
   app.get("/RequestIdForm", function (req, res) {
     res.render("./page-admin/RequestIdForm");
   });
+
   app.get("/RequestIndigencyForm", function (req, res) {
     res.render("./page-admin/RequestIndigencyForm");
   });
@@ -216,53 +260,21 @@ app.get("/login", function (req, res) {
   });
   
 app.get("/deleteinfo/:id", (req, res, next)=> {
-  WiringandExcavationClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-    CertificateIndigency.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-      BusinessPermit.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-        RequestClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-          RequestBrgyId.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-              Account.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
-                if(err){
-                  console.log("Something went wrong");
-                  next(err);
-                } else {
-                  console.log("Delete Successfully");
-                  res.redirect("/adminportal");
-                }
-              });
-            });
-          });
-        });
-      });
-    });
-});
-  
-  
-app.get("/adminportal", function (req, res) {
-  const query = Account.find();  query.count(function (err, countAccounts) {
-  const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
-  WiringandExcavationClearance.find({request: 'Approved'}, function(err, approvedWirings){ 
-    WiringandExcavationClearance.find({request: 'Pending'}, function(err, requestsWirings){ 
-      CertificateIndigency.find({request: 'Approved'}, function(err, approvedIndigency){ 
-        CertificateIndigency.find({request: 'Pending'}, function(err, requestsIndigency){ 
-          BusinessPermit.find({request: 'Approved'}, function(err, approvedBusinessPermit){ 
-            BusinessPermit.find({request: 'Pending'}, function(err, requestsBusinessPermit){ 
-              RequestClearance.find({request: 'Approved'}, function(err, approvedClearances){
-                RequestClearance.find({request: 'Pending'}, function(err, requestsClearances){ 
-                  RequestBrgyId.find({request: 'Approved'}, function(err, approvedIds){ 
-                    RequestBrgyId.find({request: 'Pending'}, function(err, requestIds){ 
-                      Account.find({}, function(err, allUser){
-                        Account.find({ accountrole: 'citizen' }, function (err, usersUser) {
-                          Account.find({ accountrole: 'employee' }, function (err, usersEmployee) {
-                            Account.find({ accountrole: 'admin' }, function (err, usersAdmin) {
-                              res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
-                              , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts, countSuggestions });
-                            });
-                          });
-                        });
-                      });
-                    });
-                  });
+  Blotter.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+    Suggestion.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+    WiringandExcavationClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+      CertificateIndigency.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+        BusinessPermit.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+          RequestClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+            RequestBrgyId.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                Account.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
+                  if(err){
+                    console.log("Something went wrong");
+                    next(err);
+                  } else {
+                    console.log("Delete Successfully");
+                    res.redirect("/adminportal");
+                  }
                 });
               });
             });
@@ -271,6 +283,62 @@ app.get("/adminportal", function (req, res) {
       });
     });
   });
+});
+  
+  
+app.get("/adminportal", function (req, res) {
+
+
+  const query = Account.find();  query.count(function (err, countAccounts) {
+
+
+  const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
+    const blotterquery = Blotter.find(); blotterquery.count(function(err, countBlotter){  
+    BackUpBlotter.find({}, function(err, backupBlotters){ 
+    Blotter.find({request: 'Finished'}, function(err, blottersFinished){ 
+    Blotter.find({request: 'On-going'}, function(err, blottersOngoing){ 
+    Blotter.find({}, function(err, blotters){ 
+
+    Suggestion.find({}, function(err, suggestions){ 
+      BackUpWiringandExcavationClearance.find({}, function(err, allWirings){ 
+      WiringandExcavationClearance.find({request: 'Approved'}, function(err, approvedWirings){ 
+        WiringandExcavationClearance.find({request: 'Pending'}, function(err, requestsWirings){ 
+          BackUpCertificateIndigency.find({}, function(err, allIndigency){ 
+          CertificateIndigency.find({request: 'Approved'}, function(err, approvedIndigency){ 
+            CertificateIndigency.find({request: 'Pending'}, function(err, requestsIndigency){ 
+              BackUpBusinessPermit.find({}, function(err, allPermit){ 
+              BusinessPermit.find({request: 'Approved'}, function(err, approvedBusinessPermit){ 
+                BusinessPermit.find({request: 'Pending'}, function(err, requestsBusinessPermit){ 
+                  RequestClearance.find({request: 'Approved'}, function(err, approvedClearances){
+                    RequestClearance.find({request: 'Pending'}, function(err, requestsClearances){ 
+                      BackUpRequestClearance.find({}, function(err, allClearance){
+                      RequestBrgyId.find({request: 'Approved'}, function(err, approvedIds){ 
+                        RequestBrgyId.find({request: 'Pending'}, function(err, requestIds){ 
+                          BackUpRequestBrgyId.find({}, function(err, allrequestIds){ 
+                            BackUpAccount.find({}, function(err, allUserAccounts){
+                          Account.find({}, function(err, allUser){
+                            Account.find({ accountrole: 'citizen' }, function (err, usersUser) {
+                              Account.find({ accountrole: 'employee' }, function (err, usersEmployee) {
+                                Account.find({ accountrole: 'admin' }, function (err, usersAdmin) {
+                                  res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
+                                  , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts, countSuggestions, suggestions
+                                ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
+                              ,allUserAccounts });
+                                });
+                              });
+                            });
+                          });
+                        });
+                      });
+                    });
+                  });
+                });
+              });
+            }); });});});});});});});});});});});
+          });
+        });
+      });
+    });
 });
   
 });
@@ -317,6 +385,7 @@ app.post("/editinfo/:id", (req,res, next ) =>{
 // });
 
 app.get("/deleteinfo", (req, res, next)=> {
+  Blotter.deleteMany({}, (err, users)=>{
   CertificateIndigency.deleteMany({}, (err, users)=>{
     BusinessPermit.deleteMany({}, (err, users)=>{
       RequestClearance.deleteMany({}, (err, users)=>{
@@ -329,7 +398,7 @@ app.get("/deleteinfo", (req, res, next)=> {
               console.log("Delete Successfully");
               res.redirect("/adminportal");
             }
-  });});});});});
+  });});});});});});
 });
 
 
@@ -353,9 +422,11 @@ app.post("/login", function (req, res) {
                 res.redirect("employeeportal");
             }
             else if(foundUser.accountrole === "citizen"){
-                res.redirect("portal");
-                
+                res.redirect("portal");     
             }
+            else if(foundUser.accountrole === "superadmin"){
+              res.redirect("portal");     
+          }
         }
         else {
             res.redirect("login");
@@ -366,28 +437,39 @@ app.post("/login", function (req, res) {
 });
  
 
+
 /// SIGN UPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
-app.post("/registeraccount", function (req, res) {
 
-  const newUser = new Account({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    password: req.body.password,
-    conpassword: req.body.conpassword,
-    accountrole: req.body.accountrole,
-  });
 
-  newUser.save(function (err) {
-    if (err) {
-      console.log(err);
-      // res.redirect("register");
-    } 
-     else {
-           res.redirect("login")
-        }
+app.post("/registeraccount", async function (req, res) {
 
-  });
+    try{
+
+      const newUser = new Account({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password,
+        conpassword: req.body.conpassword,
+        accountrole: req.body.accountrole
+      });
+      await newUser.save();
+      const backupaccounts = new BackUpAccount({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password,
+        conpassword: req.body.conpassword,
+        accountrole: req.body.accountrole
+      });
+      await backupaccounts.save();
+      res.render("login")
+
+    } catch(err){
+      console.log(err)
+      res.redirect("register");
+    }
+
 });
 
 
@@ -398,27 +480,58 @@ app.get("/createnewaccount", (req, res) => {
   res.render("createnewaccount");
 });
 
-app.post("/createnewaccount", function (req, res) {
+app.post("/createnewaccount", async function (req, res) {
 
-  const newUser = new Account({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    password: req.body.password,
-    conpassword: req.body.conpassword,
-    accountrole: req.body.accountrole,
-  });
+  // const newUser = new Account({
+  //   firstname: req.body.firstname,
+  //   lastname: req.body.lastname,
+  //   email: req.body.email,
+  //   password: req.body.password,
+  //   conpassword: req.body.conpassword,
+  //   accountrole: req.body.accountrole,
+  // });
 
-  newUser.save(function (err) {
-    if (err) {
-      console.log(err);
-      // res.redirect("register");
-    } 
-     else {
-           res.redirect("adminportal")
-        }
 
-  });
+  try{
+
+    const newUser = new Account({ 
+     
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: req.body.password,
+      conpassword: req.body.conpassword,
+      accountrole: req.body.accountrole
+    });
+    await newUser.save();
+    const backupaccounts = new BackUpAccount({
+      
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: req.body.password,
+      conpassword: req.body.conpassword,
+      accountrole: req.body.accountrole
+    });
+    await backupaccounts.save();
+    res.redirect("adminportal")
+
+  } catch(err){
+    console.log(err)
+    res.redirect("createnewaccount");
+  }
+
+
+  // newUser.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     // res.redirect("register");
+  //   } 
+  //    else {
+  //          res.redirect("adminportal")
+  //       }
+
+  // });
 });
 
 
@@ -446,36 +559,89 @@ app.post("/createnewaccount", function (req, res) {
 
 
 // -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF WIRINGS-- use for user
-app.post("/reqwiringsclearance-req", function (req, res) {
+app.post("/reqwiringsclearance-req", async function (req, res) {
 
-  const result = "Pending"
-  const requestWiring= new WiringandExcavationClearance({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    purposeofreq: req.body.purposeofreq,
-    ctc: req.body.ctc,
-    request: result
+  // const result = "Pending"
+  // const requestWiring= new WiringandExcavationClearance({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   purposeofreq: req.body.purposeofreq,
+  //   ctc: req.body.ctc,
+  //   request: result
     
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestWiring.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./pages/reqwiringsclearance")
-    } else {
-      res.render("main");
-    }
-  });
+  // requestWiring.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./pages/reqwiringsclearance")
+  //   } else {
+  //     res.render("main");
+  //   }
+  // });
+  try{
+    const result = "Pending"
+    const requestWiring= new WiringandExcavationClearance({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      request: result });
+      await requestWiring.save();
+      const backuprequestWiring= new BackUpWiringandExcavationClearance({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        purposeofreq: req.body.purposeofreq,
+        ctc: req.body.ctc,
+        request: result });
+        await backuprequestWiring.save();
+        res.render("main")
+      } catch(err){
+        console.log(err)
+        res.redirect("./pages/reqwiringsclearance")
+      }
+
+
 });
 
-app.post("/WiringandExcavationForm", function (req, res) {
+app.post("/WiringandExcavationForm", async function (req, res) {
 
+//   const result = "Pending"
+//   const requestWiring= new WiringandExcavationClearance({
+//     fullname: req.body.fullname,
+//     address: req.body.address,
+//     email: req.body.email,
+//     phone: req.body.phone,
+//     purposeofreq: req.body.purposeofreq,
+//     ctc: req.body.ctc,
+//     request: result
+    
+//     // imgfilefee: req.body.imgfilefee,
+//     // contentType: 'img/png',
+//     // imgfileidorpsa: req.body.imgfileidorpsa,
+//     // contentType: 'img/png'
+//   });
+
+//   requestWiring.save(function (err) {
+//     if (err) {
+//       console.log(err);
+//       res.redirect("./page-admin/WiringandExcavationForm")
+//     } else {
+//       res.redirect("adminportal");
+//     }
+//   });
+
+try{
   const result = "Pending"
   const requestWiring= new WiringandExcavationClearance({
     fullname: req.body.fullname,
@@ -484,22 +650,24 @@ app.post("/WiringandExcavationForm", function (req, res) {
     phone: req.body.phone,
     purposeofreq: req.body.purposeofreq,
     ctc: req.body.ctc,
-    request: result
-    
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
-
-  requestWiring.save(function (err) {
-    if (err) {
-      console.log(err);
+    request: result });
+    await requestWiring.save();
+    const backuprequestWiring= new BackUpWiringandExcavationClearance({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      request: result });
+      await backuprequestWiring.save();
+      res.redirect("adminportal")
+    } catch(err){
+      console.log(err)
       res.redirect("./page-admin/WiringandExcavationForm")
-    } else {
-      res.redirect("adminportal");
     }
-  });
+
+
 });
 
 
@@ -545,8 +713,89 @@ app.post("/adminviewwirings/:id", (req,res, next ) =>{
     
     });
 
+// ------------------------------------------------------------------------BLOTTERRR
+
+app.post("/blotter", async function (req, res){
+
+  try{
+    const result = "On-going"
+    const blotter = new Blotter({
+      daterecorded: req.body.daterecorded,
+      request: result,
+      fullnamecomplainant: req.body.fullnamecomplainant,
+      email: req.body.email,
+      phone: req.body.phone,
+      fullnamedefendant: req.body.fullnamedefendant,
+      address: req.body.address,
+      date: req.body.date,
+      time: req.body.time,
+      incident: req.body.incident
+    });
+    await blotter.save();
+    const backupblotter = new BackUpBlotter({
+      daterecorded: req.body.daterecorded,
+      request: result,
+      fullnamecomplainant: req.body.fullnamecomplainant,
+      email: req.body.email,
+      phone: req.body.phone,
+      fullnamedefendant: req.body.fullnamedefendant,
+      address: req.body.address,
+      date: req.body.date,
+      time: req.body.time,
+      incident: req.body.incident
+    });
+    await backupblotter.save();
+        res.redirect("adminportal")
+      } catch(err){
+        console.log(err)
+        res.redirect("adminportal")
+      }
 
 
+});
+
+
+//--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY  CLEARANCE Application Form
+app.get("/adminsviewblotter/:id", (req,res, next ) =>{
+  const id = req.params.id;
+  Blotter.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+      if(err){
+        console.log("Can't retrieve data and edit because of some database problem.")
+        next(err);
+      } else {
+        res.render("./page-admin/adminsviewblotter",  { users: users });
+      }
+      
+  });
+  
+  });
+
+app.post("/adminsviewblotter/:id", (req,res, next ) =>{
+
+    Blotter.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+      if (err){
+        console.log("Something went wrong to update your data");
+        next(err);
+      }else{
+        res.redirect("/adminportal");
+  
+      }
+    })
+  });
+
+app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
+    const id = req.params.id;
+    RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          res.render("./page-admin/adminviewreqclearanceapproved",  { users: users });
+        }
+        
+    });
+    
+    });
 
 
 
@@ -561,65 +810,130 @@ app.post("/adminviewwirings/:id", (req,res, next ) =>{
 
 
 // -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF INDIGENCY-- use for user
-app.post("/reqindigency-req", function (req, res) {
+app.post("/reqindigency-req", async function (req, res) {
 
-  const result = "Pending"
-  const requestIndigency= new CertificateIndigency({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    birthday: req.body.birthday,
-    datestarted: req.body.datestarted,
-    purposeofreq: req.body.purposeofreq,
-    ctc: req.body.ctc,
-    request: result
+  // const result = "Pending"
+  // const requestIndigency= new CertificateIndigency({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   birthday: req.body.birthday,
+  //   datestarted: req.body.datestarted,
+  //   purposeofreq: req.body.purposeofreq,
+  //   ctc: req.body.ctc,
+  //   request: result
     
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestIndigency.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./pages/reqindigency")
-    } else {
-      res.render("main");
-    }
-  });
+  // requestIndigency.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./pages/reqindigency")
+  //   } else {
+  //     res.render("main");
+  //   }
+  // });
+
+  try{
+    const result = "Pending"
+    const requestIndigency= new CertificateIndigency({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      birthday: req.body.birthday,
+      datestarted: req.body.datestarted,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      request: result});
+      await requestIndigency.save();
+      const backuprequestIndigency= new BackUpCertificateIndigency({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        birthday: req.body.birthday,
+        datestarted: req.body.datestarted,
+        purposeofreq: req.body.purposeofreq,
+        ctc: req.body.ctc,
+        request: result});
+        await backuprequestIndigency.save();
+        res.render("main")
+      } catch(err){
+        console.log(err)
+        res.redirect("./pages/reqindigency")
+      }
+
+
+
 });
 
 
 // Admin Add Request Form for Certificate for Indigency--- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/RequestIndigencyForm", function (req, res) {
+app.post("/RequestIndigencyForm", async function (req, res) {
 
-  const result = "Pending"
-  const requestIndigency = new CertificateIndigency({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    birthday: req.body.birthday,
-    datestarted: req.body.datestarted,
-    purposeofreq: req.body.purposeofreq,
-    ctc: req.body.ctc,
-    request: result
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  // const result = "Pending"
+  // const requestIndigency = new CertificateIndigency({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   birthday: req.body.birthday,
+  //   datestarted: req.body.datestarted,
+  //   purposeofreq: req.body.purposeofreq,
+  //   ctc: req.body.ctc,
+  //   request: result
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestIndigency.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./page-admin/RequestIndigencyForm")
-    } else {
-      res.redirect("adminportal");
-    }
-  });
+  // requestIndigency.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./page-admin/RequestIndigencyForm")
+  //   } else {
+  //     res.redirect("adminportal");
+  //   }
+  // });
+
+  try{
+    const result = "Pending"
+    const requestIndigency= new CertificateIndigency({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      birthday: req.body.birthday,
+      datestarted: req.body.datestarted,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      request: result});
+      await requestIndigency.save();
+      const backuprequestIndigency= new BackUpCertificateIndigency({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        birthday: req.body.birthday,
+        datestarted: req.body.datestarted,
+        purposeofreq: req.body.purposeofreq,
+        ctc: req.body.ctc,
+        request: result});
+        await backuprequestIndigency.save();
+        res.redirect("adminportal")
+      } catch(err){
+        console.log(err)
+        res.redirect("./page-admin/RequestIndigencyForm")
+      }
+
+
 });
 
 
@@ -668,61 +982,118 @@ app.post("/adminviewreqindigency/:id", (req,res, next ) =>{
 
 
 // -------------------------------------------------------------------------------------REQUEST FOR BUSINESS PERMIT-- use for user
-app.post("/reqbusinesspermit-req", function (req, res) {
+app.post("/reqbusinesspermit-req",async function (req, res) {
 
-  const result = "Pending"
-  const requestBusinessPermit = new BusinessPermit({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    businessname: req.body.businessname,
-    businessaddress: req.body.businessaddress,
-    request: result
+  // const result = "Pending"
+  // const requestBusinessPermit = new BusinessPermit({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   businessname: req.body.businessname,
+  //   businessaddress: req.body.businessaddress,
+  //   request: result
     
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestBusinessPermit.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./pages/reqbusinesspermit")
-    } else {
-      res.render("main");
-    }
-  });
+  // requestBusinessPermit.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./pages/reqbusinesspermit")
+  //   } else {
+  //     res.render("main");
+  //   }
+  // });
+
+
+  try{
+    const result = "Pending"
+    const requestBusinessPermit = new BusinessPermit({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      businessname: req.body.businessname,
+      businessaddress: req.body.businessaddress,
+      request: result});
+      await requestBusinessPermit.save();
+      const backuprequestBusinessPermit = new BackUpBusinessPermit({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        businessname: req.body.businessname,
+        businessaddress: req.body.businessaddress,
+        request: result});
+        await backuprequestBusinessPermit.save();
+        res.render("main")
+      } catch(err){
+        console.log(err)
+        res.redirect("./pages/reqbusinesspermit")
+      }
+
+
 });
 
 // Admin Add Request Form for Business Permit --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/BusinessPermitForm", function (req, res) {
+app.post("/BusinessPermitForm",async function (req, res) {
 
-  const result = "Pending"
-  const requestBusinessPermit = new BusinessPermit({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    businessname: req.body.businessname,
-    businessaddress: req.body.businessaddress,
-    request: result
+  // const result = "Pending"
+  // const requestBusinessPermit = new BusinessPermit({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   businessname: req.body.businessname,
+  //   businessaddress: req.body.businessaddress,
+  //   request: result
     
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestBusinessPermit.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./page-admin/BusinessPermitForm")
-    } else {
-      res.redirect("adminportal");
-    }
-  });
+  // requestBusinessPermit.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./page-admin/BusinessPermitForm")
+  //   } else {
+  //     res.redirect("adminportal");
+  //   }
+  // });
+
+  
+  try{
+    const result = "Pending"
+    const requestBusinessPermit = new BusinessPermit({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      businessname: req.body.businessname,
+      businessaddress: req.body.businessaddress,
+      request: result});
+      await requestBusinessPermit.save();
+      const backuprequestBusinessPermit = new BackUpBusinessPermit({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        businessname: req.body.businessname,
+        businessaddress: req.body.businessaddress,
+        request: result});
+        await backuprequestBusinessPermit.save();
+        res.redirect("adminportal");
+      } catch(err){
+        console.log(err)
+        res.redirect("./page-admin/BusinessPermitForm")
+      }
+
 });
 
 //--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY ID Application Form
@@ -787,64 +1158,128 @@ app.post("/adminviewbusinesspermit/:id", (req,res, next ) =>{
 
 
 // ------------------------------------------------------------------------------------------REQUEST FOR BRGY CLEARANCE FORM -- use for user
-app.post("/reqbrgyclerance-req", function (req, res) {
+app.post("/reqbrgyclerance-req", async function (req, res) {
 
-  const result = "Pending"
-  const requestClearanceuser = new RequestClearance({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    age: req.body.age,
-    civilstatus: req.body.civilstatus,
-    purposeofreq: req.body.purposeofreq,
-    ctc: req.body.ctc,
-    request: result
+  // const result = "Pending"
+  // const requestClearanceuser = new RequestClearance({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   age: req.body.age,
+  //   civilstatus: req.body.civilstatus,
+  //   purposeofreq: req.body.purposeofreq,
+  //   ctc: req.body.ctc,
+  //   request: result
     
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestClearanceuser.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./pages/reqbrgyclearance")
-    } else {
-      res.render("main");
-    }
-  });
+  // requestClearanceuser.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./pages/reqbrgyclearance")
+  //   } else {
+  //     res.render("main");
+  //   }
+  // });
+
+  try{
+    const result = "Pending"
+    const requestClearanceuser = new RequestClearance({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      age: req.body.age,
+      civilstatus: req.body.civilstatus,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      request: result});
+      await requestClearanceuser.save();
+      const backuprequestClearanceuser = new BackUpRequestClearance({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        age: req.body.age,
+        civilstatus: req.body.civilstatus,
+        purposeofreq: req.body.purposeofreq,
+        ctc: req.body.ctc,
+        request: result});
+        await backuprequestClearanceuser.save();
+        res.render("main")
+      } catch(err){
+        console.log(err)
+        res.redirect("./pages/reqbrgyclearance")
+      }
+
+
+
+
 });
 
 // Admin Add Request Form for Clearance --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/RequestClearanceForm", function (req, res) {
-  const result = "Pending"
-  const requestClearanceuser = new RequestClearance({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    age: req.body.age,
-    civilstatus: req.body.civilstatus,
-    purposeofreq: req.body.purposeofreq,
-    ctc: req.body.ctc,
-    request: result
+app.post("/RequestClearanceForm",async function (req, res) {
+  // const result = "Pending"
+  // const requestClearanceuser = new RequestClearance({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   age: req.body.age,
+  //   civilstatus: req.body.civilstatus,
+  //   purposeofreq: req.body.purposeofreq,
+  //   ctc: req.body.ctc,
+  //   request: result
     
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestClearanceuser.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./page-admin/RequestClearanceForm")
-    } else {
-      res.redirect("adminportal");
-    }
-  });
+  // requestClearanceuser.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./page-admin/RequestClearanceForm")
+  //   } else {
+  //     res.redirect("adminportal");
+  //   }
+  // });
+  try{
+    const result = "Pending"
+    const requestClearanceuser = new RequestClearance({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      age: req.body.age,
+      civilstatus: req.body.civilstatus,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      request: result });
+      await requestClearanceuser.save();
+      const backuprequestClearanceuser = new BackUpRequestClearance({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        age: req.body.age,
+        civilstatus: req.body.civilstatus,
+        purposeofreq: req.body.purposeofreq,
+        ctc: req.body.ctc,
+        request: result });
+        await backuprequestClearanceuser.save();
+        res.redirect("adminportal")
+      } catch(err){
+        console.log(err)
+        res.redirect("./page-admin/RequestClearanceForm")
+      }
+
 });
 
 
@@ -921,64 +1356,129 @@ app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
 
 
 // ------------------------------------------------------------------------------------------------REQUEST FOR ID FORM -- use for user
-app.post("/reqbrgyid-req", function (req, res) {
+app.post("/reqbrgyid-req", async function (req, res) {
 
-  const result = "Pending"
-  const requestIDuser = new RequestBrgyId({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    age: req.body.age,
-    civilstatus: req.body.civilstatus,
-    purposeofreq: req.body.purposeofreq,
-    ctc: req.body.ctc,
-    request: result
+  // const result = "Pending"
+  // const requestIDuser = new RequestBrgyId({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   age: req.body.age,
+  //   civilstatus: req.body.civilstatus,
+  //   purposeofreq: req.body.purposeofreq,
+  //   ctc: req.body.ctc,
+  //   request: result
     
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestIDuser.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./pages/reqbrgyid")
-    } else {
-      res.render("main");
-    }
-  });
+  // requestIDuser.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./pages/reqbrgyid")
+  //   } else {
+  //     res.render("main");
+  //   }
+  // });
+
+  try{
+    const result = "Pending"
+    const requestIDuser = new RequestBrgyId({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      age: req.body.age,
+      civilstatus: req.body.civilstatus,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      request: result});
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpRequestBrgyId({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        age: req.body.age,
+        civilstatus: req.body.civilstatus,
+        purposeofreq: req.body.purposeofreq,
+        ctc: req.body.ctc,
+        request: result});
+        await backuprequestIDuser.save();
+        res.render("main");
+      } catch(err){
+        console.log(err)
+        res.redirect("./pages/reqbrgyid")
+      }
+
+
+
+
+
 });
 
 // Admin Add Request Form  --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/RequestIdForm", function (req, res) {
-  const result = "Pending"
-  const requestIDuser = new RequestBrgyId({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    age: req.body.age,
-    civilstatus: req.body.civilstatus,
-    purposeofreq: req.body.purposeofreq,
-    ctc: req.body.ctc,
-    request: result
+app.post("/RequestIdForm", async function (req, res) {
+  // const result = "Pending"
+  // const requestIDuser = new RequestBrgyId({
+  //   fullname: req.body.fullname,
+  //   address: req.body.address,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   age: req.body.age,
+  //   civilstatus: req.body.civilstatus,
+  //   purposeofreq: req.body.purposeofreq,
+  //   ctc: req.body.ctc,
+  //   request: result
     
-    // imgfilefee: req.body.imgfilefee,
-    // contentType: 'img/png',
-    // imgfileidorpsa: req.body.imgfileidorpsa,
-    // contentType: 'img/png'
-  });
+  //   // imgfilefee: req.body.imgfilefee,
+  //   // contentType: 'img/png',
+  //   // imgfileidorpsa: req.body.imgfileidorpsa,
+  //   // contentType: 'img/png'
+  // });
 
-  requestIDuser.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("./page-admin/RequestIdForm")
-    } else {
-      res.redirect("adminportal");
-    }
-  });
+  // requestIDuser.save(function (err) {
+  //   if (err) {
+  //     console.log(err);
+  //     res.redirect("./page-admin/RequestIdForm")
+  //   } else {
+  //     res.redirect("adminportal");
+  //   }
+  // });
+
+  try{
+    const result = "Pending"
+    const requestIDuser = new RequestBrgyId({
+      fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      age: req.body.age,
+      civilstatus: req.body.civilstatus,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      request: result});
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpRequestBrgyId({
+        fullname: req.body.fullname,
+        address: req.body.address,
+        email: req.body.email,
+        phone: req.body.phone,
+        age: req.body.age,
+        civilstatus: req.body.civilstatus,
+        purposeofreq: req.body.purposeofreq,
+        ctc: req.body.ctc,
+        request: result});
+        await backuprequestIDuser.save();
+        res.redirect("adminportal");
+      } catch(err){
+        console.log(err)
+        res.redirect("./page-admin/RequestIdForm")
+      }
 });
 
 
@@ -1073,25 +1573,49 @@ app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
 
 
 // SUGGESTION FORM
-app.post("/contact-mail", function (req, res) {
-  const contactUser = new Suggestion({
-    fullname: req.body.fullname,
-    email: req.body.email,
-    phone: req.body.phone,
-    subject: req.body.subject,
-    text: req.body.message,
-  });
-
-  contactUser.save(function (err) {
-    if (err) {
-      console.log(err);
-      res.redirect("main")
-    } else {
-      res.redirect("main");
-    }
-  });
+app.post("/contact-mail", async function (req, res) {
+  try { 
+    const contactUser = new Suggestion({
+          fullname: req.body.fullname,
+          email: req.body.email,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          text: req.body.message,
+        });
+        await contactUser.save();
+      const backupContact = new BackUpSuggestion({
+          fullname: req.body.fullname,
+          email: req.body.email,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          text: req.body.message,
+        });
+        await backupContact.save();
+        res.redirect("main")
+  }catch(err){
+    console.log(err)
+  }
 });
 
+
+
+//   const contactUser = new Suggestion({
+//     fullname: req.body.fullname,
+//     email: req.body.email,
+//     phone: req.body.phone,
+//     subject: req.body.subject,
+//     text: req.body.message,
+//   });
+
+//   contactUser.save(function (err) {
+//     if (err) {
+//       console.log(err);
+//       res.redirect("main")
+//     } else {
+//       res.redirect("main");
+//     }
+//   });
+// });
 
 
 

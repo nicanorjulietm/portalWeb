@@ -261,4 +261,21 @@ flex-direction: column;
 
 /* ---------- */
 
+.record-content{
+  background-color: white;
+  border: 1px solid rgb(134, 131, 131);
+}
 
+
+/* --------------- */
+.blotter-side{
+  padding: 0;
+}
+.blotter-w{
+  width: 80%;
+  text-align: left;
+  padding: 0;
+}
+.req-view-input{
+  width: 100%;
+}
