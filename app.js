@@ -13,7 +13,6 @@ const { redirect } = require("express/lib/response");
 const { features } = require("process");
 const { PerformanceNodeTiming } = require("perf_hooks");
 
-
 // const { authenticate } = require("passport/lib");
 
 // const session = require("express-session");
@@ -290,14 +289,27 @@ app.get("/adminportal", function (req, res) {
 
 
   const query = Account.find();  query.count(function (err, countAccounts) {
-
-
   const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
-    const blotterquery = Blotter.find(); blotterquery.count(function(err, countBlotter){  
+  const blotterquery = Blotter.find(); blotterquery.count(function(err, countBlotter){  
+
+
+    // const accountPercentage = ((countAccounts * 0.10) * 100);
+    // const accountDegree = (accountPercentage * 3.6);
+  
+
+  
+    BackUpRequestBrgyId.find().count(function(err, countRequestID){ 
+    BackUpRequestClearance.find().count(function(err, countRequestClearance){ 
+    BackUpBusinessPermit.find().count(function(err, countRequestPermit){ 
+    BackUpCertificateIndigency.find().count(function(err, countRequestIndigency){ 
+    BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
+    const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
+
     BackUpBlotter.find({}, function(err, backupBlotters){ 
     Blotter.find({request: 'Finished'}, function(err, blottersFinished){ 
     Blotter.find({request: 'On-going'}, function(err, blottersOngoing){ 
     Blotter.find({}, function(err, blotters){ 
+
 
     Suggestion.find({}, function(err, suggestions){ 
       BackUpWiringandExcavationClearance.find({}, function(err, allWirings){ 
@@ -323,7 +335,7 @@ app.get("/adminportal", function (req, res) {
                                   res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
                                   , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts, countSuggestions, suggestions
                                 ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-                              ,allUserAccounts });
+                              ,allUserAccounts, requestCount});
                                 });
                               });
                             });
@@ -334,7 +346,7 @@ app.get("/adminportal", function (req, res) {
                   });
                 });
               });
-            }); });});});});});});});});});});});
+            }); });});});});});});});});});});});});});});});});
           });
         });
       });

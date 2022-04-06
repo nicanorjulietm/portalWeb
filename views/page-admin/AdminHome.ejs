@@ -47,6 +47,19 @@
                   </button>
 
                   <button
+                  class="nav-btn"
+                  id="v-pills-residents-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-residents"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-residents"
+                  aria-selected="false"
+                >
+                  Residents Record
+                </button>
+
+                  <button
                     class="nav-btn"
                     id="v-pills-projects-tab"
                     data-bs-toggle="pill"
@@ -138,54 +151,90 @@
                           <div class="card-header">Dashboard</div>
                           <div class="card-body">
                             <div class="row">
-                              <div class="col-sm-3">
-                                <div class="card">
+                              <!-- <div class="col-sm-3">
+                                <div class="card cardx">
                                   <div class="card-body">
                                     <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i>    <%= countAccounts %> </h2>
+                                      <h2><i class="fa-solid fa-user fa-1x"></i>   </h2>
                                       <h5 class="card-title">Users</h5>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-sm-3">
-                                <div class="card">
+                                <div class="card cardx">
                                   <div class="card-body">
                                     <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i>    <%= countSuggestions %> </h2>
-                                      <h5 class="card-title">Suggestions</h5>
+                                      <h2><i class="fa-solid fa-user fa-1x"></i>   </h2>
+                                      <h5 class="card-title">Requests</h5>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-sm-3">
-                                <div class="card">
+                                <div class="card cardx">
                                   <div class="card-body">
                                     <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i>    <%= countBlotter %></h2>
+                                      <h2><i class="fa-solid fa-user fa-1x"></i>   </h2>
                                       <h5 class="card-title">Blotter</h5>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-sm-3">
-                                <div class="card">
+                                <div class="card cardx">
                                   <div class="card-body">
                                     <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i> 140</h2>
-                                      <h5 class="card-title">Visitors</h5>
+                                      <h2><i class="fa-solid fa-user fa-1x"></i>    </h2>
+                                      <h5 class="card-title">Suggestions</h5>
                                     </div>
                                   </div>
                                 </div>
+                              </div> -->
+                              <div class="col-sm-3">
+                                <div class="card cardx">
+                                      <div class="card-counter primary">
+                                        <i class="fa-solid fa-users"></i>
+                                        <span class="count-numbers"> <%= countAccounts %> </span>
+                                        <span class="count-name">Users </span>
+                                      </div>
+                                </div>
                               </div>
+                              <div class="col-sm-3">
+                                <div class="card cardx">
+                                      <div class="card-counter primary">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                        <span class="count-numbers">  <%= requestCount %></span>
+                                        <span class="count-name">Requests</span>
+                                      </div>     
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="card cardx">
+                                      <div class="card-counter primary">
+                                        <i class="fa-solid fa-scale-balanced"></i>
+                                        <span class="count-numbers">  <%= countBlotter %></span>
+                                        <span class="count-name">Blotters</span>
+                                      </div>
+                                </div>
+                              </div>
+                              <div class="col-sm-3">
+                                <div class="card cardx">
+                                      <div class="card-counter primary">
+                                        <i class="fa-solid fa-comment-dots"></i>
+                                        <span class="count-numbers"> <%= countSuggestions %> </span>
+                                        <span class="count-name">Suggestions</span>
+                                      </div>     
+                                </div>
+                              </div>
+                              
+
                             </div>
                           </div>
                         </div>
                         <!-- --------------END OF DASHBOARD (SIDEBAR)------------- -->
                   </div>
                    
-
-
 
 
 
@@ -420,6 +469,16 @@
                 </div>
                 <!-- --------------END OF REQUEST (SIDEBAR)------------- -->
 
+                 <!-- --------------RESIDENTS (SIDEBAR)------------- -->
+                 <div
+                 class="tab-pane fade"
+                 id="v-pills-residents"
+                 role="tabpanel"
+                 aria-labelledby="v-pills-residents-tab"
+               >
+               <%- include('../page-admin/Residents') %>
+               </div>
+                <!-- --------------END OF RESIDENTS (SIDEBAR)------------- -->
 
                   <!-- --------------PROJECT (SIDEBAR)------------- -->
                 <div
@@ -463,13 +522,12 @@
 
 
 <script>
+
+
   var $th = $('.tableFixHead').find('thead th')
 $('.tableFixHead').on('scroll', function() {
   $th.css('transform', 'translateY('+ this.scrollTop +'px)');
 });
-
-
-
 
 
 
