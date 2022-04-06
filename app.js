@@ -180,6 +180,31 @@ request: String,
 const Blotter = new mongoose.model("Blotter", blotterSchema);
 const BackUpBlotter = new mongoose.model("BackUpBlotter", blotterSchema);
 
+
+const residentsSchema ={
+  precinct: String,
+  daterecorded: String,
+  lastname: String,
+  firstname: String,
+  birthday: String,
+  birthplace: String,
+  age: String,
+  gender: String,
+  civilstatus: String, 
+  email: String,
+  phone: String,
+  schoolattainment: String,
+  profession: String,
+  blklot: String,
+  street: String,
+  brgy: String,
+  province: String,
+  citizen: String,
+  zipcode: String
+  };
+  const Residents= new mongoose.model("Residents", residentsSchema);
+  const BackUpResidents= new mongoose.model("BackUpResidents", residentsSchema);
+
 app.get("/", function (req, res) {
 res.render("main");
 
@@ -222,6 +247,10 @@ app.get("/login", function (req, res) {
     res.render("./page-admin/RequestIndigencyForm");
   });
 
+  // app.get("/adminsviewresidents", function (req, res) {
+  //   res.render("./page-admin/adminsviewresidents");
+  // });
+
   
   app.get("/WiringandExcavationForm", function (req, res) {
     res.render("./page-admin/WiringandExcavationForm");
@@ -259,39 +288,40 @@ app.get("/login", function (req, res) {
   });
   
 app.get("/deleteinfo/:id", (req, res, next)=> {
-  Blotter.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-    Suggestion.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-    WiringandExcavationClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-      CertificateIndigency.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-        BusinessPermit.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-          RequestClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-            RequestBrgyId.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
-                Account.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
-                  if(err){
-                    console.log("Something went wrong");
-                    next(err);
-                  } else {
-                    console.log("Delete Successfully");
-                    res.redirect("/adminportal");
-                  }
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  });
-});
+      Residents.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+         BackUpResidents.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+          BackUpBlotter.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+            Blotter.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+              Suggestion.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                BackUpWiringandExcavationClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+              WiringandExcavationClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                BackUpCertificateIndigency.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                CertificateIndigency.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                  BackUpBusinessPermit.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                  BusinessPermit.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                    BackUpRequestClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                    RequestClearance.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                      BackUpRequestBrgyId.findByIdAndDelete({_id: req.params.id}, (err, users) =>{
+                      RequestBrgyId.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
+                        BackUpAccount.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
+                        Account.findByIdAndDelete({_id: req.params.id}, (err, users)=>{
+                            if(err){
+                              console.log("Something went wrong");
+                              next(err);
+                            } else {
+                              console.log("Delete Successfully");
+                              res.redirect("/adminportal");
+                            }
+});});});});});});});});});});});});});});});});});});
   
   
 app.get("/adminportal", function (req, res) {
 
 
   const query = Account.find();  query.count(function (err, countAccounts) {
-  const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
+  // const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
   const blotterquery = Blotter.find(); blotterquery.count(function(err, countBlotter){  
-
+    const residentsquery = Blotter.find(); residentsquery.count(function(err, countResidents){  
 
     // const accountPercentage = ((countAccounts * 0.10) * 100);
     // const accountDegree = (accountPercentage * 3.6);
@@ -309,8 +339,11 @@ app.get("/adminportal", function (req, res) {
     Blotter.find({request: 'Finished'}, function(err, blottersFinished){ 
     Blotter.find({request: 'On-going'}, function(err, blottersOngoing){ 
     Blotter.find({}, function(err, blotters){ 
-
-
+    
+      Residents.find({gender: 'Male'}, function(err, allMale){ 
+      Residents.find({gender: 'Female'}, function(err, allFemale){ 
+    BackUpResidents.find({}, function(err, allbackupResidents){ 
+    Residents.find({}, function(err, allResidents){ 
     Suggestion.find({}, function(err, suggestions){ 
       BackUpWiringandExcavationClearance.find({}, function(err, allWirings){ 
       WiringandExcavationClearance.find({request: 'Approved'}, function(err, approvedWirings){ 
@@ -333,9 +366,9 @@ app.get("/adminportal", function (req, res) {
                               Account.find({ accountrole: 'employee' }, function (err, usersEmployee) {
                                 Account.find({ accountrole: 'admin' }, function (err, usersAdmin) {
                                   res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
-                                  , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts, countSuggestions, suggestions
+                                  , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
                                 ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-                              ,allUserAccounts, requestCount});
+                              ,allUserAccounts, requestCount, allResidents,  allbackupResidents, countResidents, allFemale, allMale});
                                 });
                               });
                             });
@@ -346,7 +379,7 @@ app.get("/adminportal", function (req, res) {
                   });
                 });
               });
-            }); });});});});});});});});});});});});});});});});
+            }); });});});});});});});});});});});});});});});});});});});});
           });
         });
       });
@@ -397,6 +430,8 @@ app.post("/editinfo/:id", (req,res, next ) =>{
 // });
 
 app.get("/deleteinfo", (req, res, next)=> {
+
+  Residents.deleteMany({}, (err, users)=>{ 
   Blotter.deleteMany({}, (err, users)=>{
   CertificateIndigency.deleteMany({}, (err, users)=>{
     BusinessPermit.deleteMany({}, (err, users)=>{
@@ -410,7 +445,7 @@ app.get("/deleteinfo", (req, res, next)=> {
               console.log("Delete Successfully");
               res.redirect("/adminportal");
             }
-  });});});});});});
+  });});});});});});});
 });
 
 
@@ -724,6 +759,95 @@ app.post("/adminviewwirings/:id", (req,res, next ) =>{
     });
     
     });
+
+
+// --------------------------------------------------------------------RESIDENT INFORMATION
+
+
+
+  app.post("/residents", async function(req, res){
+    try {
+      const residents = new Residents({
+        precinct: req.body.precinct,
+        daterecorded: req.body.daterecorded,
+        lastname: req.body.lastname,
+        firstname: req.body.firstname,
+        birthday: req.body.birthday,
+        birthplace: req.body.birthplace,
+        civilstatus: req.body.civilstatus, 
+        email: req.body.email,
+        phone: req.body.phone,
+        age: req.body.age,
+        schoolattainment: req.body.schoolattainment,
+        profession: req.body.profession,
+        blklot: req.body.blklot,
+        street: req.body.street,
+        brgy: req.body.brgy,
+        province: req.body.province,
+        citizen: req.body.citizen,
+        zipcode: req.body.zipcode
+      });
+      await residents.save();
+      const backupresidents = new BackUpResidents({
+        precinct: req.body.precinct,
+        daterecorded: req.body.daterecorded,
+        lastname: req.body.lastname,
+        firstname: req.body.firstname,
+        birthday: req.body.birthday,
+        age: req.body.age,
+        birthplace: req.body.birthplace,
+        civilstatus: req.body.civilstatus, 
+        email: req.body.email,
+        phone: req.body.phone,
+        schoolattainment: req.body.schoolattainment,
+        profession: req.body.profession,
+        blklot: req.body.blklot,
+        street: req.body.street,
+        brgy: req.body.brgy,
+        province: req.body.province,
+        citizen: req.body.citizen,
+        zipcode: req.body.zipcode
+      });
+      await backupresidents.save();
+      res.redirect("adminportal")
+    } catch(err){
+      console.log(err)
+      res.redirect("adminportal")
+    }
+  })
+
+
+
+  app.get("/adminsviewresidents/:id", (req,res, next ) =>{
+    const id = req.params.id;
+    Residents.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          res.render("./page-admin/adminsviewresidents",  { users: users });
+        }
+        
+    });
+    
+    });
+  
+  app.post("/adminsviewresidents/:id", (req,res, next ) =>{
+  
+      Residents.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+        if (err){
+          console.log("Something went wrong to update your data");
+          next(err);
+        }else{
+          res.redirect("/adminportal");
+    
+        }
+      })
+    });
+  
+  
+    
+
 
 // ------------------------------------------------------------------------BLOTTERRR
 

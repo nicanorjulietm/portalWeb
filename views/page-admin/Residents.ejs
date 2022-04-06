@@ -8,9 +8,9 @@
             <button class="nav-link active" id="nav-allrecord-tab" data-bs-toggle="tab" data-bs-target="#nav-allrecord" type="button" role="tab" 
             aria-controls="nav-allrecord" aria-selected="true">All Records</button>
             <button class="nav-link" id="nav-ongoing-tab" data-bs-toggle="tab" data-bs-target="#nav-ongoing" type="button" role="tab" 
-            aria-controls="nav-ongoing" aria-selected="false"> On-Going</button>
+            aria-controls="nav-ongoing" aria-selected="false"> Female </button>
             <button class="nav-link" id="nav-finished-tab" data-bs-toggle="tab" data-bs-target="#nav-finished" type="button" role="tab" 
-            aria-controls="nav-finished" aria-selected="false"> Finished</button>
+            aria-controls="nav-finished" aria-selected="false"> Male </button>
        
       </div>
     </nav>
@@ -25,14 +25,14 @@
                                 type="button"
                                 class="btn addbtn submit" data-modal="modal-12" 
                               ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
-                                Add Blotter</a>
+                                Add Resident</a>
                               </button>
               
                             
                             <button
                               type="button"
                               class="btn addbtn submit"
-                            ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL citizens users?');"  >
+                            ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL Residents informations?');"  >
                               Delete All</a>
                             </button>
                            
@@ -53,12 +53,13 @@
                                       
                         
                                       <div class="news-inside blotter-side">
-                                          <form class="row g-3 req-row blotter-w" action="/blotter" method="POST">
+                                          <form class="row g-3 req-row blotter-w" action="/residents" method="POST">
                                             <div class="col-12 req-distance">
                                               
                           
-                                                <div class="date-req " style="text-align: right; padding: 0; margin: 0;">
+                                                <div class="date-req " style="text-align: right; padding: 0; margin: 10px;">
                                                 <label class="req-label"> <b>Precinct No: <input style="width: 100px;" name="precinct" /> </b> </label>  <br>
+                                                <label class="req-label"> <b>Date Recorded: <input style="width: 100px;" name="daterecorded" required/> </b> </label> 
                                                 <!-- <label class="req-label"><b> Request : </b> </label>  -->
                                                 <!-- <select class="custom-select my-1 mr-sm-2" name="request" style="width: 100px"> -->
                                                   <!-- <option selected></option> -->
@@ -70,7 +71,7 @@
                                               </div>
                                               <div class="col-md-5 req-distance">
                                                 <label class="req-label">Last Name</label>
-                                                <input type="email" class="req-view-input" name="lastname"style="width: 100%;" required />
+                                                <input type="text" class="req-view-input" name="lastname"style="width: 100%;" required />
                                               </div>
                                               <div class="col-md-5 req-distance">
                                                 <label class="req-label">First Name</label>
@@ -80,76 +81,93 @@
                                                 <label class="req-label">M.I</label>
                                                 <input type="text" class="req-view-input" name="middleinitial" style="width: 100%;" required />
                                               </div>
-                                              <div class="col-md-2 req-distance">
+                                              <div class="col-md-1 req-distance">
                                                 <label class="req-label">Age</label>
-                                                <input type="email" class="req-view-input" name="age"style="width: 100%;" required />
+                                                <input type="text" class="req-view-input" name="age"style="width: 100%;" required />
                                               </div>
                                               <div class="col-md-3 req-distance">
                                                 <label class="req-label">Gender</label>
-                                                    <select class="custom-select my-1 mr-sm-2" name="gender" style="width: 100px"> 
+                                                    <select class="custom-select  " name="gender" style="width: 100px">  
                                                     <option selected></option>
                                                     <option value="Female">Female</option>
-                                                    <option value="Male">Male</option>
-                                              </div>
-                                              <div class="col-md-3 req-distance">
-                                                <label class="req-label">Date of Birth</label>
-                                                <input type="text" class="req-view-input" name="phone" style="width: 100%;" required />
+                                                    <option value="Male">Male</option></select>
                                               </div>
                                               <div class="col-md-4 req-distance">
+                                                <label class="req-label">Date of Birth</label>
+                                                <input type="text" class="req-view-input" name="birthday" style="width: 100%;" required />
+                                              </div>
+                                             
+                                              <div class="col-md-4 req-distance">
                                                 <label class="req-label">Place of Birth</label>
-                                                <input type="text" class="req-view-input" name="phone" style="width: 100%;" required />
+                                                <input type="text" class="req-view-input" name="birthplace" style="width: 100%;" required />
                                               </div>
                                               <div class="col-md-3 req-distance">
                                                 <label class="req-label">Civil Status</label>
-                                                <select class="custom-select my-1 mr-sm-2" name="civilstatus" style="width: 100px"> 
+                                                <select class="custom-select" name="civilstatus" style="width: 100px"> 
                                                     <option selected></option>
                                                     <option value="Single">Single</option>
                                                     <option value="Married">Married</option>
                                                     <option value="Widow/er">Widow/er</option>
-                                                    <option value="Separated">Separated</option>
+                                                    <option value="Separated">Separated</option></select>
                                               </div>
-                                              <div class="col-md-3 req-distance">
-                                                <label class="req-label">Current Occupation</label>
+                                              <div class="col-md-5 req-distance">
+                                                <label class="req-label">Email</label>
+                                                <input type="email" class="req-view-input" name="email" style="width: 100%;" required />
+                                              </div>
+                                              <div class="col-md-4 req-distance">
+                                                <label class="req-label">Contact No.</label>
                                                 <input type="text" class="req-view-input" name="phone" style="width: 100%;" required />
                                               </div>
 
+                                              <div class="col-md-4 req-distance">
+                                                <label class="req-label">Highest School Attainment</label>
+                                                <select class="custom-select" name="schoolattainment" style="width: 180px"> 
+                                                    <option selected ></option>
+                                                    <option value="Elementary">Elementary</option>
+                                                    <option value="HighSchool"style="width: 100px">HighSchool</option>
+                                                    <option value="College">College</option>
+                                                    <option value="Graduate School ">Graduate School </option>
+                                                    <option value="Vocational">Vocational</option>
+                                                </select>
+                                              </div>
 
+                                              <div class="col-md-8 req-distance">
+                                                <label class="req-label">Profession/Occupation</label>
+                                                <input type="text" class="req-view-input" name="profession" style="width: 100%;" required />
+                                              </div>
 
-                                            <div class="col-md-3 req-distance">
-                                              <label class="req-label">Email</label>
-                                              <input type="email" class="req-view-input" name="email"style="width: 100%;" required />
-                                            </div>
-                                            <div class="col-md-3 req-distance">
-                                              <label class="req-label">Phone</label>
-                                              <input type="text" class="req-view-input" name="phone" style="width: 100%;" required />
-                                            </div>
-                                            <div class="col-md-12 req-distance">
-                                            <label class="req-label">Full Name of Defendant :</label>
-                                              <input type="text" class="req-view-input" style="width: 100%;" name="fullnamedefendant" required />
-                                            </div>
-                                            <div class="col-12 req-distance">
-                                              <label class="req-label">Address where Incident happened :</label>
-                                              <input type="text" class="req-view-input" name="address" required />
-                                            </div>
-                                            
-                                              <div class="col-md-6 req-distance">
-                                                  <label class="req-label">Date :</label>
-                                                  <input type="text" class="req-view-input" placeholder="MM/DD/YYYY" name="date"style="width: 100%;" required />
-                                                </div>
-                                                <div class="col-md-6 req-distance">
-                                                  <label class="req-label">Time :</label>
-                                                  <input type="text" class="req-view-input" placeholder="HH:MM AM" name="time" style="width: 100%;" required />
-                                                </div>
-                                                <div class="col-12 req-distance">
-                                              <label class="form-label">Incidents/Events</label> <br>
-                                              <input type="text" class="req-input"style="width: 100%;"  name="incident" required  />
-                                            </div>
+                                              <div class="col-md-3 req-distance">
+                                                <label class="req-label">Blk/Lt</label>
+                                                <input type="text" class="req-view-input" name="blklot"style="width: 100%;" required />
+                                              </div>
+                                              <div class="col-md-4 req-distance">
+                                                <label class="req-label">Street</label>
+                                                <input type="text" class="req-view-input" name="street"style="width: 100%;" required />
+                                              </div>
+                                              <div class="col-md-5 req-distance">
+                                                <label class="req-label">Barangay</label>
+                                                <input type="text" class="req-view-input" name="brgy" style="width: 100%;" required />
+                                              </div>
+                                             
+                                              <div class="col-md-5 req-distance">
+                                                <label class="req-label">Province/City</label>
+                                                <input type="text" class="req-view-input" name="province" style="width: 100%;" required />
+                                              </div>
+                                              <div class="col-md-5 req-distance">
+                                                <label class="req-label">Citizenship</label>
+                                                <input type="text" class="req-view-input" name="citizen" style="width: 100%;" required />
+                                              </div>
+                                              <div class="col-md-2 req-distance">
+                                                <label class="req-label">Zipcode</label>
+                                                <input type="text" class="req-view-input" name="zipcode" style="width: 100%;" required />
+                                              </div>
+                                           
                                             
                                           
                           
                                             <div class="col-12 submit-center req-btns " style="text-align: center;">
-                                              <button type="submit" class="btn submit  " style="width: 230px;">
-                                                Save Blotter Form
+                                              <button type="submit" class="btn submit  " style="width: 300px;">
+                                                Save Information
                                               </button>
                                               
                                             </div>
@@ -178,26 +196,26 @@
                                    <!-- <th scope="col">#</th> -->
                                    <th scope="col">Date Recorded: </th>
                                   
-                                   <th scope="col">Complainant</th>
-                                   <th scope="col">Defendant</th>
-                                   <th scope="col">Request</th>
+                                   <th scope="col">Full Name</th>
+                                   <th scope="col">Complete Address</th>
+                                   <th scope="col"></th>
                                    <th scope="col"></th>
                                    <th scope="col"></th>
                                  </tr>
                                </thead>
                                <tbody>
                                 
-                               <% blotters.forEach(function(users){ %>
+                               <% allResidents.forEach(function(users){ %>
                                  <tr>
                                    <th scope="row"><%= users.daterecorded %></th>
                                    
-                                   <td><%= users.fullnamecomplainant %></td>
-                                   <td><%= users.fullnamedefendant %></td>
+                                   <td><%= users.lastname %>  <%= users.firstname %> <%= users.middleinitial %> </td>
+                                   <td> <%= users.blklot %>  <%= users.street %> <%= users.brgy %> <%= users.province%>  </td>
                                    <td><%= users.request %></td>
-                                   <td> <a class="td-link"  href="/adminsviewblotter/<%= users._id %>" >
+                                   <td> <a class="td-link"  href="/adminsviewresidents/<%= users._id %>" >
                                      Edit
                                    </a> </td>
-                                   <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullnamecomplainant %> complaint?');"  >
+                                   <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.lastname %> s information?');"  >
                                      
                                   Delete </a> </td>
                                  </tr>
@@ -216,33 +234,33 @@
                 <!-- -------------------BRGY CLEARANCE---------------------------- -->
                 <div class="tab-pane fade" id="nav-ongoing" role="tabpanel" aria-labelledby="nav-ongoing-tab">
                     <div class="tableFixHead">
-           
-               
+                         
+                             
                         <table class="table table-hover citizen-table">
                           <thead class="table-dark">
                               <!-- <th scope="col">#</th> -->
                               <th scope="col">Date Recorded: </th>
                              
-                              <th scope="col">Complainant</th>
-                              <th scope="col">Defendant</th>
-                              <th scope="col">Request</th>
+                              <th scope="col">Full Name</th>
+                              <th scope="col">Complete Address</th>
+                              <th scope="col"></th>
                               <th scope="col"></th>
                               <th scope="col"></th>
                             </tr>
                           </thead>
                           <tbody>
                            
-                          <% blottersOngoing.forEach(function(users){ %>
+                          <% allFemale.forEach(function(users){ %>
                             <tr>
                               <th scope="row"><%= users.daterecorded %></th>
                               
-                              <td><%= users.fullnamecomplainant %></td>
-                              <td><%= users.fullnamedefendant %></td>
+                              <td><%= users.lastname %>  <%= users.firstname %> <%= users.middleinitial %> </td>
+                              <td> <%= users.blklot %>  <%= users.street %> <%= users.brgy %> <%= users.province%>  </td>
                               <td><%= users.request %></td>
-                              <td> <a class="td-link"  href="/adminsviewblotter/<%= users._id %>" >
+                              <td> <a class="td-link"  href="/adminsviewresidents/<%= users._id %>" >
                                 Edit
                               </a> </td>
-                              <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullnamecomplainant %> complaint?');"  >
+                              <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.lastname %> s information?');"  >
                                 
                              Delete </a> </td>
                             </tr>
@@ -250,7 +268,7 @@
                             
                           </tbody>
                      </table>
-                    </div>
+                     </div>
 
                 </div>
                 <!-- -------------------END OF BRGY CLEARANCE---------------------------- -->
@@ -259,33 +277,33 @@
                 <!-- -------------------BUSINESS PERMIT---------------------------- -->
                 <div class="tab-pane fade" id="nav-finished" role="tabpanel" aria-labelledby="nav-finished-tab">
                     <div class="tableFixHead">
-           
-               
+                         
+                             
                         <table class="table table-hover citizen-table">
                           <thead class="table-dark">
                               <!-- <th scope="col">#</th> -->
                               <th scope="col">Date Recorded: </th>
                              
-                              <th scope="col">Complainant</th>
-                              <th scope="col">Defendant</th>
-                              <th scope="col">Request</th>
+                              <th scope="col">Full Name</th>
+                              <th scope="col">Complete Address</th>
+                              <th scope="col"></th>
                               <th scope="col"></th>
                               <th scope="col"></th>
                             </tr>
                           </thead>
                           <tbody>
                            
-                          <% blottersFinished.forEach(function(users){ %>
+                          <% allMale.forEach(function(users){ %>
                             <tr>
                               <th scope="row"><%= users.daterecorded %></th>
                               
-                              <td><%= users.fullnamecomplainant %></td>
-                              <td><%= users.fullnamedefendant %></td>
+                              <td><%= users.lastname %>  <%= users.firstname %> <%= users.middleinitial %> </td>
+                              <td> <%= users.blklot %>  <%= users.street %> <%= users.brgy %> <%= users.province%>  </td>
                               <td><%= users.request %></td>
-                              <td> <a class="td-link"  href="/adminsviewblotter/<%= users._id %>" >
+                              <td> <a class="td-link"  href="/adminsviewresidents/<%= users._id %>" >
                                 Edit
                               </a> </td>
-                              <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullnamecomplainant %> complaint?');"  >
+                              <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.lastname %> s information?');"  >
                                 
                              Delete </a> </td>
                             </tr>
@@ -293,7 +311,7 @@
                             
                           </tbody>
                      </table>
-                    </div>
+                     </div>
 
             
                 </div>

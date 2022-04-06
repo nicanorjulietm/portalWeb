@@ -1,0 +1,228 @@
+<%- include('../partials/header') %> 
+
+    <div class="news-container req-view-div">
+              <div class="news-inside">
+                <form class="row g-3 req-row blotter-w" action="/adminsviewresidents/<%-users._id %>" method="POST">
+                    <div class="col-12 req-distance">
+                        <div class="title-design" style="width: 100%; padding-top: 50px;" >
+                            <h5>Resident Information </h5>
+                            <hr />
+                          </div>
+  
+                        <div class="date-req " style="text-align: right; padding: 0; margin: 10px;">
+                        <label class="req-label"> <b>Precinct No: <input style="width: 100px;" name="precinct" value="<%=users.precinct %> "/> </b> </label>  <br>
+                        <label class="req-label"> <b>Date Recorded: <input style="width: 100px;" value="<%=users.daterecorded %> " name="daterecorded" required/> </b> </label> 
+                        <!-- <label class="req-label"><b> Request : </b> </label>  -->
+                        <!-- <select class="custom-select my-1 mr-sm-2" name="request" style="width: 100px"> -->
+                          <!-- <option selected></option> -->
+                          <!-- <option value="Pending">On-going</option>
+                          <option value="Approved">Finished</option> -->
+                        
+                        </select>
+                      </div>
+                      </div>
+                      <div class="col-md-5 req-distance">
+                        <label class="req-label">Last Name</label>
+                        <input type="text" class="req-view-input" value="<%=users.lastname %> "name="lastname"style="width: 100%;" required />
+                      </div>
+                      <div class="col-md-5 req-distance">
+                        <label class="req-label">First Name</label>
+                        <input type="text" class="req-view-input" name="firstname" value="<%=users.firstname %> "style="width: 100%;" required />
+                      </div>
+                      <div class="col-md-2 req-distance">
+                        <label class="req-label">M.I</label>
+                        <input type="text" class="req-view-input" name="middleinitial"value="<%=users.middleinitial %> " style="width: 100%;" required />
+                      </div>
+                      <div class="col-md-1 req-distance">
+                        <label class="req-label">Age</label>
+                        <input type="text" class="req-view-input" name="age" style="width: 100%;"value="<%=users.age %> "required />
+                      </div>
+                      <div class="col-md-3 req-distance">
+                        <label class="req-label">Gender</label>
+                            <select class="custom-select  " name="gender" value="<%=users.gender %> "style="width: 100px">  
+                           
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option></select>
+                      </div>
+                      <div class="col-md-4 req-distance">
+                        <label class="req-label">Date of Birth</label>
+                        <input type="text" class="req-view-input" name="birthday" style="width: 100%;" value="<%=users.birthday %> " required />
+                      </div>
+                     
+                      <div class="col-md-4 req-distance">
+                        <label class="req-label">Place of Birth</label>
+                        <input type="text" class="req-view-input" name="birthplace" style="width: 100%;"value="<%=users.birthplace %> " required />
+                      </div>
+                      <div class="col-md-3 req-distance">
+                        <label class="req-label">Civil Status</label>
+                        <select class="custom-select" name="civilstatus"value="<%=users.civilstatus %> " style="width: 100px"> 
+                            
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Widow/er">Widow/er</option>
+                            <option value="Separated">Separated</option></select>
+                      </div>
+                      <div class="col-md-5 req-distance">
+                        <label class="req-label">Email</label>
+                        <input type="email" class="req-view-input" name="email" value="<%=users.email %> " style="width: 100%;" required />
+                      </div>
+                      <div class="col-md-4 req-distance">
+                        <label class="req-label">Contact No.</label>
+                        <input type="text" class="req-view-input" name="phone"value="<%=users.phone %> " style="width: 100%;" required />
+                      </div>
+
+                      <div class="col-md-4 req-distance">
+                        <label class="req-label">Highest School Attainment</label>
+                        <select class="custom-select" name="schoolattainment"value="<%=users.schoolattainment %> " style="width: 150px"> 
+                            
+                            <option value="Elementary">Elementary</option>
+                            <option value="HighSchool"style="width: 100px">HighSchool</option>
+                            <option value="College">College</option>
+                            <option value="Graduate School ">Graduate School </option>
+                            <option value="Vocational">Vocational</option>
+                        </select>
+                      </div>
+
+                      <div class="col-md-8 req-distance">
+                        <label class="req-label">Profession/Occupation</label>
+                        <input type="text" class="req-view-input" name="profession" value="<%=users.profession %> " style="width: 100%;" required />
+                      </div>
+
+                      <div class="col-md-3 req-distance">
+                        <label class="req-label">Blk/Lt</label>
+                        <input type="text" class="req-view-input" name="blklot"value="<%=users.blklot %> " style="width: 100%;" required />
+                      </div>
+                      <div class="col-md-4 req-distance">
+                        <label class="req-label">Street</label>
+                        <input type="text" class="req-view-input" name="street" value="<%=users.street %> "style="width: 100%;" required />
+                      </div>
+                      <div class="col-md-5 req-distance">
+                        <label class="req-label">Barangay</label>
+                        <input type="text" class="req-view-input" name="brgy" value="<%=users.brgy %> " style="width: 100%;" required />
+                      </div>
+                     
+                      <div class="col-md-5 req-distance">
+                        <label class="req-label">Province/City</label>
+                        <input type="text" class="req-view-input" name="province"  value="<%=users.province %> "style="width: 100%;" required />
+                      </div>
+                      <div class="col-md-5 req-distance">
+                        <label class="req-label">Citizenship</label>
+                        <input type="text" class="req-view-input" name="citizen" value="<%=users.citizen %> " style="width: 100%;" required />
+                      </div>
+                      <div class="col-md-2 req-distance">
+                        <label class="req-label">Zipcode</label>
+                        <input type="text" class="req-view-input" name="zipcode" value="<%=users.zipcode %> " style="width: 100%;" required />
+                      </div>
+                   
+                    
+                  
+  
+                    <div class="col-12 submit-center req-btns " style="text-align: center;">
+                      <button type="submit" class="btn submit  " style="width: 300px;">
+                        Save Information
+                      </button>
+                      
+                    </div>
+                  </form>
+              </div>
+   
+
+    </div>
+
+
+  
+
+
+<style>
+
+body {
+    Margin: 0;
+    Padding: 0;
+    font-family: 'Source Sans Pro', sans-serif;
+    Line-height: 1.3;
+    background-image: url("/images/bground.png");
+    background-repeat: no-repeat, repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+
+
+}
+.news-inside{
+    width: 100%;
+}
+.req-view-input{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.req-view-div{
+    width: 500px;
+    margin: 0 auto;
+ 
+    line-height: 0.9;
+}
+
+  input, .txt-area, select{
+    border: none;
+    margin-bottom: 2px;
+    border-bottom: 1px solid #04684f;
+    width: 300px;
+    background: transparent !important;
+    
+  }
+  .title-design
+  {
+    /* background-color: #1B999D;
+    opacity: 0.75; */
+    text-align: center;
+    padding-bottom: 0px;
+    color:#1B999D;
+    width: 300px;
+   
+  }
+
+  .submit{
+    width: 300px;
+    margin: 10px 0 0 0;
+    padding: 5px;
+    background-color:#1B999D; 
+    
+    border: none;
+    opacity: 0.75;
+    color: white;
+    margin-bottom: 10px;
+  }
+  .submit:hover{
+    background: none;
+    border: 1px solid #04684f;
+    color: #784546;
+    border-style: double;
+    transition: 0.5s;
+    
+  }
+  
+  .google-au
+  {
+    margin-top: 20px;
+    text-decoration: none;
+   
+    color: #04684f; 
+  }
+  .google-au:hover
+  {
+    margin-top: 20px;
+    text-decoration: none;
+    color: #784546; 
+  }
+
+.sign-up-link
+  {
+      text-align: center;
+  }
+
+.req-label{
+    line-height: 1.5;
+    font-size: 13px;
+}
+</style>

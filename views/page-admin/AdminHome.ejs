@@ -151,46 +151,7 @@
                           <div class="card-header">Dashboard</div>
                           <div class="card-body">
                             <div class="row">
-                              <!-- <div class="col-sm-3">
-                                <div class="card cardx">
-                                  <div class="card-body">
-                                    <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i>   </h2>
-                                      <h5 class="card-title">Users</h5>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-sm-3">
-                                <div class="card cardx">
-                                  <div class="card-body">
-                                    <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i>   </h2>
-                                      <h5 class="card-title">Requests</h5>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-sm-3">
-                                <div class="card cardx">
-                                  <div class="card-body">
-                                    <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i>   </h2>
-                                      <h5 class="card-title">Blotter</h5>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-sm-3">
-                                <div class="card cardx">
-                                  <div class="card-body">
-                                    <div class="well dash-box">
-                                      <h2><i class="fa-solid fa-user fa-1x"></i>    </h2>
-                                      <h5 class="card-title">Suggestions</h5>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div> -->
+                             
                               <div class="col-sm-3">
                                 <div class="card cardx">
                                       <div class="card-counter primary">
@@ -203,31 +164,35 @@
                               <div class="col-sm-3">
                                 <div class="card cardx">
                                       <div class="card-counter primary">
-                                        <i class="fa-solid fa-file-lines"></i>
-                                        <span class="count-numbers">  <%= requestCount %></span>
-                                        <span class="count-name">Requests</span>
+                                        <i class="fa-solid fa-person"></i>
+                                        
+                                        <span class="count-numbers">  <%=  countResidents%></span>
+                                        <span class="count-name">Residents</span>
                                       </div>     
                                 </div>
                               </div>
                               <div class="col-sm-3">
                                 <div class="card cardx">
                                       <div class="card-counter primary">
-                                        <i class="fa-solid fa-scale-balanced"></i>
-                                        <span class="count-numbers">  <%= countBlotter %></span>
-                                        <span class="count-name">Blotters</span>
+                                        <i class="fa-solid fa-file-lines"></i>
+                                       
+                                        <span class="count-numbers">  <%= requestCount %></span>
+                                        <span class="count-name">Requests</span>
                                       </div>
                                 </div>
                               </div>
                               <div class="col-sm-3">
                                 <div class="card cardx">
                                       <div class="card-counter primary">
-                                        <i class="fa-solid fa-comment-dots"></i>
-                                        <span class="count-numbers"> <%= countSuggestions %> </span>
-                                        <span class="count-name">Suggestions</span>
+                                        <i class="fa-solid fa-scale-balanced"></i>
+                                        <span class="count-numbers"> <%= countBlotter %> </span>
+                                        <span class="count-name">Blotters</span>
                                       </div>     
                                 </div>
                               </div>
+
                               
+                            
 
                             </div>
                           </div>

@@ -6,6 +6,8 @@
         
             <button class="nav-link active" id="nav-users-tab" data-bs-toggle="tab" data-bs-target="#nav-users" 
             type="button" role="tab" aria-controls="nav-users" aria-selected="true">All Users</button>
+            <button class="nav-link " id="nav-residents-tab" data-bs-toggle="tab" data-bs-target="#nav-residents" 
+            type="button" role="tab" aria-controls="nav-residents" aria-selected="true">Residents Record</button>
             <button class="nav-link" id="nav-blotter-tab" data-bs-toggle="tab" data-bs-target="#nav-blotter" 
             type="button" role="tab" aria-controls="nav-blotter" aria-selected="false"> Blotters Record</button>
           
@@ -23,7 +25,7 @@
             aria-controls="nav-indigencyh" aria-selected="false">Certificate for Indigency</button>
             
             <button class="nav-link" id="nav-wiringh-tab" data-bs-toggle="tab" data-bs-target="#nav-wiringh" 
-            type="button" role="tab" aria-controls="nav-wiringh" aria-selected="false"> Wiring and Excavation Clearance</button>
+            type="button" role="tab" aria-controls="nav-wiringh" aria-selected="false"> W & E Clearance</button>
 
       </div>
   </nav>
@@ -56,7 +58,7 @@
                          
                         <td scope="row"> <%= users.email %> </td>
                               
-                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.lastname %>s back up account?');"  >
                         <i class="fa-solid fa-xmark"></i> </a> </td>
                       
                       </tr>
@@ -66,6 +68,49 @@
                   </table>
                 </div>
               </div> 
+
+               <!-- -------------------RESIDENTS--------------------------- -->
+               <div class="tab-pane fade" id="nav-residents" role="tabpanel" aria-labelledby="nav-residents-tab">
+                <div class="tableFixHead record-content">
+                                                  
+                                                      
+                  <table class="table table-hover citizen-table">
+                    <thead class="table-dark">
+                        <!-- <th scope="col">#</th> -->
+                        <th scope="col">Date Recorded: </th>
+                       
+                        <th scope="col">Full Name</th>
+                        <th scope="col">Complete Address</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     
+                    <%  allbackupResidents.forEach(function(users){ %>
+                      <tr>
+                        <th scope="row"><%= users.daterecorded %></th>
+                        
+                        <td><%= users.lastname %>  <%= users.firstname %> <%= users.middleinitial %> </td>
+                        <td> <%= users.blklot %>  <%= users.street %> <%= users.brgy %> <%= users.province%>  </td>
+                        <td><%= users.request %></td>
+                        <td> <a class="td-link"  href="/adminsviewblotter/<%= users._id %>" >
+                          Edit
+                        </a> </td>
+                        <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.lastname %> s backup information?');"  >
+                          
+                       Delete </a> </td>
+                      </tr>
+                      <% }); %> 
+                      
+                    </tbody>
+               </table>
+                 
+                </div>
+          
+              </div>
+              <!-- -------------------END OF RESIDENTS--------------------------- -->
           
           
               
@@ -94,7 +139,7 @@
                                 
                         
                         <td scope="row"> <%= users.request %> </td>       
-                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullnamecomplainant %> complaint?');"  >
                         <i class="fa-solid fa-xmark"></i> </a> </td>
                       
                       </tr>
@@ -133,7 +178,7 @@
                         <td scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>  
                         <td scope="row"> <%= users.email %> </td>
                         <td scope="row"> <%= users.request %> </td>       
-                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> request?');"  >
                         <i class="fa-solid fa-xmark"></i> </a> </td>
                       
                       </tr>
@@ -168,7 +213,7 @@
                         <td scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>  
                         <td scope="row"> <%= users.email %> </td>
                         <td scope="row"> <%= users.request %> </td>       
-                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> request?');"  >
                         <i class="fa-solid fa-xmark"></i> </a> </td>
                       
                       </tr>
@@ -203,7 +248,7 @@
                         <td scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>  
                         <td scope="row"> <%= users.email %> </td>
                         <td scope="row"> <%= users.request %> </td>       
-                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> request?');"  >
                         <i class="fa-solid fa-xmark"></i> </a> </td>
                       
                       </tr>
@@ -240,7 +285,7 @@
                         <td scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>  
                         <td scope="row"> <%= users.email %> </td>
                         <td scope="row"> <%= users.request %> </td>       
-                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> request?');"  >
                         <i class="fa-solid fa-xmark"></i> </a> </td>
                       
                       </tr>
@@ -279,7 +324,7 @@
                         <td scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>  
                         <td scope="row"> <%= users.email %> </td>
                         <td scope="row"> <%= users.request %> </td>       
-                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
+                      <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> request?');"  >
                         <i class="fa-solid fa-xmark"></i> </a> </td>
                       
                       </tr>

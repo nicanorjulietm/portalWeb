@@ -16,7 +16,7 @@
 
    }
    .addbtn{
-     width: 100px;
+     width: 130px;
      margin-right: 5px ;
    }
    .addbtn:hover{
@@ -25,6 +25,7 @@
    tr{
      background-color: white;
    }
+ 
    .table-container{
      padding-top: 0;
    }
@@ -250,9 +251,11 @@ flex-direction: column;
 }
 .a-link{
   color: white;
+  
 }
 .a-link:hover{
   color:#1B999D;
+  
 }
 
 .td-link{
@@ -274,7 +277,7 @@ flex-direction: column;
 .blotter-w{
   width: 100% !important;
   text-align: left;
-  padding: 0;
+  padding: 10px 30px;
 }
 .req-view-input{
   width: 100%;
