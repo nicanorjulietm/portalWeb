@@ -205,13 +205,16 @@ const residentsSchema ={
   const Residents= new mongoose.model("Residents", residentsSchema);
   const BackUpResidents= new mongoose.model("BackUpResidents", residentsSchema);
 
+
+ 
 app.get("/", function (req, res) {
+
+ 
 res.render("main");
-
-
-
-
 });
+
+
+
 app.get("/login", function (req, res) {
   res.render("login");
 });
@@ -219,6 +222,7 @@ app.get("/login", function (req, res) {
 // app.get("/createaccount", function (req, res) {
 //   res.redirect("createaccount");
 // });
+
 
   app.get("/portal", function (req, res) {
       res.render("portal");
@@ -286,6 +290,81 @@ app.get("/login", function (req, res) {
   app.get("/employeeportal", async (req, res) => {
     res.redirect("employeeportal");
   });
+
+
+  
+
+/// lOGIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+app.post("/login", function (req, res) {
+  const email = req.body.email;
+  const password = req.body.password;
+//   const accountrole = req.body.accountrole;
+
+  Account.findOne({ email: email }, function (err, foundUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser) {
+        if (foundUser.password === password) {
+
+            if (foundUser.accountrole === "admin") {
+                res.redirect("adminportal");
+            }
+            else if(foundUser.accountrole === "employee"){
+                res.redirect("employeeportal");
+            }
+            else if(foundUser.accountrole === "citizen"){
+                res.redirect("portal");     
+            }
+            else if(foundUser.accountrole === "superadmin"){
+              res.redirect("portal");     
+          }
+        }
+        else {
+            res.redirect("login");
+        }
+      }
+    }
+  });
+});
+ 
+
+
+/// SIGN UPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
+
+
+app.post("/registeraccount", async function (req, res) {
+
+    try{
+
+      const newUser = new Account({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password,
+        conpassword: req.body.conpassword,
+        accountrole: req.body.accountrole
+      });
+      await newUser.save();
+      const backupaccounts = new BackUpAccount({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password,
+        conpassword: req.body.conpassword,
+        accountrole: req.body.accountrole
+      });
+      await backupaccounts.save();
+      res.render("login")
+
+    } catch(err){
+      console.log(err)
+      res.redirect("register");
+    }
+
+});
+
+
   
 app.get("/deleteinfo/:id", (req, res, next)=> {
       Residents.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
@@ -447,78 +526,6 @@ app.get("/deleteinfo", (req, res, next)=> {
             }
   });});});});});});});
 });
-
-
-/// lOGIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/login", function (req, res) {
-  const email = req.body.email;
-  const password = req.body.password;
-//   const accountrole = req.body.accountrole;
-
-  Account.findOne({ email: email }, function (err, foundUser) {
-    if (err) {
-      console.log(err);
-    } else {
-      if (foundUser) {
-        if (foundUser.password === password) {
-
-            if (foundUser.accountrole === "admin") {
-                res.redirect("adminportal");
-            }
-            else if(foundUser.accountrole === "employee"){
-                res.redirect("employeeportal");
-            }
-            else if(foundUser.accountrole === "citizen"){
-                res.redirect("portal");     
-            }
-            else if(foundUser.accountrole === "superadmin"){
-              res.redirect("portal");     
-          }
-        }
-        else {
-            res.redirect("login");
-        }
-      }
-    }
-  });
-});
- 
-
-
-/// SIGN UPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
-
-
-app.post("/registeraccount", async function (req, res) {
-
-    try{
-
-      const newUser = new Account({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: req.body.password,
-        conpassword: req.body.conpassword,
-        accountrole: req.body.accountrole
-      });
-      await newUser.save();
-      const backupaccounts = new BackUpAccount({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: req.body.password,
-        conpassword: req.body.conpassword,
-        accountrole: req.body.accountrole
-      });
-      await backupaccounts.save();
-      res.render("login")
-
-    } catch(err){
-      console.log(err)
-      res.redirect("register");
-    }
-
-});
-
 
 
 //ADMIN PERKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
