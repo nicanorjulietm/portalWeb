@@ -269,6 +269,8 @@ app.get("/portal", function(req, res){
      res.redirect("/");
     })
 
+
+
 //   app.get("/main", function (req, res) {
 //   res.render("main");
 // });
@@ -363,6 +365,8 @@ app.get("/deleteinfo/:id", (req, res, next)=> {
   
 app.get("/adminportal", function (req, res) {
 
+ 
+
 
   const query = Account.find();  query.count(function (err, countAccounts) {
   // const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
@@ -413,7 +417,7 @@ app.get("/adminportal", function (req, res) {
               res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
               , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
             ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-          ,allUserAccounts, requestCount, allResidents,  allbackupResidents, countResidents, allFemale, allMale});
+          ,allUserAccounts, requestCount, allResidents,  allbackupResidents, countResidents, allFemale, allMale, username: req.user.username});
             });
           });
         });

@@ -119,13 +119,36 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                 <ul class="navbar-nav">
-                  <li class="nav-item navbar-distance signout-distance" style="padding: 7px;">
-                    <a class="nav-link" href="/logout" >Sign out</a>
+                  <li class="nav-item navbar-distance signout-distance" style="padding: 7px;margin-top: 15px;">
+                    <a class="nav-link" href="#" >Projects</a>
                   </li>
+                  <!-- <li class="nav-item navbar-distance signout-distance" style="padding: 7px;margin-top: 15px;">
+                    <a class="nav-link" href="/calendar" >Calendar</a>
+                  </li> -->
                   
-                  <li class="nav-item navbar-distance" style="padding: 7px;">
-                   <a class="nav-link nav-border-without" href="/adminportal" > <i class="fa-solid fa-user fa-1x"></i> Hi! Admin </a>
-        
+                  <!-- ------------------------------------------------------------------------ -->
+
+                  
+
+            <!-- ------------------------------------------------------------------------ -->
+
+               
+                  
+                  
+
+                  <li class="nav-item dropdown navbar-distance" >
+                    <a class="nav-link dropdown-toggle nav-border-without" href="/adminportal" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <i class="fa-solid fa-user fa-1x"></i> Hi! <%= username %>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <!-- <li><a class="dropdown-item" href="/editinfo/:id">Profile</a></li> -->
+                      <li><a class="dropdown-item" href="#">User View</a></li>
+                      <li><a class="dropdown-item" href="#">Employee View</a></li>
+                      <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                     
+                    
+                    
                   </li>
                 
                   <!-- <li class="nav-item navbar-distance">
@@ -190,12 +213,97 @@
                               </div>     
                         </div>
                       </div>
-
-                      
-                    
-
                     </div>
                   </div>
+                </div>
+
+                <div class="card card-content Dashboard-card" style="margin-top: 10px; ">
+                  
+                 
+                    <div class="row">
+                     
+                      <div class="col-sm-7">
+                        <div class="card officials-card">
+                          <div class="card-header">Barangay Officials</div>
+                          <table class="table table-striped table-hover">
+                            <thead>
+                              <tr>
+                               
+                                <th scope="col">Position</th>
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Username</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Captain </td>
+                                <td>Engr. Fortunato Flojo</td>
+                                <td>@flojof</td>
+                              </tr>
+                              <tr>
+                                <td>Councilor </td>
+                                <td>Edgar Tamayo</td>
+                                <td>@tamayoe</td>
+                              </tr>
+                              <tr>
+                                <td>Councilor </td>
+                                <td>Thelma Nicanor</td>
+                                <td>@nicanort</td>
+                              </tr>
+                              <tr>
+                                <td>Councilor </td>
+                                <td>Neil Pinon</td>
+                                <td>@pinonn</td>
+                              </tr>
+                              <tr>
+                                <td>Councilor </td>
+                                <td>Denial Lazaro</td>
+                                <td>@lazarod</td>
+                              </tr>
+                              <tr>
+                                <td>Councilor </td>
+                                <td>Berto Morales</td>
+                                <td>@morealesb</td>
+                              </tr>
+                             
+                              <tr>
+                                <td>Councilor </td>
+                                <td>Aaron Orca</td>
+                                <td>@orcaa</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-sm-5">
+                        <div class="card ">
+                              <div class="card-counter primary">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                
+                                <span class="count-numbers"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %></span>
+                                <span class="count-name">Have a Nice day!</span>
+                                
+                              </div>     
+                        </div>
+                        <div class="card " style="margin-top: 8px;">
+                          <div class="card-header">Contact Admin</div>
+                             <form action="/contactadmin" style=" padding: 10px">
+                              <label> 
+                                Username :
+                              </label>
+                              <input type="text" class="form-control" style="width: 100%"/>
+                              <label> 
+                                Message :
+                              </label>
+                              <textarea  class="form-control" name="message" style="width: 100%;height: 55px;"></textarea>
+                              <button class="submit " style="width: 100%"> Send Now </button>
+
+                             </form>
+                    </div>
+                      </div>
+                     
+                    </div>
+                  
                 </div>
                 <!-- --------------END OF DASHBOARD (SIDEBAR)------------- -->
           </div>
@@ -260,7 +368,7 @@
                            <div class="tableFixHead">
                          
                              
-                             <table class="table table-hover citizen-table">
+                             <table class="table table-hover table-striped citizen-table">
                                <thead class="table-dark">
                                    <!-- <th scope="col">#</th> -->
                                    <th scope="col">Accout Role</th>
@@ -303,7 +411,7 @@
                       <div class="tableFixHead">
 
                         
-                        <table class="table table-hover citizen-table">
+                        <table class="table table-hover table-striped citizen-table">
                           <thead class="table-dark">
 
 
@@ -345,7 +453,7 @@
                     <div class="tab-pane fade" id="employee" role="tabpanel" aria-labelledby="employee-tab">
 
                       <div class="tableFixHead">
-                        <table class="table table-hover citizen-table">
+                        <table class="table table-hover table-striped citizen-table">
                           <thead class="table-dark">
                               <!-- <th scope="col">#</th> -->
                               <th scope="col">Accout Role</th>

@@ -36,7 +36,11 @@ margin: 0 auto;}
  /* Just common table stuff. */
  table  { border-collapse: collapse; width: 100%; }
 
- .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+ .tableFixHead thead th tr { position: sticky; 
+  top: 0; z-index: 1;}
+
+
+
  /* ----------- */
  .card-content{
    width: 80%;
@@ -349,4 +353,13 @@ text-transform: capitalize;
 opacity: 0.5;
 display: block;
 font-size: 18px;
+}
+
+/* ------DASHBOARD---- */
+
+.Dashboard-card{
+  background-color: transparent;
+}
+.officials-card{
+  padding: 5px;
 }
