@@ -59,7 +59,7 @@
                           
                                                 <div class="date-req " style="text-align: right; padding: 0; margin: 10px;">
                                                 <label class="req-label"> <b>Precinct No: <input style="width: 100px;" name="precinct" /> </b> </label>  <br>
-                                                <label class="req-label"> <b>Date Recorded: <input style="width: 100px;" name="daterecorded" required/> </b> </label> 
+                                                <label class="req-label"> <b>Date Recorded: <input style="width: 100px;" value="<%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %>" name="daterecorded" required/> </b> </label> 
                                                 <!-- <label class="req-label"><b> Request : </b> </label>  -->
                                                 <!-- <select class="custom-select my-1 mr-sm-2" name="request" style="width: 100px"> -->
                                                   <!-- <option selected></option> -->

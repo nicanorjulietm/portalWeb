@@ -387,7 +387,7 @@ app.get("/adminportal", function (req, res) {
   const query = Account.find();  query.count(function (err, countAccounts) {
   // const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
   const blotterquery = Blotter.find(); blotterquery.count(function(err, countBlotter){  
-    const residentsquery = Blotter.find(); residentsquery.count(function(err, countResidents){  
+    const residentsquery = Residents.find(); residentsquery.count(function(err, countResidents){  
 
     // const accountPercentage = ((countAccounts * 0.10) * 100);
     // const accountDegree = (accountPercentage * 3.6);
