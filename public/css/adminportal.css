@@ -71,6 +71,7 @@ height: 100%;
 overflow-x: hidden;
 overflow-y: auto;
 background:#1B999D;
+
 }
 .sidebar-cont{
 position: fixed;
@@ -92,7 +93,7 @@ width: 220px;
 background-color: transparent;
 text-align: left;
 float: left;
-padding-left: 20px;
+padding-left: 15px;
 border:0px;
 color:#fff;
 box-shadow: 0 0 1px #ccc;
@@ -359,7 +360,20 @@ font-size: 18px;
 
 .Dashboard-card{
   background-color: transparent;
+  border: none;
 }
 .officials-card{
   padding: 5px;
 }
+.dash-icon{
+  padding-right: 7px;
+}
+.dash-content{
+  padding: 0 20px;
+  margin: 0;
+}
+/* $modal-fade-transform: scale(.8). */
+
+
+
+/* ------------PROJECTS-------- */

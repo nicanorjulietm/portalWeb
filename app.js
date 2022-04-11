@@ -58,6 +58,7 @@ const useraccountsSchema = new mongoose.Schema ({
   password: String,
   accountrole: String,
 
+
 });
 useraccountsSchema.plugin(passportLocalMongoose);
 const Account = new mongoose.model("Account", useraccountsSchema);
@@ -209,6 +210,13 @@ const residentsSchema ={
   const Residents= new mongoose.model("Residents", residentsSchema);
   const BackUpResidents= new mongoose.model("BackUpResidents", residentsSchema);
 
+const updateSchema = {
+    datetodays: String,
+    postedby: String,
+    title: String,
+    details: String
+  };
+  const Update = new mongoose.model("Update", updateSchema);
 
  
 app.get("/", function (req, res) {
@@ -240,7 +248,7 @@ app.get("/portal", function(req, res){
   app.get("/RequestIdForm", function (req, res) {
     res.render("./page-admin/RequestIdForm");
   });
-
+ 
   app.get("/RequestIndigencyForm", function (req, res) {
     res.render("./page-admin/RequestIndigencyForm");
   });
@@ -276,7 +284,7 @@ app.get("/portal", function(req, res){
 // });
   
   app.get("/contact-mail", async (req, res) => {
-    res.redirect("main");
+    res.redirect("/");
   });
   
   app.get("/employeeportal", async (req, res) => {
@@ -365,9 +373,6 @@ app.get("/deleteinfo/:id", (req, res, next)=> {
   
 app.get("/adminportal", function (req, res) {
 
- 
-
-
   const query = Account.find();  query.count(function (err, countAccounts) {
   // const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
   const blotterquery = Blotter.find(); blotterquery.count(function(err, countBlotter){  
@@ -384,6 +389,8 @@ app.get("/adminportal", function (req, res) {
     BackUpCertificateIndigency.find().count(function(err, countRequestIndigency){ 
     BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
     const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
+
+   
 
     BackUpBlotter.find({}, function(err, backupBlotters){ 
     Blotter.find({request: 'Finished'}, function(err, blottersFinished){ 
@@ -417,7 +424,7 @@ app.get("/adminportal", function (req, res) {
               res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
               , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
             ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-          ,allUserAccounts, requestCount, allResidents,  allbackupResidents, countResidents, allFemale, allMale, username: req.user.username});
+          ,allUserAccounts, requestCount, allResidents, allbackupResidents, countResidents, allFemale, allMale, username: req.user.username});
             });
           });
         });
@@ -466,6 +473,36 @@ app.get("/deleteinfo", (req, res, next)=> {
         res.redirect("/adminportal");
       }
 });});});});});});});});
+
+
+
+app.get("/updates",function (req, res){
+  Update.find({}, function(err, myUpdates){
+   res.render('updates', {myUpdates});
+  })
+ });
+
+
+//for updates in add new things!
+app.post("/updates", function (req,res){
+
+  const updatex = new Update({
+    datetodays: req.body.datetodays,
+    postedby: req.body.postedby,
+    title: req.body.title,
+    details: req.body.details
+  });
+ updatex.save(function (err){
+   if (err){
+     console.log(err)
+   }else{
+     res.redirect("adminportal")
+   }
+ })
+
+});
+
+
 
 
 //ADMIN PERKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1257,7 +1294,7 @@ app.post("/contact-mail", async function (req, res) {
           text: req.body.message,
         });
         await backupContact.save();
-        res.redirect("main")
+        res.redirect("/")
   }catch(err){
     console.log(err)
   }

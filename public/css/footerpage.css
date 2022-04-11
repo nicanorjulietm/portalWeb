@@ -11,9 +11,10 @@
     border: 1px solid #c7860db8;
   } */
   
-  input, textarea, iframe
+  .contact-input, textarea
   {
-    filter: drop-shadow(0px 4px 4px #41524F);
+    border: 1px rgb(180, 177, 177) solid !important;
+    /* filter: drop-shadow(0px 4px 4px #41524F); */
   }
   
   
