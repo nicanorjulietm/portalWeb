@@ -344,6 +344,7 @@ app.post("/registeraccount",  function(req, res){
 
   
 app.get("/deleteinfo/:id", (req, res, next)=> {
+  Update.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
       Residents.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
       BackUpResidents.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
       BackUpBlotter.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
@@ -368,7 +369,8 @@ app.get("/deleteinfo/:id", (req, res, next)=> {
          console.log("Delete Successfully");
          res.redirect("/adminportal");
          }
-});});});});});});});});});});});});});});});});});});
+});});});});});});});});});});});});});});});});});});});
+  
   
   
 app.get("/adminportal", function (req, res) {
@@ -391,7 +393,7 @@ app.get("/adminportal", function (req, res) {
     const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
 
    
-
+      Update.find({}, function (err, myUpdates){
     BackUpBlotter.find({}, function(err, backupBlotters){ 
     Blotter.find({request: 'Finished'}, function(err, blottersFinished){ 
     Blotter.find({request: 'On-going'}, function(err, blottersOngoing){ 
@@ -424,12 +426,12 @@ app.get("/adminportal", function (req, res) {
               res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
               , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
             ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-          ,allUserAccounts, requestCount, allResidents, allbackupResidents, countResidents, allFemale, allMale, username: req.user.username});
+          ,allUserAccounts, requestCount, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, username: req.user.username});
             });
           });
         });
       });
-    });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});});
+    });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});}); });
 
 
 // EDIT USER for Manage Account
@@ -457,7 +459,7 @@ const id = req.params.id;
 
 
 app.get("/deleteinfo", (req, res, next)=> {
-
+  
   Residents.deleteMany({}, (err, users)=>{ 
   Blotter.deleteMany({}, (err, users)=>{
   CertificateIndigency.deleteMany({}, (err, users)=>{

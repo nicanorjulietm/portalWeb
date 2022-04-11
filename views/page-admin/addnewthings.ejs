@@ -1,0 +1,47 @@
+<div class="title-design"style="width: 100%; padding: 0;margin: 0;">
+    <h5 style="padding: 0;">Add New Things</h5>
+  
+  </div><nav>
+    <div class="nav nav-tabs justify-content-center" style="margin-bottom: 0;" id="nav-tab" role="tablist">
+      <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Projects</button>
+      <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Bulletin</button>
+      <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Task</button>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+       
+        
+        <div class="suggestions-div" style="width: 100%; " >
+           
+            <div class="row">
+      
+                <% myUpdates.forEach(function(users){ %>
+                 
+                <div class="col-sm-3">
+        
+                  <div class="post-it">
+                     <div>  <a class="td-link"  href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> suggestions?');"  >  <i class="fa-solid fa-xmark"></i></a>
+                    <p class="sticky taped">
+                       
+                      <strong><%= users.title %> </strong><br>
+                      <i> date today : <%= users.datetodays %> </i> <br>
+                      <i> posted by : <%= users.postedby %> </i><br>
+                      
+                      <%= users.details %>
+                    </p>
+                </div>
+                  </div>
+                </div>
+               
+               
+                <% }); %>
+              </div>
+          </div>
+        
+    </div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+  </div>
+
+  
