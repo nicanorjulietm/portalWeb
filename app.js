@@ -218,6 +218,14 @@ const updateSchema = {
   };
   const Update = new mongoose.model("Update", updateSchema);
 
+  const taskSchema = {
+    datetodays: String,
+    postedby: String,
+    assignedto: String,
+    subject: String,
+    description: String
+  }
+  const Task = new mongoose.model("Task", taskSchema);
  
 app.get("/", function (req, res) {
 res.render("main");
@@ -344,6 +352,7 @@ app.post("/registeraccount",  function(req, res){
 
   
 app.get("/deleteinfo/:id", (req, res, next)=> {
+  Task.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
   Update.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
       Residents.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
       BackUpResidents.findByIdAndDelete({_id: req.params.id}, (err, users) =>{ 
@@ -369,7 +378,7 @@ app.get("/deleteinfo/:id", (req, res, next)=> {
          console.log("Delete Successfully");
          res.redirect("/adminportal");
          }
-});});});});});});});});});});});});});});});});});});});
+});});});});});});});});});});});});});});});});});});});});
   
   
   
@@ -392,7 +401,7 @@ app.get("/adminportal", function (req, res) {
     BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
     const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
 
-   
+   Task.find({}, function (err, myTasks){ 
       Update.find({}, function (err, myUpdates){
     BackUpBlotter.find({}, function(err, backupBlotters){ 
     Blotter.find({request: 'Finished'}, function(err, blottersFinished){ 
@@ -426,12 +435,12 @@ app.get("/adminportal", function (req, res) {
               res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
               , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
             ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-          ,allUserAccounts, requestCount, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, username: req.user.username});
+          ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, username: req.user.username});
             });
           });
         });
       });
-    });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});}); });
+    });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});}); });});
 
 
 // EDIT USER for Manage Account
@@ -484,6 +493,25 @@ app.get("/updates",function (req, res){
   })
  });
 
+ //for updates in add new things!
+app.post("/tasks", function (req,res){
+
+  const tasks = new Task({
+    datetodays: req.body.datetodays,
+    postedby: req.body.postedby,
+    assignedto: req.body.assignedto,
+    subject: req.body.subject,
+    description: req.body.description
+  });
+ tasks.save(function (err){
+   if (err){
+     console.log(err)
+   }else{
+     res.redirect("adminportal")
+   }
+ })
+
+});
 
 //for updates in add new things!
 app.post("/updates", function (req,res){
