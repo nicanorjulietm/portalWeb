@@ -64,7 +64,7 @@
             <li>
               <hr class="dropdown-divider" />
             </li>
-            <li><a class="dropdown-item" href="#">Other</a></li>
+            <li><a class="dropdown-item" href="#contacts" onclick="return confirm('Please send us your concern.');" >Other</a></li>
           </ul>
         </li>
       </ul>
@@ -73,17 +73,17 @@
     
         
       
-        <li class="nav-item navbar-distance">
+        <!-- <li class="nav-item navbar-distance">
           <a class="nav-link nav-border-with" href="#contacts">Talk to Us</a>
-        </li>
+        </li> -->
 
         <li class="nav-item dropdown navbar-distance" >
           <a class="nav-link dropdown-toggle nav-border-without"  id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-            <i class="fa-solid fa-user fa-1x"></i> Hi! <%= username %>
+            <i class="fa-solid fa-id-badge fa-1x" style="color: cadetblue;"></i> Hi! <%= username %>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <!-- <li><a class="dropdown-item" href="/editinfo/:id">Profile</a></li> -->
+            <li><a class="dropdown-item" href="/usersprofile/<%= id %>"> Edit Profile</a></li>
             <!-- <li><a class="dropdown-item" href="#">User View</a></li>
             <li><a class="dropdown-item" href="#">Employee View</a></li> -->
             <li><a class="dropdown-item" href="/logout">Sign out</a></li>

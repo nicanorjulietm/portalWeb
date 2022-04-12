@@ -51,11 +51,12 @@ mongoose.connect("mongodb://localhost:27017/barangayportalDB", {
 
 const useraccountsSchema = new mongoose.Schema ({
   
-  firstname: String,
-  lastname: String,
-  middlename: String,
+  fullname: String,
+  address: String, 
+  birthday: String,
+  phone: String,
   username: { type: String, index: true, unique: true },
-  email: String,
+  email:  { type: String, index: true, unique: true },
   password: String,
   accountrole: String,
 
@@ -92,9 +93,9 @@ const requestforbrgyidSchema = {
   civilstatus: String,
   purposeofreq: String,
   ctc: String,
-  request: String
-  // imgfilefee: { data: Buffer, contentType: String },
-  // imgfileidorpsa: { data: Buffer, contentType: String },
+  request: String,
+  imgfilefee: { data: Buffer, contentType: String },
+  imgfileidorpsa: { data: Buffer, contentType: String },
 };
 const RequestBrgyId = new mongoose.model("RequestBrgyId", requestforbrgyidSchema);
 const BackUpRequestBrgyId = new mongoose.model("BackUpRequestBrgyId", requestforbrgyidSchema);
@@ -242,7 +243,7 @@ app.get("/login", function (req, res) {
 });
 app.get("/portal", function(req, res){
   if(req.isAuthenticated()){
-   res.render("portal", {username: req.user.username});
+   res.render("portal", {username: req.user.username, id: req.user.id});
    }else{
    res.redirect("/login");
    }
@@ -327,6 +328,9 @@ app.get("/reqbrgy-wande-user", function (req, res) {
   app.get("/register", function (req, res) {
     res.render("register");
   });
+  app.get("/usersprofile", function (req, res) {
+    res.render("usersprofile");
+  });
 
   app.get("/logout", function(req, res){
      req.logOut();
@@ -373,15 +377,13 @@ app.post("/registeraccount",  function(req, res){
   const backupaccount = new BackUpAccount({
     username: req.body.username,
     email: req.body.email,
-    lastname: req.body.lastname,
-    firstname: req.body.firstname,
+    fullname: req.body.fullname,
     
     accountrole: req.body.accountrole });
       Account.register({
         username: req.body.username,
         email: req.body.email,
-        lastname: req.body.lastname,
-        firstname: req.body.firstname,
+        fullname: req.body.fullname,
         accountrole: req.body.accountrole
       }, req.body.password,   function(err, user){
         if(err){
@@ -481,7 +483,14 @@ app.get("/adminportal", function (req, res) {
               res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
               , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
             ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-          ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, username: req.user.username});
+          ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, 
+          username: req.user.username,
+          id: req.user.id,
+      fullname: req.user.fullname,
+      address: req.user.address,
+      phone: req.user.phone,
+      birthday: req.user.birthday,
+      email: req.user.email});
             });
           });
         });
@@ -498,6 +507,7 @@ const id = req.params.id;
       console.log("Can't retrieve data and edit because of some database problem.")
       next(err);
     } else {
+      
       res.render("editinfo",  { users: users });
     } 
 });})
@@ -511,6 +521,61 @@ const id = req.params.id;
        }
   })
 });
+
+
+// Account.register({
+//   username: req.body.username,
+//   email: req.body.email,
+//   fullname: req.body.fullname,
+//   accountrole: req.body.accountrole
+// }, req.body.password,   function(err, user){
+//   if(err){
+//   console.log(err);
+//   res.redirect("/createnewaccount");
+//   } else {
+ 
+// backupaccount.save();
+//   res.redirect("/adminportal");
+ 
+//   }
+
+
+// EDIT PROFILE
+app.route("/usersprofile/:id")
+   .get((req,res, next ) =>{
+const id = req.params.id;
+  Account.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+    if(err){
+      console.log("Can't retrieve data and edit because of some database problem.")
+      next(err);
+    } else {
+      
+        res.render("usersprofile",  { users: users });
+     
+      
+    } 
+});})
+   .post((req,res, next ) =>{
+  Account.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+   
+
+    if (err){
+      console.log("Something went wrong to update your data");
+      next(err);
+    }else{
+            if (req.user.accountrole === "admin") {
+              res.redirect("/adminportal"); 
+            } else if (req.user.accountrole === "employee") {
+              res.redirect("/employeeportal"); 
+            } else if (req.user.accountrole === "citizen"){
+              res.redirect("/portal");
+            }
+       }
+  })
+});
+
+ 
+ 
 
 
 app.get("/deleteinfo", (req, res, next)=> {
@@ -592,31 +657,50 @@ app.route("/createnewaccount")
    .get(function(req, res){
     res.render("createnewaccount");
    })
-  .post(function(req, res){
+  .post( async function(req, res){
 
     const backupaccount = new BackUpAccount({
       username: req.body.username,
       email: req.body.email,
-      lastname: req.body.lastname,
-      firstname: req.body.firstname,
+      fullname: req.body.fullname,
       accountrole: req.body.accountrole });
         Account.register({
           username: req.body.username,
           email: req.body.email,
-          lastname: req.body.lastname,
-          firstname: req.body.firstname,
+          fullname: req.body.fullname,
           accountrole: req.body.accountrole
         }, req.body.password,   function(err, user){
           if(err){
           console.log(err);
-          res.redirect("/createnewaccoun");
+          res.redirect("/createnewaccount");
           } else {
-          passport.authenticate("local")(req, res, function(){
+         
        backupaccount.save();
           res.redirect("/adminportal");
-          });
+         
           }
   });   
+//   try{
+//     const accounts= new Account({
+//       username: req.body.username,
+//       email: req.body.email,
+//       fullname: req.body.fullname,
+//       password: req.body.password,
+//       accountrole: req.body.accountrole });
+//       await accounts.save();
+//       const backupaccounts= new BackUpAccount({
+//         username: req.body.username,
+//         email: req.body.email,
+//         fullname: req.body.fullname,
+//         password: req.body.password,
+//         accountrole: req.body.accountrole  });
+//         await backupaccounts.save();
+//         res.redirect("/adminportal");
+//       } catch(err){
+//         console.log(err)
+//         res.redirect("/createnewaccount");
+//       }
+
 });
   
 // -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF WIRINGS-- use for user

@@ -1,24 +1,23 @@
 <%- include('partials/header') %>
 <div class="login-page">
-  <form autocomplete="off" action="/editinfo/<%- users._id %>" method="POST">
+  <form autocomplete="off" action="/usersprofile/<%- users._id %>" method="POST">
     <div class="title-design">
       <h5>Edit Account Information</h5>
       <hr />
     </div>
 
-    <div class="form-input">
-      <label for="accountrole"> Account Role </label>
-
-      <!-- <input name="amount" id="amount" type="text" /> -->
-      <select class="custom-select my-1 mr-sm-2" name="accountrole" value="<%- users.accountrole %>">
-        <!-- <option selected></option> -->
-        <option value="citizen">Barangay Citizen or others</option>
-        <option value="employee">Barangay Employee</option>
-        <option value="admin">Administrator</option>
-      </select>
-    </div>
+  
     <label for="lastname"> Full Name <i style="font-size: 13px;"> (LastName, FirstName, MiddleName) </i></label>
     <input autocomplete="off" type="text" name="fullname"  value=" <%= users.fullname %> "required/>
+
+    <label for="username"> Address</label>
+    <input autocomplete="off" type="text" name="address" value="<%- users.address %>" />
+
+    <label for="username"> Birthday</label>
+    <input autocomplete="off" type="text" name="birthday" placeholder="MM/DD/YYYY" value="<%- users.birthday %>" />
+
+    <label for="username">Phone</label>
+    <input autocomplete="off" type="text" name="phone" value="<%- users.phone %>" />
 
     <label for="username"> Username</label>
     <input autocomplete="off" type="text" name="username" value="<%- users.username %>" />
@@ -27,13 +26,12 @@
     <label for="email"> Email </label>
     <input autocomplete="off" type="email" name="email" value="<%- users.email %>" />
 
-    <label for="password"> Password </label>
-    <input name="password" id="password" type="password" value="<%- users.password %>"/>
+  
 
     <!-- <label for="password"> Confirm Password </label>
       <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
 
-    <button type="submit" class="submit" id="submit">Done Edit </button>
+    <button type="submit" class="submit" id="submit">Save </button>
     <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
   </form>
  
@@ -43,6 +41,9 @@
 <style>
     
 /* -----Login Page---- */
+input{
+  color:rgb(33, 130, 141)
+}
 .login-page{
   position: absolute;
   width: 300px;

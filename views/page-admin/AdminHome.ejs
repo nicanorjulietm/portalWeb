@@ -114,7 +114,7 @@
         <span class="span-dash"> History Records </span>  
         </button>
 
-        <a style="padding: 150px 50px  10px; color: white;"> &copy; j3rm2.com</a>
+        <a style="padding: 100px 50px  10px; color: white;"> &copy; j3rm2.com</a>
   </div>
 
   <!-- --------SIDEBAR MENUS ----------- -->
@@ -143,16 +143,14 @@
                   <li class="nav-item dropdown navbar-distance" >
                     <a class="nav-link dropdown-toggle nav-border-without" href="/adminportal" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                       aria-expanded="false">
-                      <i class="fa-solid fa-user fa-1x"></i> Hi! <%= username %>
+                      <i class="fa-solid fa-id-badge"></i> Hi! <%= username %>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <!-- <li><a class="dropdown-item" href="/editinfo/:id">Profile</a></li> -->
+                      <li><a class="dropdown-item "  href="/usersprofile/<%= id %>"">Edit Profile</a></li>
                       <li><a class="dropdown-item" href="#">User View</a></li>
                       <li><a class="dropdown-item" href="#">Employee View</a></li>
                       <li><a class="dropdown-item" href="/logout">Sign out</a></li>
-                     
-                    
-                    
                   </li>
                 
                   <!-- <li class="nav-item navbar-distance">
@@ -163,6 +161,7 @@
             </div>
           </nav>
           <!-- --------END OF ORIGINAL MENUS ----------- -->
+
 <!-- ==========START SIDEBAR CONTENT============ -->
 
   <!-- --------------FOR DASHBOARD (SIDEBAR)------------- -->
@@ -432,8 +431,8 @@
                                    <!-- <th scope="col">#</th> -->
                                    <th scope="col">Accout Role</th>
                                    <th scope="col">Username</th>
-                                   <th scope="col">First Name</th>
-                                   <th scope="col">Last Name</th>
+                                   <th scope="col">Full Name</th>
+                                   
                                   
                                    <th scope="col"></th>
                                    <th scope="col"></th>
@@ -445,8 +444,8 @@
                                  <tr>
                                    <th scope="row"><%= users.accountrole %></th>
                                    <td><%= users.username %></td>
-                                   <td><%= users.firstname %></td>
-                                   <td><%= users.lastname %></td>
+                                   <td><%= users.fullname %></td>
+                                  
                                 
                                    <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
                                      Edit
@@ -476,8 +475,8 @@
 
                               <!-- <th scope="col">#</th> -->
                               <th scope="col">Accout Role</th>
-                              <th scope="col">First Name</th>
-                              <th scope="col">Last Name</th>
+                              <th scope="col">Full Name</th>
+                             
                               <th scope="col">Email</th>
                               <th scope="col"></th>
                               <th scope="col"></th>
@@ -488,8 +487,8 @@
                           <% usersUser.forEach(function(users){ %>
                             <tr>
                               <th scope="row"><%= users.accountrole %></th>
-                              <td><%= users.firstname %></td>
-                              <td><%= users.lastname %></td>
+                              <td><%= users.fullname %></td>
+                             
                               <td><%= users.email %></td>
                               <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
                                 Edit
@@ -516,8 +515,8 @@
                           <thead class="table-dark">
                               <!-- <th scope="col">#</th> -->
                               <th scope="col">Accout Role</th>
-                              <th scope="col">First Name</th>
-                              <th scope="col">Last Name</th>
+                              <th scope="col">Full Name</th>
+                              
                               <th scope="col">Email</th>
                               <th scope="col"></th>
                               <th scope="col"></th>
@@ -528,8 +527,8 @@
                           <% usersEmployee.forEach(function(users){ %>
                             <tr>
                               <th scope="row"><%= users.accountrole %></th>
-                              <td><%= users.firstname %></td>
-                              <td><%= users.lastname %></td>
+                              <td><%= users.fullname %></td>
+                             
                               <td><%= users.email %></td>
                               <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
                                 Edit
@@ -552,8 +551,8 @@
                           <thead class="table-dark">
                               <!-- <th scope="col">#</th> -->
                               <th scope="col">Accout Role</th>
-                              <th scope="col">First Name</th>
-                              <th scope="col">Last Name</th>
+                              <th scope="col">Full Name</th>
+                              
                               <th scope="col">Email</th>
                               <th scope="col"></th>
                               <th scope="col"></th>
@@ -564,8 +563,8 @@
                           <% usersAdmin.forEach(function(users){ %>
                             <tr>
                               <th scope="row"><%= users.accountrole %></th>
-                              <td><%= users.firstname %></td>
-                              <td><%= users.lastname %></td>
+                              <td><%= users.fullname %></td>
+                              
                               <td><%= users.email %></td>
                               <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
                                 Edit
