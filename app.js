@@ -563,19 +563,83 @@ const id = req.params.id;
       console.log("Something went wrong to update your data");
       next(err);
     }else{
-            if (req.user.accountrole === "admin") {
-              res.redirect("/adminportal"); 
-            } else if (req.user.accountrole === "employee") {
-              res.redirect("/employeeportal"); 
-            } else if (req.user.accountrole === "citizen"){
-              res.redirect("/portal");
-            }
+      
+      if (req.user.accountrole === "admin") {
+        res.redirect("/adminportal"); 
+      } else if (req.user.accountrole === "employee") {
+        res.redirect("/employeeportal"); 
+      } else if (req.user.accountrole === "citizen"){
+        res.redirect("/portal");
+      }
+           
        }
   })
 });
 
- 
- 
+
+// EDIT PROFILE
+
+  app.get("/changepassword/:id",(req,res, next ) =>{
+const id = req.params.id;
+Account.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+  if(err){
+    console.log("Can't retrieve data and edit because of some database problem.")
+    next(err);
+  } else {
+    
+      res.render("changepassword",  { users: users });
+   
+  } 
+});});
+   app.post("/changepassword/:id", (req,res, next ) => {
+
+    Account.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+      if (err){
+        console.log("Something went wrong to update your data");
+        next(err);
+      }else{
+            
+               
+Account.findOne({ _id: req.params.id },(err, user) => {
+  // Check if error connecting
+  if (err) {
+    console.log(err);// Return error
+  } else {
+    // Check if user was found in database
+    if (!user) {
+     console.log("User not found!"); // Return error, user was not found in db
+    } else {
+            user.changePassword(req.body.password, req.body.newpassword, function(err) {
+              if(err) {
+                        if(err.name === 'IncorrectPasswordError'){
+                           res.redirect("changepassword") // Return error
+                        }else {
+                            console.log('Something went wrong!! Please try again after sometimes.' );
+                            res.redirect("changepassword")
+                        }
+              } else {
+                if (req.user.accountrole === "admin") {
+                        res.redirect("/adminportal"); 
+                      } else if (req.user.accountrole === "employee") {
+                        res.redirect("/employeeportal"); 
+                      } else if (req.user.accountrole === "citizen"){
+                        res.redirect("/portal");
+                      }
+                // res.redirect("/adminportal");
+              }
+       })
+    }
+  }
+});   
+                       
+            
+        
+              
+             
+         }
+    })
+  
+});
 
 
 app.get("/deleteinfo", (req, res, next)=> {
