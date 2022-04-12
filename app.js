@@ -53,6 +53,7 @@ const useraccountsSchema = new mongoose.Schema ({
   
   firstname: String,
   lastname: String,
+  middlename: String,
   username: { type: String, index: true, unique: true },
   email: String,
   password: String,
@@ -231,6 +232,11 @@ app.get("/", function (req, res) {
 res.render("main");
 });
 
+app.get("/main-user", function (req, res) {
+ 
+  res.render("mainuser", {username: req.user.username});
+  });
+
 app.get("/login", function (req, res) {
   res.render("login");
 });
@@ -242,6 +248,7 @@ app.get("/portal", function(req, res){
    }
 });
 app.get("/reqbrgy-id-user", function (req, res) {
+  
   res.render("./users/reqbrgy-id-user");
 });
 app.get("/reqbrgy-clearance-user", function (req, res) {
@@ -263,15 +270,35 @@ app.get("/reqbrgy-wande-user", function (req, res) {
 
 
   app.get("/reqbrgyid", function (req, res) {
-    res.render("./pages/reqbrgyid");
-  });
+   
+    res.render("./pages/reqbrgyid", {
+      username: req.user.username,
+      lastname: req.user.lastname,
+      firstname: req.user.firstname,
+      middlename: req.user.middlename,
+      email: req.user.email
+    });
+  });  
+
   app.get("/reqbrgyclearance", function (req, res) {
-    res.render("./pages/reqbrgyclearance");
+    res.render("./pages/reqbrgyclearance",{
+      username: req.user.username,
+      lastname: req.user.lastname,
+      firstname: req.user.firstname,
+      middlename: req.user.middlename,
+      email: req.user.email
+    });
   });
 
 
   app.get("/businesspermit", function (req, res) {
-    res.render("./pages/businesspermit");
+    res.render("./pages/businesspermit", {
+      username: req.user.username,
+      lastname: req.user.lastname,
+      firstname: req.user.firstname,
+      middlename: req.user.middlename,
+      email: req.user.email
+    });
   });
 
   app.get("/RequestIdForm", function (req, res) {
@@ -308,9 +335,6 @@ app.get("/reqbrgy-wande-user", function (req, res) {
 
 
 
-//   app.get("/main", function (req, res) {
-//   res.render("main");
-// });
   
   app.get("/contact-mail", async (req, res) => {
     res.redirect("/");
@@ -351,6 +375,7 @@ app.post("/registeraccount",  function(req, res){
     email: req.body.email,
     lastname: req.body.lastname,
     firstname: req.body.firstname,
+    
     accountrole: req.body.accountrole });
       Account.register({
         username: req.body.username,
@@ -505,6 +530,11 @@ app.get("/deleteinfo", (req, res, next)=> {
         res.redirect("/adminportal");
       }
 });});});});});});});});
+app.get("/updates-user",function (req, res){
+  Update.find({}, function(err, myUpdates){
+   res.render('./users/updates-user', {myUpdates, username: req.user.username});
+  })
+ });
 
 
 
@@ -590,11 +620,16 @@ app.route("/createnewaccount")
 });
   
 // -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF WIRINGS-- use for user
-app.route("/reqwiringsclearance ")
-    .get(function (req, res) {
-     res.render("./pages/reqwiringsclearance");
-})
-   .post(async function (req, res) {
+app.get("/reqwiringsclearance", function (req, res) {
+     res.render("./pages/reqwiringsclearance", {
+       username: req.user.username,
+      lastname: req.user.lastname,
+      firstname: req.user.firstname,
+      middlename: req.user.middlename,
+      email: req.user.email
+    });
+});
+   app.post(async function (req, res) {
   try{
     const result = "Pending"
     const requestWiring= new WiringandExcavationClearance({
@@ -620,7 +655,6 @@ app.route("/reqwiringsclearance ")
         console.log(err)
         res.redirect("./pages/reqwiringsclearance")
       }
-
 
 });
 
@@ -867,7 +901,13 @@ app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
 
 // -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF INDIGENCY-- use for user
 app.get("/reqindigency", function (req, res) {
-  res.render("./pages/reqindigency");
+  res.render("./pages/reqindigency", {
+    username: req.user.username,
+    lastname: req.user.lastname,
+    firstname: req.user.firstname,
+    middlename: req.user.middlename,
+    email: req.user.email
+  });
 });
 app.post("/reqindigency-req", async function (req, res) {
 

@@ -40,6 +40,7 @@
                     <thead class="table-dark">
                         <!-- <th scope="col">#</th> -->
                         <th scope="col">Account Role </th>  
+                        <th scope="col">Username </th>  
                         <th scope="col"> First Name </th>
                         <th scope="col"> Last Name </th>
                         <th scope="col"> Email </th>
@@ -53,6 +54,7 @@
                     <% allUserAccounts.forEach(function(users){ %>
                       <tr>
                         <td scope="row"> <%= users.accountrole %> </td> 
+                        <td scope="row"> <%= users.username %> </td> 
                         <td scope="row"> <%= users.firstname %> </td>   
                         <td scope="row"> <%= users.lastname %> </td>     
                          

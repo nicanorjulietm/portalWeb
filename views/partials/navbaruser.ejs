@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container">
-    <a class="navbar-brand" href="/main">Barangay Portal</a>
+    <a class="navbar-brand" href="/main-user">Barangay Portal</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -15,14 +15,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/main">Home</a>
+          <a class="nav-link active" aria-current="page" href="/main-user">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#News">About</a>
         </li>
         <li class="nav-item">
                     
-          <a class="nav-link"   href="/updates" >Bulletin</a>
+          <a class="nav-link"   href="/updates-user" >Bulletin</a>
         </li>
         <li class="nav-item dropdown">
           <a
@@ -37,36 +37,28 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
-              <a class="dropdown-item" href="#">Request for Barangay ID</a>
+              <a class="dropdown-item" href="/reqbrgyid">Request for Barangay ID</a>
             </li>
             <li>
-              <a class="dropdown-item" href="#"
+              <a class="dropdown-item" href="/reqbrgyclearance"
                 >Request for Barangay Clearance</a
               >
             </li>
             <li>
-              <a class="dropdown-item" href="#"
+              <a class="dropdown-item" href="/businesspermit"
                 >Request for Barangay Business Clearance</a
               >
             </li>
+           
             <li>
-              <a class="dropdown-item" href="#"
-                >Request for Barangay Certification for Exacavation Permit</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#"
+              <a class="dropdown-item" href="/reqindigency"
                 >Request for Barangay Certification for Indigency</a
               >
             </li>
+            
             <li>
-              <a class="dropdown-item" href="#"
-                >Request for Barangay Certification for Solo Parent</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#"
-                >Request for Barangay Wiring Clearance</a
+              <a class="dropdown-item" href="/reqwiringsclearance"
+                >Request for Barangay Wiring and Exacavation Clearance</a
               >
             </li>
             <li>
@@ -77,27 +69,30 @@
         </li>
       </ul>
       <ul class="navbar-nav">
-             <!-- <li class="nav-item navbar-distance signout-distance" style="padding: 7px;margin-top: 15px;">
-                    <a class="nav-link"   href="#" >Projects</a>
-                  </li>
-                  <li class="nav-item navbar-distance signout-distance" style="padding: 7px;margin-top: 15px;">
-                    <a class="nav-link"   href="#" >News</a>
-                  </li> -->
-              
-                  <!-- <li class="nav-item navbar-distance signout-distance" style="padding: 7px;margin-top: 15px;">
-                    <a class="nav-link" href="/calendar" >Calendar</a>
-                  </li>
-        <li class="nav-item navbar-distance">
-          <a class="nav-link" href="/logout"><%= username %></a>
-        </li>
+             
+    
         
-        
+      
         <li class="nav-item navbar-distance">
-          <a class="nav-link" href="/logout">Sign out</a>
+          <a class="nav-link nav-border-with" href="#contacts">Talk to Us</a>
         </li>
-        <li class="nav-item navbar-distance">
-          <a class="nav-link nav-border-without" href="#contacts">Talk to Us</a>
+
+        <li class="nav-item dropdown navbar-distance" >
+          <a class="nav-link dropdown-toggle nav-border-without"  id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fa-solid fa-user fa-1x"></i> Hi! <%= username %>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <!-- <li><a class="dropdown-item" href="/editinfo/:id">Profile</a></li> -->
+            <!-- <li><a class="dropdown-item" href="#">User View</a></li>
+            <li><a class="dropdown-item" href="#">Employee View</a></li> -->
+            <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+           
+          
+          
         </li>
+
+
       </ul>
     </div>
   </div>

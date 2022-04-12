@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 
-<%- include('../partials/navbar') %>
+<%- include('../partials/navbaruser') %>
 
 <div class="news-container container-fluid">
   <div class="row row-news">
@@ -34,11 +34,11 @@
             <i>
               Note: Please make sure that all of the informations are true.
             </i>
-            
+           
             <label class="form-label"
               >Full Name <i> (Last Name, First Name, Middle Name) </i></label
             >
-            <input type="text" class="req-input" name="fullname" required/>
+            <input type="text" class="req-input" name="fullname"  value="<%= lastname %> <%= firstname %> <%= middlename %>  " required/>
           </div>
           <div class="col-12 req-distance">
             <label class="form-label">Address</label>
@@ -46,7 +46,7 @@
           </div>
           <div class="col-md-6 req-distance">
             <label class="form-label">Email</label>
-            <input type="email" class="req-input" name="email" required/>
+            <input type="email" class="req-input" name="email" value="<%= email %>"  required/>
           </div>
           <div class="col-md-6 req-distance">
             <label class="form-label">Phone</label>
@@ -86,7 +86,7 @@
               id="exampleFormControlFile1" 
             />
           </div>
-         
+      
 
           <div class="col-12 submit-center">
             <button type="submit" class="btn submit">
@@ -98,3 +98,5 @@
     </div>
   </div>
 </div>
+<%-
+include('../partials/scriptstag') %>
