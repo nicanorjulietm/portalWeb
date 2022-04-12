@@ -241,6 +241,27 @@ app.get("/portal", function(req, res){
    res.redirect("/login");
    }
 });
+app.get("/reqbrgy-id-user", function (req, res) {
+  res.render("./users/reqbrgy-id-user");
+});
+app.get("/reqbrgy-clearance-user", function (req, res) {
+  res.render("./users/reqbrgy-clearance-user");
+});
+app.get("/reqbrgy-permit-user", function (req, res) {
+  res.render("./users/reqbrgy-permit-user");
+});
+
+app.get("/reqbrgy-indigency-user", function (req, res) {
+  res.render("./users/reqbrgy-indigency-user");
+});
+
+app.get("/reqbrgy-wande-user", function (req, res) {
+  res.render("./users/reqbrgy-wande-user");
+});
+
+
+
+
   app.get("/reqbrgyid", function (req, res) {
     res.render("./pages/reqbrgyid");
   });
