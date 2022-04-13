@@ -44,7 +44,7 @@
                                         <p> Thank you very for your kindness, We truly apprecite your commitment to kid's lives.</p>
                                         <hr/>
                                         </div>  
-                                      <form autocomplete="off" action="/register" method="POST">
+                                      <form autocomplete="off" action="/donate" method="POST">
                                         
                                           <div class="form-input" >
                                             <label for="donatorsname"> I'm donating in the name of: </label>
@@ -52,17 +52,17 @@
                                       </div>
                                       <div class="form-input" >
                                         <label for="firstname"> Organization/Honoree name: </label>
-                                        <input autocomplete="off" type="text" name="firstname" />
+                                        <input autocomplete="off" type="text" name="honoreename" />
                                       </div>
                                       <div class="form-input" >
                                         <label for="email"> Email </label>
-                                        <input autocomplete="off" type="email" name="username" />
+                                        <input autocomplete="off" type="email" name="email" />
                                       </div>
                                       <div class="form-input" >
                                         <label for="amount"> Donation Amount </label>
                                       
                                         <!-- <input name="amount" id="amount" type="text" /> -->
-                                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+                                        <select class="custom-select my-1 mr-sm-2" name="donation" id="inlineFormCustomSelectPref">
                                           <option selected>Php 00,000</option>
                                           <option value="10,000">Php 10,000</option>
                                           <option value="20,000">Php 20,000</option>
@@ -72,18 +72,18 @@
                                       </div>
                                       <div class="form-input" >
                                         <label for="notes"> Leave us a commment: </label>
-                                        <textarea class="txt-area" rows="3"></textarea>
+                                        <textarea class="txt-area" name="commment" rows="3"></textarea>
                                         <!-- <label for="password"> Confirm Password </label>
                                         <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
                                       </div>
                                         <!-- <button type="submit" class="submit" id="submit">Donate</button> -->
                                         <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
-                                  
+                                        <button type="submit" class="submit md-trigger" data-modal="modal-12" id="submit">Donate</button>
                                       </form>
                                   
                                   
                                   
-                                      <button type="submit" class="submit md-trigger" data-modal="modal-12" id="submit">Donate</button>
+                                     
                                       
              
                                     <!-- 
@@ -240,7 +240,7 @@
                                     <p> Please Fill in the required information so we could contact you.</p>
                                     <hr/>
                                     </div>  
-                                  <form autocomplete="off" action="/register" method="POST">
+                                  <form autocomplete="off" action="/volunteer" method="POST">
                                     
                                       <div class="form-input" >
                                         <label for="donatorsname"> Your Name: </label>
@@ -248,27 +248,27 @@
                                   </div>
                                   <div class="form-input" >
                                     <label for="firstname"> Organization: </label>
-                                    <input autocomplete="off" type="text" name="firstname" />
+                                    <input autocomplete="off" type="text" name="organization" />
                                   </div>
                                   <div class="form-input" >
                                     <label for="email"> Email </label>
-                                    <input autocomplete="off" type="email" name="username" />
+                                    <input autocomplete="off" type="email" name="email" />
                                   </div>
                                   
                                   <div class="form-input" >
                                     <label for="notes"> Leave us a commment: </label>
-                                    <textarea class="txt-area" rows="3"></textarea>
+                                    <textarea class="txt-area" name="comment" rows="3"></textarea>
                                     <!-- <label for="password"> Confirm Password </label>
                                     <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->
                                   </div>
                                     <!-- <button type="submit" class="submit" id="submit">Donate</button> -->
                                     <!-- <input id="errormsg" type="hidden" name="errormsg" onChange="onChange()"> </input> -->
-                              
+                                    <button type="submit" class="submit md-trigger" data-modal="modal-12" id="submit">Join</button>
                                   </form>
                               
                               
                               
-                                  <button type="submit" class="submit md-trigger" data-modal="modal-12" id="submit">Join</button>
+                                  
                                   
          
                                 <!-- 

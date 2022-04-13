@@ -226,16 +226,35 @@ const updateSchema = {
     assignedto: String,
     subject: String,
     description: String
-  }
+  };
   const Task = new mongoose.model("Task", taskSchema);
+
+  const donateSchema = {
+    donatorsname: String, 
+    honoreename: String,
+    email: String,
+    donation: String,
+    commment: String
+  };
+  const Donate = new mongoose.model("Donate", donateSchema)
  
+  const volunteerSchema = {
+    
+      name: String,
+      organization: String,
+      email: String,
+      commment: String
+  }; 
+  const Volunteer = new mongoose.model("Volunteer", volunteerSchema);
+
+
 app.get("/", function (req, res) {
 res.render("main");
 });
 
 app.get("/main-user", function (req, res) {
  
-  res.render("mainuser", {username: req.user.username});
+  res.render("mainuser", {username: req.user.username, id: req.user.id});
   });
 
 app.get("/login", function (req, res) {
@@ -273,6 +292,7 @@ app.get("/reqbrgy-wande-user", function (req, res) {
   app.get("/reqbrgyid", function (req, res) {
    
     res.render("./pages/reqbrgyid", {
+      id: req.user.id,
       username: req.user.username,
       lastname: req.user.lastname,
       firstname: req.user.firstname,
@@ -283,6 +303,7 @@ app.get("/reqbrgy-wande-user", function (req, res) {
 
   app.get("/reqbrgyclearance", function (req, res) {
     res.render("./pages/reqbrgyclearance",{
+      id: req.user.id,
       username: req.user.username,
       lastname: req.user.lastname,
       firstname: req.user.firstname,
@@ -294,6 +315,7 @@ app.get("/reqbrgy-wande-user", function (req, res) {
 
   app.get("/businesspermit", function (req, res) {
     res.render("./pages/businesspermit", {
+      id: req.user.id,
       username: req.user.username,
       lastname: req.user.lastname,
       firstname: req.user.firstname,
@@ -358,6 +380,7 @@ app.post("/login", function (req, res) {
         req.login(user, function (err) {
         if (err) {
         console.log(err);
+        res.redirect("login");
         } else {
         passport.authenticate("local")(req, res, function () {
         if (req.user.accountrole === "admin")  {
@@ -523,23 +546,6 @@ const id = req.params.id;
 });
 
 
-// Account.register({
-//   username: req.body.username,
-//   email: req.body.email,
-//   fullname: req.body.fullname,
-//   accountrole: req.body.accountrole
-// }, req.body.password,   function(err, user){
-//   if(err){
-//   console.log(err);
-//   res.redirect("/createnewaccount");
-//   } else {
- 
-// backupaccount.save();
-//   res.redirect("/adminportal");
- 
-//   }
-
-
 // EDIT PROFILE
 app.route("/usersprofile/:id")
    .get((req,res, next ) =>{
@@ -661,7 +667,7 @@ app.get("/deleteinfo", (req, res, next)=> {
 });});});});});});});});
 app.get("/updates-user",function (req, res){
   Update.find({}, function(err, myUpdates){
-   res.render('./users/updates-user', {myUpdates, username: req.user.username});
+   res.render('./users/updates-user', {myUpdates, username: req.user.username, id: req.user.id});
   })
  });
 
@@ -712,7 +718,47 @@ app.post("/updates", function (req,res){
 
 });
 
+// DONATION PROJECT
+app.post("/donate", function (req, res){
 
+  
+  const newdonate = new Donate({
+    donatorsname: req.body.donatorsname,
+    honoreename: req.body.honoreename,
+    email: req.body.email,
+    donation: req.body.donation,
+    commment: req.body.commment
+  });
+  newdonate.save(function (err){
+   if (err){
+   console.log(err);
+   }
+   else{
+   console.log("Done!");
+   }
+  })  
+
+});
+// VOLUNTEER PROJECT
+app.post("/volunteer", function (req, res){
+
+  
+  const newdonate = new Volunteer({
+    name: req.body.donatorsname,
+    organization: req.body.organization,
+    email: req.body.email,
+    commment: req.body.commment
+  });
+  newdonate.save(function (err){
+   if (err){
+   console.log(err);
+   }
+   else{
+   console.log("Done!");
+   }
+  })  
+
+});
 
 
 //ADMIN PERKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -770,6 +816,7 @@ app.route("/createnewaccount")
 // -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF WIRINGS-- use for user
 app.get("/reqwiringsclearance", function (req, res) {
      res.render("./pages/reqwiringsclearance", {
+      id: req.user.id,
        username: req.user.username,
       lastname: req.user.lastname,
       firstname: req.user.firstname,
@@ -1050,6 +1097,7 @@ app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
 // -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF INDIGENCY-- use for user
 app.get("/reqindigency", function (req, res) {
   res.render("./pages/reqindigency", {
+    id: req.user.id,
     username: req.user.username,
     lastname: req.user.lastname,
     firstname: req.user.firstname,
