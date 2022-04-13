@@ -9,6 +9,8 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const multer = require("multer");
+
 
 const { StringDecoder } = require("string_decoder");
 // const encrypt = require("mongoose-encryption");
@@ -23,6 +25,7 @@ const { PerformanceNodeTiming } = require("perf_hooks");
 
 
 const { getMaxListeners } = require("process");
+const { createVerify } = require('crypto');
 const app = express();
 
 
@@ -34,6 +37,22 @@ app.set("view engine", "ejs");
 // app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, './views/pages/')]);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+const path = require('path');
+//image upload
+var storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, './uploads');
+  }, 
+  filename: function(req, file, cb){
+    cb(null, file.fieldname +"_"+ Date.now() +"_"+ file.originalname);
+  },
+});
+
+var upload = multer({
+  storage: storage,
+}).single("image");
+
+
 
 
 app.use(session({
@@ -94,7 +113,9 @@ const requestforbrgyidSchema = {
   purposeofreq: String,
   ctc: String,
   request: String,
-  imgfilefee: { data: Buffer, contentType: String },
+  image: {
+   type: String, required: true,
+},
   imgfileidorpsa: { data: Buffer, contentType: String },
 };
 const RequestBrgyId = new mongoose.model("RequestBrgyId", requestforbrgyidSchema);
@@ -1446,7 +1467,7 @@ app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
 
 
 // ------------------------------------------------------------------------------------------------REQUEST FOR ID FORM -- use for user
-app.post("/reqbrgyid-req", async function (req, res) {
+app.post("/reqbrgyid-req", upload, async function (req, res) {
 
 
   try{
@@ -1460,6 +1481,7 @@ app.post("/reqbrgyid-req", async function (req, res) {
       civilstatus: req.body.civilstatus,
       purposeofreq: req.body.purposeofreq,
       ctc: req.body.ctc,
+      image: req.file.filename,
       request: result});
       await requestIDuser.save();
       const backuprequestIDuser = new BackUpRequestBrgyId({
@@ -1471,12 +1493,14 @@ app.post("/reqbrgyid-req", async function (req, res) {
         civilstatus: req.body.civilstatus,
         purposeofreq: req.body.purposeofreq,
         ctc: req.body.ctc,
+        image: req.file.filename,
         request: result});
         await backuprequestIDuser.save();
         res.render("main");
       } catch(err){
         console.log(err)
-        res.redirect("./pages/reqbrgyid")
+        console.log(req.file);
+        res.redirect("../pages/reqbrgyid")
       }
 
 });

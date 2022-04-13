@@ -19,6 +19,7 @@
     "moment": "^2.29.2",
     "mongoose": "^6.2.7",
     "mongoose-encryption": "^2.1.2",
+    "multer": "^1.4.4",
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
