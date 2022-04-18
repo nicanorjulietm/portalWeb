@@ -26,7 +26,7 @@
 
     <div class="col-lg-8 news-container">
       <div class="news-inside">
-        <form class="row g-3 req-row" action="/reqbusinesspermit-req" method="POST">
+        <form class="row g-3 req-row" action="/reqbusinesspermit-req" method="POST"  enctype="multipart/form-data">
           <div class="col-12 req-distance">
             <h5>Fill out this Application Form</h5>
             <i>
@@ -58,7 +58,16 @@
             <label class="form-label">Business Address</label>
             <input type="text" class="req-input" name="businessaddress" required />
           </div>
-
+          <div class="col-12">
+            <p> <i> Note: Complete your requirements in one PDF file. <a href="/tutorialsuser" style="color: teal"> Click here for more information</a> </i></p>
+            <label for="image">Requirements :</label>
+            <input
+              type="file"
+              class="upload-file"
+              name="image"
+              id="exampleFormControlFile1" 
+            />
+          </div>
 
           
          

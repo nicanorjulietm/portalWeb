@@ -26,7 +26,7 @@
 
     <div class="col-lg-8 news-container">
       <div class="news-inside">
-        <form class="row g-3 req-row" action="/WiringandExcavationForm" method="POST">
+        <form class="row g-3 req-row" action="/WiringandExcavationForm" method="POST" enctype="multipart/form-data">
           <div class="col-12 req-distance">
             <h5>Fill out this Application Form</h5>
             <i>
@@ -66,20 +66,12 @@
             <input type="text" class="req-input" name="ctc" required/>
           </div>
           <div class="col-12">
-            <label for="exampleFormControlFile1">Barangay ID Fee :</label>
+            <p> <i> Note: Complete your requirements in one PDF file. <a href="/tutorialsuser" style="color: teal"> Click here for more information</a> </i></p>
+            <label for="image">Requirements :</label>
             <input
               type="file"
               class="upload-file"
-              name="imgfilefee"
-              id="exampleFormControlFile1" 
-            />
-          </div>
-          <div class="col-12">
-            <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
-            <input
-              type="file"
-              class="upload-file"
-              name="imgfileidorpsa"
+              name="image"
               id="exampleFormControlFile1" 
             />
           </div>

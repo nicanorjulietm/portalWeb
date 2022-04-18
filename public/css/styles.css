@@ -472,3 +472,94 @@ flex-direction: column;
   color:#5892FF;
   font-weight:600;
 }
+/* -------------TUTORIALS----------- */
+
+.container-blog {
+  width: 900px;
+  margin: 0px auto;    
+}
+
+.title-blog {
+  width: 100%;
+  padding-bottom: 40px;
+  border-bottom: 1px solid lightgrey;    
+}
+
+/* h1 {
+  font-weight: 800;
+  margin-bottom: 10px;
+} */
+
+.post-top {
+  width: 100%;
+  padding-top: 25px;
+  display: flex;
+}
+
+.post-top > img {
+  width: 585px;
+  height: 307px;
+}
+
+.post-top-details {
+      width: 35%;
+      margin-top: 30px;
+      margin-left: 45px;
+}
+
+.post-top-details > h3 {
+  font-size: 1.6rem;
+}
+
+.post-details > h3 {
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.post-details > h6 {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.bio {
+  margin-top: 20px;
+  display: flex;
+}
+
+.bio > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.posts-other {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 35px;
+}
+
+.post-other {
+  width: 30%;
+  height: 100%;
+}
+
+.post-other > img {
+  width: 100%;
+}
+
+.post-details {
+  width: 100%;
+}
+
+.post-details > h3 {
+  font-weight: 600;
+  margin: 10px 0;
+  font-size: 1.3rem;
+}
+
+.post-details > h6 {
+  font-weight: 600;
+  font-size: 0.9rem;    
+}

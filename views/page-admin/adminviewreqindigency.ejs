@@ -42,6 +42,8 @@
                     <label class="req-label">Phone</label>
                     <input type="text" class="req-view-input" name="phone" required value="<%- users.phone %>"/>
                   </div>
+
+                
                   <div class="col-md-6 req-distance">
                     <label class="form-label"> Birthday <i style="font-size: 13px;"> (MM/DD/YYYY) </i>: </label>
                     <input type="text" class="req-view-input" name="birthday" required value="<%- users.birthday %>"/>
@@ -59,26 +61,25 @@
                     <input type="text" class="req-view-input" name="ctc" required value="<%- users.ctc %>"/>
                   </div>
                   <div class="col-12">
-                    <label for="exampleFormControlFile1">Barangay ID Fee :</label>
-                    <input
+                  
+                    <label for="image" style="font-size: 12px;"> <i> Note: You don't have the right to change the Uploaded Files.</i> </label>
+                    <!-- <input
                       type="file"
                       class="upload-file"
-                      name="imgfilefee"
+                      name="image"
                       id="exampleFormControlFile1" 
                       style="border: none;"
-                    />
+                     
+                    /> -->
+                  
                   </div>
-                  <div class="col-12">
-                    <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
-                    <input
-                      type="file"
-                      class="upload-file"
-                      name="imgfileidorpsa"
-                      id="exampleFormControlFile1" 
-                      style="border: none;"
-                    />
-                  </div>
+                  <label for="uploaded">
+                    Uploaded Files : 
+                  </label>
                 
+                  <p class="requirement"  > <a href="/<%= users.image %>" 
+                    style="color: teal; font-size: 13px;" target="_blank"  > <%- users.image %> </a> </p>
+                  
 
                   <div class="col-12 submit-center req-btns " style="text-align: center;">
                     <button type="submit" class="btn submit  " style="width: 230px;">

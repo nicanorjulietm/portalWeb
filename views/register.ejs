@@ -3,7 +3,8 @@
 
 
 <div class="login-page">
-  <form autocomplete="off" action="/registeraccount" method="POST">
+  <form autocomplete="off" action="/registeraccount" method="POST"
+  oninput='compassword.setCustomValidity(compassword.value != password.value ? "Passwords do not match." : "")'>
     <div class="title-design">
       <h5>Create New Account</h5>
       <hr />
@@ -27,12 +28,14 @@
     <label for="email"> Email </label>
     <input autocomplete="off" type="email" name="email" required/>
 
-   
-
 
 
     <label for="password"> Password </label>
     <input name="password" id="password" type="password" required/>
+    <label for="password"> Confirm Password </label>
+    <input autocomplete="off" type="password" name="compassword" required />
+  
+
 
     <!-- <label for="password"> Confirm Password </label>
       <input name="conpassword" id="conpassword" type="password"onchange='check_pass()' /> -->

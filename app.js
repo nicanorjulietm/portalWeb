@@ -12,6 +12,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require("multer");
 
 
+
 const { StringDecoder } = require("string_decoder");
 // const encrypt = require("mongoose-encryption");
 const moment = require ("moment");
@@ -36,23 +37,23 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 // app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, './views/pages/')]);
 app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static("public"));
-const path = require('path');
-//image upload
-var storage = multer.diskStorage({
-  destination: function(req, file, cb){
+app.use(express.static("uploads"));
+// const path = require('path');
+
+//image upload for brgyid
+var storage = multer.diskStorage({destination: function(req, file, cb){
     cb(null, './uploads');
   }, 
   filename: function(req, file, cb){
     cb(null, file.fieldname +"_"+ Date.now() +"_"+ file.originalname);
   },
 });
-
-var upload = multer({
-  storage: storage,
-}).single("image");
-
-
+// var upload = multer({ storage: storage, }).array("image");
+var upload = multer({ storage: storage, }).single("image");
+// var uploads = multer({ storage: storage, }).single("filepsaid");
+//image upload for brgyid
 
 
 app.use(session({
@@ -114,9 +115,8 @@ const requestforbrgyidSchema = {
   ctc: String,
   request: String,
   image: {
-   type: String, required: true,
-},
-  imgfileidorpsa: { data: Buffer, contentType: String },
+   type: String, required: true, },
+
 };
 const RequestBrgyId = new mongoose.model("RequestBrgyId", requestforbrgyidSchema);
 const BackUpRequestBrgyId = new mongoose.model("BackUpRequestBrgyId", requestforbrgyidSchema);
@@ -132,9 +132,10 @@ const requestforbrgyclearanceSchema = {
   civilstatus: String,
   purposeofreq: String,
   ctc: String,
-  request: String
-  // imgfilefee: { data: Buffer, contentType: String },
-  // imgfileidorpsa: { data: Buffer, contentType: String },
+  image: {
+    type: String, required: true, },
+  request: String,
+
 };
 const RequestClearance = new mongoose.model("RequestClearance", requestforbrgyclearanceSchema);
 const BackUpRequestClearance = new mongoose.model("BackUpRequestClearance", requestforbrgyclearanceSchema);
@@ -148,9 +149,9 @@ const businesspermitSchema = {
   phone: Number,
   businessname: String,
   businessaddress: String,
-  request: String
-  // imgfilefee: { data: Buffer, contentType: String },
-  // imgfileidorpsa: { data: Buffer, contentType: String },
+  request: String,
+  image: { type: String, required: true, },
+  
 };
 const BusinessPermit = new mongoose.model("BusinessPermit", businesspermitSchema);
 const BackUpBusinessPermit = new mongoose.model("BackUpBusinessPermit", businesspermitSchema);
@@ -166,9 +167,8 @@ const certificateofindigencySchema = {
   datestarted: String,
   purposeofreq: String,
   ctc: String,
-  request: String
-  // imgfilefee: { data: Buffer, contentType: String },
-  // imgfileidorpsa: { data: Buffer, contentType: String },
+  request: String,
+  image: { type: String, required: true, },
 };
 const CertificateIndigency = new mongoose.model("CertificateIndigency", certificateofindigencySchema);
 const BackUpCertificateIndigency = new mongoose.model("BackUpCertificateIndigency", certificateofindigencySchema);
@@ -184,9 +184,9 @@ const wiringandexcavationclearanceSchema = {
   datestarted: String,
   purposeofreq: String,
   ctc: String,
+  image: {    type: String, required: true, },
   request: String
-  // imgfilefee: { data: Buffer, contentType: String },
-  // imgfileidorpsa: { data: Buffer, contentType: String },
+
 };
 const WiringandExcavationClearance = new mongoose.model("WiringandExcavationClearance", wiringandexcavationclearanceSchema);
 const BackUpWiringandExcavationClearance = new mongoose.model("BackUpWiringandExcavationClearance", wiringandexcavationclearanceSchema);
@@ -273,7 +273,7 @@ app.get("/", function (req, res) {
 res.render("main");
 });
 
-app.get("/main-user", function (req, res) {
+app.get("/mainuser", function (req, res) {
  
   res.render("mainuser", {username: req.user.username, id: req.user.id});
   });
@@ -281,9 +281,13 @@ app.get("/main-user", function (req, res) {
 app.get("/login", function (req, res) {
   res.render("login");
 });
+
 app.get("/portal", function(req, res){
   if(req.isAuthenticated()){
-   res.render("portal", {username: req.user.username, id: req.user.id});
+   res.render("portal", {
+     username: req.user.username, 
+     fullname: req.user.fullname,
+     id: req.user.id});
    }else{
    res.redirect("/login");
    }
@@ -307,17 +311,35 @@ app.get("/reqbrgy-wande-user", function (req, res) {
   res.render("./users/reqbrgy-wande-user");
 });
 
+app.get("/tutorials", function (req, res){
+res.render("tutorials")
+});
 
+app.get("/tutorialsuser", function (req, res){
+  res.render("tutorialsuser", {
+    id: req.user.id,
+    address: req.user.address,
+    phone: req.user.phone,
+    fullname: req.user.fullname,
+    username: req.user.username,
+    lastname: req.user.lastname,
+    firstname: req.user.firstname,
+    middlename: req.user.middlename,
+    email: req.user.email
+   });
+  });
+  
 
 
   app.get("/reqbrgyid", function (req, res) {
    
     res.render("./pages/reqbrgyid", {
       id: req.user.id,
+      address: req.user.address,
+      phone: req.user.phone,
+      fullname: req.user.fullname,
       username: req.user.username,
-      lastname: req.user.lastname,
-      firstname: req.user.firstname,
-      middlename: req.user.middlename,
+      
       email: req.user.email
     });
   });  
@@ -325,10 +347,11 @@ app.get("/reqbrgy-wande-user", function (req, res) {
   app.get("/reqbrgyclearance", function (req, res) {
     res.render("./pages/reqbrgyclearance",{
       id: req.user.id,
+      address: req.user.address,
+      phone: req.user.phone,
+      fullname: req.user.fullname,
       username: req.user.username,
-      lastname: req.user.lastname,
-      firstname: req.user.firstname,
-      middlename: req.user.middlename,
+      
       email: req.user.email
     });
   });
@@ -346,7 +369,17 @@ app.get("/reqbrgy-wande-user", function (req, res) {
   });
 
   app.get("/RequestIdForm", function (req, res) {
-    res.render("./page-admin/RequestIdForm");
+    res.render("./page-admin/RequestIdForm", {
+      id: req.user.id,
+      address: req.user.address,
+      phone: req.user.phone,
+      fullname: req.user.fullname,
+      username: req.user.username,
+      lastname: req.user.lastname,
+      firstname: req.user.firstname,
+      middlename: req.user.middlename,
+      email: req.user.email
+    });
   });
  
   app.get("/RequestIndigencyForm", function (req, res) {
@@ -845,63 +878,76 @@ app.get("/reqwiringsclearance", function (req, res) {
       email: req.user.email
     });
 });
-   app.post(async function (req, res) {
+
+app.post("/reqwiringsclearance-req", upload, async function (req, res) {
+
+
   try{
     const result = "Pending"
-    const requestWiring= new WiringandExcavationClearance({
+    const requestIDuser = new WiringandExcavationClearance({
       fullname: req.body.fullname,
       address: req.body.address,
       email: req.body.email,
       phone: req.body.phone,
       purposeofreq: req.body.purposeofreq,
       ctc: req.body.ctc,
+      image: req.file.filename,
       request: result });
-      await requestWiring.save();
-      const backuprequestWiring= new BackUpWiringandExcavationClearance({
+     
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpWiringandExcavationClearance({
         fullname: req.body.fullname,
-        address: req.body.address,
-        email: req.body.email,
-        phone: req.body.phone,
-        purposeofreq: req.body.purposeofreq,
-        ctc: req.body.ctc,
-        request: result });
-        await backuprequestWiring.save();
-        res.render("main")
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      image: req.file.filename,
+      request: result });
+     
+        await backuprequestIDuser.save();
+        res.redirect("portal");
       } catch(err){
         console.log(err)
-        res.redirect("./pages/reqwiringsclearance")
+        console.log(req.file);
+        res.redirect("/reqwiringsclearance-req")
       }
 
 });
 
-app.post("/WiringandExcavationForm", async function (req, res) {
 
-try{
-  const result = "Pending"
-  const requestWiring= new WiringandExcavationClearance({
-    fullname: req.body.fullname,
-    address: req.body.address,
-    email: req.body.email,
-    phone: req.body.phone,
-    purposeofreq: req.body.purposeofreq,
-    ctc: req.body.ctc,
-    request: result });
-    await requestWiring.save();
-    const backuprequestWiring= new BackUpWiringandExcavationClearance({
+app.post("/WiringandExcavationForm", upload, async function (req, res) {
+
+  try{
+    const result = "Pending"
+    const requestIDuser = new WiringandExcavationClearance({
       fullname: req.body.fullname,
       address: req.body.address,
       email: req.body.email,
       phone: req.body.phone,
       purposeofreq: req.body.purposeofreq,
       ctc: req.body.ctc,
+      image: req.file.filename,
       request: result });
-      await backuprequestWiring.save();
-      res.redirect("adminportal")
-    } catch(err){
-      console.log(err)
-      res.redirect("./page-admin/WiringandExcavationForm")
-    }
-
+     
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpWiringandExcavationClearance({
+        fullname: req.body.fullname,
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      purposeofreq: req.body.purposeofreq,
+      ctc: req.body.ctc,
+      image: req.file.filename,
+      request: result });
+     
+        await backuprequestIDuser.save();
+        res.redirect("adminportal");
+      } catch(err){
+        console.log(err)
+        console.log(req.file);
+        res.redirect("/WiringandExcavationForm")
+      }
 
 });
 
@@ -1126,11 +1172,12 @@ app.get("/reqindigency", function (req, res) {
     email: req.user.email
   });
 });
-app.post("/reqindigency-req", async function (req, res) {
+app.post("/reqindigency-req", upload, async function (req, res) {
 
+  
   try{
     const result = "Pending"
-    const requestIndigency= new CertificateIndigency({
+    const requestIDuser = new CertificateIndigency({
       fullname: req.body.fullname,
       address: req.body.address,
       email: req.body.email,
@@ -1138,25 +1185,30 @@ app.post("/reqindigency-req", async function (req, res) {
       birthday: req.body.birthday,
       datestarted: req.body.datestarted,
       purposeofreq: req.body.purposeofreq,
+      image: req.file.filename,
       ctc: req.body.ctc,
       request: result});
-      await requestIndigency.save();
-      const backuprequestIndigency= new BackUpCertificateIndigency({
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpCertificateIndigency({
         fullname: req.body.fullname,
         address: req.body.address,
         email: req.body.email,
         phone: req.body.phone,
         birthday: req.body.birthday,
         datestarted: req.body.datestarted,
+        image: req.file.filename,
         purposeofreq: req.body.purposeofreq,
         ctc: req.body.ctc,
         request: result});
-        await backuprequestIndigency.save();
-        res.render("main")
+        await backuprequestIDuser.save();
+        res.redirect("portal");
       } catch(err){
         console.log(err)
+        console.log(req.file);
         res.redirect("./pages/reqindigency")
       }
+
+
 
 
 
@@ -1164,10 +1216,11 @@ app.post("/reqindigency-req", async function (req, res) {
 
 
 // Admin Add Request Form for Certificate for Indigency--- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/RequestIndigencyForm", async function (req, res) {
+app.post("/RequestIndigencyForm",upload, async function (req, res) {
+
   try{
     const result = "Pending"
-    const requestIndigency= new CertificateIndigency({
+    const requestIDuser = new CertificateIndigency({
       fullname: req.body.fullname,
       address: req.body.address,
       email: req.body.email,
@@ -1175,27 +1228,28 @@ app.post("/RequestIndigencyForm", async function (req, res) {
       birthday: req.body.birthday,
       datestarted: req.body.datestarted,
       purposeofreq: req.body.purposeofreq,
+      image: req.file.filename,
       ctc: req.body.ctc,
       request: result});
-      await requestIndigency.save();
-      const backuprequestIndigency= new BackUpCertificateIndigency({
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpCertificateIndigency({
         fullname: req.body.fullname,
         address: req.body.address,
         email: req.body.email,
         phone: req.body.phone,
         birthday: req.body.birthday,
         datestarted: req.body.datestarted,
+        image: req.file.filename,
         purposeofreq: req.body.purposeofreq,
         ctc: req.body.ctc,
         request: result});
-        await backuprequestIndigency.save();
+        await backuprequestIDuser.save();
         res.redirect("adminportal")
       } catch(err){
         console.log(err)
-        res.redirect("./page-admin/RequestIndigencyForm")
+        console.log(req.file);
+        res.redirect("/RequestIndigencyForm")
       }
-
-
 });
 
 
@@ -1244,68 +1298,77 @@ app.post("/adminviewreqindigency/:id", (req,res, next ) =>{
 
 
 // -------------------------------------------------------------------------------------REQUEST FOR BUSINESS PERMIT-- use for user
-app.post("/reqbusinesspermit-req",async function (req, res) {
+app.post("/reqbusinesspermit-req", upload, async function (req, res) {
 
+  
   try{
     const result = "Pending"
-    const requestBusinessPermit = new BusinessPermit({
+    const requestIDuser = new BusinessPermit({
       fullname: req.body.fullname,
       address: req.body.address,
       email: req.body.email,
       phone: req.body.phone,
       businessname: req.body.businessname,
       businessaddress: req.body.businessaddress,
+      image: req.file.filename,
       request: result});
-      await requestBusinessPermit.save();
-      const backuprequestBusinessPermit = new BackUpBusinessPermit({
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpBusinessPermit({
         fullname: req.body.fullname,
-        address: req.body.address,
-        email: req.body.email,
-        phone: req.body.phone,
-        businessname: req.body.businessname,
-        businessaddress: req.body.businessaddress,
-        request: result});
-        await backuprequestBusinessPermit.save();
-        res.render("main")
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      businessname: req.body.businessname,
+      businessaddress: req.body.businessaddress,
+      image: req.file.filename,
+      request: result});
+        await backuprequestIDuser.save();
+        res.redirect("portal");
       } catch(err){
         console.log(err)
-        res.redirect("./pages/reqbusinesspermit")
+        console.log(req.file);
+        res.redirect("./pages/reqbrgyid")
       }
+
+
 
 
 });
 
 // Admin Add Request Form for Business Permit --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/BusinessPermitForm",async function (req, res) {
-  
+
+app.post("/BusinessPermitForm", upload, async function (req, res) {
+
   try{
     const result = "Pending"
-    const requestBusinessPermit = new BusinessPermit({
+    const requestIDuser = new BusinessPermit({
       fullname: req.body.fullname,
       address: req.body.address,
       email: req.body.email,
       phone: req.body.phone,
       businessname: req.body.businessname,
       businessaddress: req.body.businessaddress,
+      image: req.file.filename,
       request: result});
-      await requestBusinessPermit.save();
-      const backuprequestBusinessPermit = new BackUpBusinessPermit({
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpBusinessPermit({
         fullname: req.body.fullname,
-        address: req.body.address,
-        email: req.body.email,
-        phone: req.body.phone,
-        businessname: req.body.businessname,
-        businessaddress: req.body.businessaddress,
-        request: result});
-        await backuprequestBusinessPermit.save();
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      businessname: req.body.businessname,
+      businessaddress: req.body.businessaddress,
+      image: req.file.filename,
+      request: result});
+        await backuprequestIDuser.save();
         res.redirect("adminportal");
       } catch(err){
         console.log(err)
-        res.redirect("./page-admin/BusinessPermitForm")
+        console.log(req.file);
+        res.redirect("BusinessPermitForm")
       }
 
 });
-
 //--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY ID Application Form
 app.get("/adminviewbusinesspermit/:id", (req,res, next ) =>{
   const id = req.params.id;
@@ -1350,11 +1413,89 @@ app.post("/adminviewbusinesspermit/:id", (req,res, next ) =>{
     });
 
 // ------------------------------------------------------------------------------------------REQUEST FOR BRGY CLEARANCE FORM -- use for user
-app.post("/reqbrgyclerance-req", async function (req, res) {
+// app.post("/reqbrgyclerance-req", async function (req, res) {
+
+  
+
+//   try{
+//     const result = "Pending"
+//     const requestClearanceuser = new RequestClearance({
+//       fullname: req.body.fullname,
+//       address: req.body.address,
+//       email: req.body.email,
+//       phone: req.body.phone,
+//       age: req.body.age,
+//       civilstatus: req.body.civilstatus,
+//       purposeofreq: req.body.purposeofreq,
+//       ctc: req.body.ctc,
+    
+
+//       request: result});
+//       await requestClearanceuser.save();
+//       const backuprequestClearanceuser  = new BackUpRequestClearance({
+//         fullname: req.body.fullname,
+//         address: req.body.address,
+//         email: req.body.email,
+//         phone: req.body.phone,
+//         age: req.body.age,
+//         civilstatus: req.body.civilstatus,
+//         purposeofreq: req.body.purposeofreq,
+//         ctc: req.body.ctc,
+     
+        
+//         request: result});
+//         await backuprequestClearanceuser.save();
+//         res.redirect("portal");
+//       } catch(err){
+//         console.log(err)
+//         // console.log(req.file);
+//         res.redirect("/reqbrgyclearance")
+//       }
+
+  // try{
+  //   const result = "Pending"
+  //   const requestClearanceuser = new RequestClearance({
+  //     fullname: req.body.fullname,
+  //     address: req.body.address,
+  //     email: req.body.email,
+  //     phone: req.body.phone,
+  //     age: req.body.age,
+  //     civilstatus: req.body.civilstatus,
+  //     purposeofreq: req.body.purposeofreq,
+  //     image: req.file.filename,
+  //     ctc: req.body.ctc,
+  //     request: result});
+  //     await requestClearanceuser.save();
+  //     const backuprequestClearanceuser = new BackUpRequestClearance({
+  //       fullname: req.body.fullname,
+  //       address: req.body.address,
+  //       email: req.body.email,
+  //       phone: req.body.phone,
+  //       age: req.body.age,
+  //       civilstatus: req.body.civilstatus,
+  //       purposeofreq: req.body.purposeofreq,
+  //       ctc: req.body.ctc,
+  //       image: req.file.filename,
+  //       request: result});
+  //       await backuprequestClearanceuser.save();
+  //       res.render("mainuser")
+  //     } catch(err){
+  //       console.log(err)
+  //       console.log(req.file);
+  //       res.redirect("/reqbrgyclearance")
+  //     }
+
+
+
+
+// });
+
+app.post("/reqbrgyclerance-req", upload, async function (req, res) {
+
 
   try{
     const result = "Pending"
-    const requestClearanceuser = new RequestClearance({
+    const requestIDuser = new RequestClearance({
       fullname: req.body.fullname,
       address: req.body.address,
       email: req.body.email,
@@ -1363,9 +1504,11 @@ app.post("/reqbrgyclerance-req", async function (req, res) {
       civilstatus: req.body.civilstatus,
       purposeofreq: req.body.purposeofreq,
       ctc: req.body.ctc,
+      image: req.file.filename,
+
       request: result});
-      await requestClearanceuser.save();
-      const backuprequestClearanceuser = new BackUpRequestClearance({
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpRequestClearance({
         fullname: req.body.fullname,
         address: req.body.address,
         email: req.body.email,
@@ -1374,25 +1517,25 @@ app.post("/reqbrgyclerance-req", async function (req, res) {
         civilstatus: req.body.civilstatus,
         purposeofreq: req.body.purposeofreq,
         ctc: req.body.ctc,
+        image: req.file.filename,
+        
         request: result});
-        await backuprequestClearanceuser.save();
-        res.render("main")
+        await backuprequestIDuser.save();
+        res.redirect("portal");
       } catch(err){
         console.log(err)
-        res.redirect("./pages/reqbrgyclearance")
+        console.log(req.file);
+        res.redirect("/reqbrgyclerance-req")
       }
-
-
-
 
 });
 
 // Admin Add Request Form for Clearance --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/RequestClearanceForm",async function (req, res) {
+app.post("/RequestClearanceForm", upload, async function (req, res) {
 
   try{
     const result = "Pending"
-    const requestClearanceuser = new RequestClearance({
+    const requestIDuser = new RequestClearance({
       fullname: req.body.fullname,
       address: req.body.address,
       email: req.body.email,
@@ -1401,9 +1544,11 @@ app.post("/RequestClearanceForm",async function (req, res) {
       civilstatus: req.body.civilstatus,
       purposeofreq: req.body.purposeofreq,
       ctc: req.body.ctc,
-      request: result });
-      await requestClearanceuser.save();
-      const backuprequestClearanceuser = new BackUpRequestClearance({
+      image: req.file.filename,
+
+      request: result});
+      await requestIDuser.save();
+      const backuprequestIDuser = new BackUpRequestClearance({
         fullname: req.body.fullname,
         address: req.body.address,
         email: req.body.email,
@@ -1412,13 +1557,17 @@ app.post("/RequestClearanceForm",async function (req, res) {
         civilstatus: req.body.civilstatus,
         purposeofreq: req.body.purposeofreq,
         ctc: req.body.ctc,
-        request: result });
-        await backuprequestClearanceuser.save();
-        res.redirect("adminportal")
+        image: req.file.filename,
+        
+        request: result});
+        await backuprequestIDuser.save();
+        res.redirect("adminportal");
       } catch(err){
         console.log(err)
-        res.redirect("./page-admin/RequestClearanceForm")
+        console.log(req.file);
+        res.redirect("/reqbrgyclerance-req")
       }
+
 
 });
 
@@ -1482,6 +1631,7 @@ app.post("/reqbrgyid-req", upload, async function (req, res) {
       purposeofreq: req.body.purposeofreq,
       ctc: req.body.ctc,
       image: req.file.filename,
+
       request: result});
       await requestIDuser.save();
       const backuprequestIDuser = new BackUpRequestBrgyId({
@@ -1494,19 +1644,20 @@ app.post("/reqbrgyid-req", upload, async function (req, res) {
         purposeofreq: req.body.purposeofreq,
         ctc: req.body.ctc,
         image: req.file.filename,
+        
         request: result});
         await backuprequestIDuser.save();
-        res.render("main");
+        res.redirect("portal");
       } catch(err){
         console.log(err)
         console.log(req.file);
-        res.redirect("../pages/reqbrgyid")
+        res.redirect("./pages/reqbrgyid")
       }
 
 });
 
 // Admin Add Request Form  --- user from admin's view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-app.post("/RequestIdForm", async function (req, res) {
+app.post("/RequestIdForm", upload, async function (req, res) {
 
 
   try{
@@ -1520,6 +1671,8 @@ app.post("/RequestIdForm", async function (req, res) {
       civilstatus: req.body.civilstatus,
       purposeofreq: req.body.purposeofreq,
       ctc: req.body.ctc,
+      image: req.file.filename,
+
       request: result});
       await requestIDuser.save();
       const backuprequestIDuser = new BackUpRequestBrgyId({
@@ -1531,20 +1684,26 @@ app.post("/RequestIdForm", async function (req, res) {
         civilstatus: req.body.civilstatus,
         purposeofreq: req.body.purposeofreq,
         ctc: req.body.ctc,
+        image: req.file.filename,
+        
         request: result});
         await backuprequestIDuser.save();
         res.redirect("adminportal");
       } catch(err){
         console.log(err)
-        res.redirect("./page-admin/RequestIdForm")
+        console.log(req.file);
+        res.redirect("/RequestIdForm")
       }
+
 });
 
 
+
+
 //--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY ID Application Form
-app.get("/adminviewreqid/:id", (req,res, next ) =>{
+app.get("/adminviewreqid/:id", upload, (req,res, next ) =>{
   const id = req.params.id;
-  RequestBrgyId.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+  RequestBrgyId.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
       if(err){
         console.log("Can't retrieve data and edit because of some database problem.")
         next(err);
@@ -1556,7 +1715,7 @@ app.get("/adminviewreqid/:id", (req,res, next ) =>{
   
   });
 
-  app.post("/adminviewreqid/:id", (req,res, next ) =>{
+  app.post("/adminviewreqid/:id", upload, (req,res, next ) =>{
 
     RequestBrgyId.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
       if (err){

@@ -26,30 +26,37 @@
     </div>
 
     <div class="col-lg-8 news-container">
-      <div class="news-inside">
-        <form class="row g-3 req-row" action="/reqbrgyclerance-req" method="POST">
+     
+        <form class="row g-3 req-row" action="/reqbrgyclerance-req" method="POST" enctype="multipart/form-data">
           <div class="col-12 req-distance">
             <h5>Fill out this Application Form</h5>
             <i>
               Note: Please make sure that all of the informations are true.
             </i>
-            
+           
             <label class="form-label"
               >Full Name <i> (Last Name, First Name, Middle Name) </i></label
             >
-            <input type="text" class="req-input" name="fullname"  value="<%= lastname %> <%= firstname %> <%= middlename %>"required/>
+            <input type="text" class="req-input" name="fullname"  value="<%= fullname %> "  
+            readonly required onClick="return confirm('Please complete or Change your details in Profile before requesting your concern. ')" />
           </div>
           <div class="col-12 req-distance">
             <label class="form-label">Address</label>
-            <input type="text" class="req-input" name="address" required />
+            <input type="text" class="req-input" name="address" required readonly 
+            value="<%= address %>"
+            onClick="return confirm('Please complete or Change your details in Profile before requesting your concern. ')" />
           </div>
           <div class="col-md-6 req-distance">
             <label class="form-label">Email</label>
-            <input type="email" class="req-input" name="email"  value="<%= email %> " required/>
+            <input type="email" class="req-input" name="email" value="<%= email %>" readonly required
+            onClick="return confirm('Please complete or Change your details in Profile before requesting your concern. ')" 
+            />
           </div>
           <div class="col-md-6 req-distance">
             <label class="form-label">Phone</label>
-            <input type="text" class="req-input" name="phone" required/>
+            <input type="text" class="req-input" name="phone" required value="<%= phone %>"
+            readonly onClick="return confirm('Please complete or Change your details in Profile before requesting your concern. ')" 
+            />
           </div>
           <div class="col-md-6 req-distance">
             <label class="form-label">Age</label>
@@ -67,25 +74,29 @@
             <label class="form-label">CTC</label>
             <input type="text" class="req-input" name="ctc" required/>
           </div>
+
+          
+
           <div class="col-12">
-            <label for="exampleFormControlFile1">Barangay ID Fee :</label>
+            <p> <i> Note: Complete your requirements in one PDF file. <a href="/tutorialsuser" style="color: teal"> Click here for more information</a> </i></p>
+            <label for="image">Requirements :</label>
             <input
               type="file"
               class="upload-file"
-              name="imgfilefee"
+              name="image"
               id="exampleFormControlFile1" 
             />
           </div>
-          <div class="col-12">
+          <!-- <div class="col-12">
             <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
             <input
               type="file"
               class="upload-file"
-              name="imgfileidorpsa"
+              name="filepsaid"
               id="exampleFormControlFile1" 
             />
-          </div>
-         
+          </div> -->
+      
 
           <div class="col-12 submit-center">
             <button type="submit" class="btn submit">

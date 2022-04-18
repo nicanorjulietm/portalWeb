@@ -50,7 +50,28 @@
                     <label class="form-label">Business Address</label><br>
                     <input type="text" class="req-input" style="width: 100%;" name="businessaddress" required value="<%- users.businessaddress %>" />
                   </div>
+                  
+
+                  <div class="col-12">
+                  
+                    <label for="image" style="font-size: 12px;"> <i> Note: You don't have the right to change the Uploaded Files.</i> </label>
+                    <!-- <input
+                      type="file"
+                      class="upload-file"
+                      name="image"
+                      id="exampleFormControlFile1" 
+                      style="border: none;"
+                     
+                    /> -->
+                  
+                  </div>
+                  <label for="uploaded">
+                    Uploaded Files : 
+                  </label>
                 
+                  <p class="requirement"  > <a href="/<%= users.image %>" 
+                    style="color: teal; font-size: 13px;" target="_blank"  > <%- users.image %> </a> </p>
+                  
 
                   <div class="col-12 submit-center req-btns " style="text-align: center;">
                     <button type="submit" class="btn submit  " style="width: 230px;">

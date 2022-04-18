@@ -2,7 +2,7 @@
 
     <div class="news-container req-view-div">
               <div class="news-inside">
-                <form class="row g-3 req-row" action="/adminviewreqid/<%- users._id %>" method="POST">
+                <form class="row g-3 req-row" action="/adminviewreqid/<%- users._id %>" method="POST" enctype="multipart/form-data">
                   <div class="col-12 req-distance">
                     <div class="title-design" style="width: 100%;" >
                         <h5>Request for Barangay ID </h5>
@@ -58,7 +58,7 @@
                     <label class="req-label">CTC</label>
                     <input type="text" class="req-view-input" name="ctc" required value="<%- users.ctc %>"/>
                   </div>
-                  <div class="col-12">
+                  <!-- <div class="col-12">
                     <label for="exampleFormControlFile1">Barangay ID Fee :</label>
                     <input
                       type="file"
@@ -67,18 +67,27 @@
                       id="exampleFormControlFile1" 
                       style="border: none;"
                     />
-                  </div>
+                  </div> -->
                   <div class="col-12">
-                    <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
-                    <input
+                  
+                    <label for="image" style="font-size: 12px;"> <i> Note: You don't have the right to change the Uploaded Files.</i> </label>
+                    <!-- <input
                       type="file"
                       class="upload-file"
-                      name="imgfileidorpsa"
+                      name="image"
                       id="exampleFormControlFile1" 
                       style="border: none;"
-                    />
+                     
+                    /> -->
+                  
                   </div>
+                  <label for="uploaded">
+                    Uploaded Files : 
+                  </label>
                 
+                  <p class="requirement"  > <a href="/<%= users.image %>" 
+                    style="color: teal; font-size: 13px;" target="_blank"  > <%- users.image %> </a> </p>
+                  
 
                   <div class="col-12 submit-center req-btns " style="text-align: center;">
                     <button type="submit" class="btn submit  " style="width: 230px;">
@@ -93,9 +102,6 @@
    
 
     </div>
-
-
-  
 
 
 <style>

@@ -26,7 +26,7 @@
 
     <div class="col-lg-8 news-container">
       <div class="news-inside">
-        <form class="row g-3 req-row" action="/RequestIndigencyForm" method="POST">
+        <form class="row g-3 req-row" action="/RequestIndigencyForm" method="POST" enctype="multipart/form-data">
           <div class="col-12 req-distance">
             <h5>Fill out this Application Form</h5>
             <i>
@@ -49,14 +49,25 @@
             <label class="form-label">Phone</label>
             <input type="text" class="req-input" name="phone" required/>
           </div>
+          
           <div class="col-md-6 req-distance">
+            <label class="form-label"> Birthday <i style="font-size: 13px;"> (MM/DD/YYYY) </i>: </label>
+            <input type="text" class="req-input" name="birthday" required/>
+          </div>
+          <div class="col-md-6 req-distance">
+            <label class="form-label">Date Residing at BSI  <i style="font-size: 13px;"> (MM/DD/YYYY) </i>:</label>
+            <input type="text" class="req-input" name="datestarted" required/>
+          </div>
+
+
+          <!-- <div class="col-md-6 req-distance">
             <label class="form-label">Age</label>
             <input type="text" class="req-input" name="age" required/>
           </div>
           <div class="col-md-6 req-distance">
             <label class="form-label">Civil Status</label>
             <input type="text" class="req-input" name="civilstatus" required/>
-          </div>
+          </div> -->
           <div class="col-12 req-distance">
             <label class="form-label">Purpose</label>
             <input type="text" class="req-input" name="purposeofreq" required/>
@@ -65,24 +76,18 @@
             <label class="form-label">CTC</label>
             <input type="text" class="req-input" name="ctc" required/>
           </div>
+          
           <div class="col-12">
-            <label for="exampleFormControlFile1">Barangay ID Fee :</label>
+            <p> <i> Note: Complete your requirements in one PDF file. <a href="/tutorialsuser" style="color: teal"> Click here for more information</a> </i></p>
+            <label for="image">Requirements :</label>
             <input
               type="file"
               class="upload-file"
-              name="imgfilefee"
+              name="image"
               id="exampleFormControlFile1" 
             />
           </div>
-          <div class="col-12">
-            <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
-            <input
-              type="file"
-              class="upload-file"
-              name="imgfileidorpsa"
-              id="exampleFormControlFile1" 
-            />
-          </div>
+          
           <div class="col-12 submit-center">
             <button type="submit" class="btn submit">
               Submit Application Form
