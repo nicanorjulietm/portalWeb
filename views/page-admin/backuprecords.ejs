@@ -33,7 +33,35 @@
     
               <!-- -------------------BRGY ID---------------------------- -->
               <div class="tab-pane fade show active" id="nav-users" role="tabpanel" aria-labelledby="nav-users-tab">
+                <div class="btn-add"> 
+                  <form action="/exportBackUpAllUsers" method="POST">
+                    <button
+                    type="submit"
+                    class="btn addbtn submit"
+                  ><a style=" text-decoration: none;" type="submit" class="a-link">
+                    Export to Excel</a>
+                  </button>
+      
+                  <!-- <button
+                        type="button"
+                        class="btn addbtn submit" data-modal="modal-12" 
+                      ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                        Add Blotter</a>
+                      </button>
+       -->
+                    
+                    <button
+                      type="button"
+                      class="btn addbtn submit"
+                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL records?');"  >
+                      Delete All</a>
+                    </button>
+                   </form>
+                </div>
+               
                 <div class="tableFixHead record-content">
+
+                  
                                     
                                         
                   <table class="table table-hover table-striped table-striped">
@@ -73,6 +101,31 @@
 
                <!-- -------------------RESIDENTS--------------------------- -->
                <div class="tab-pane fade" id="nav-residents" role="tabpanel" aria-labelledby="nav-residents-tab">
+                <div class="btn-add"> 
+                  <form action="/exportBackUpResidents" method="POST">
+                    <button
+                    type="submit"
+                    class="btn addbtn submit"
+                  ><a style=" text-decoration: none;" type="submit" class="a-link">
+                    Export to Excel</a>
+                  </button>
+      
+                  <!-- <button
+                        type="button"
+                        class="btn addbtn submit" data-modal="modal-12" 
+                      ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                        Add Blotter</a>
+                      </button>
+       -->
+                    
+                    <button
+                      type="button"
+                      class="btn addbtn submit"
+                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL records?');"  >
+                      Delete All</a>
+                    </button>
+                   </form>
+                </div>
                 <div class="tableFixHead record-content">
                                                   
                                                       
@@ -117,6 +170,33 @@
           
               
               <div class="tab-pane fade" id="nav-blotter" role="tabpanel" aria-labelledby="nav-blotter-tab">
+                <div class="btn-add"> 
+                  <form action="/exportBackUpBlotter" method="POST">
+                    <button
+                    type="submit"
+                    class="btn addbtn submit"
+                  ><a style=" text-decoration: none;" type="submit" class="a-link">
+                    Export to Excel</a>
+                  </button>
+      
+                  <!-- <button
+                        type="button"
+                        class="btn addbtn submit" data-modal="modal-12" 
+                      ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                        Add Blotter</a>
+                      </button>
+       -->
+                    
+                    <button
+                      type="button"
+                      class="btn addbtn submit"
+                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL records?');"  >
+                      Delete All</a>
+                    </button>
+                   </form>
+                </div>
+               
+                
                 <div class="tableFixHead record-content">
                                             
                                                 
@@ -157,6 +237,32 @@
               
               <!-- -------------------BUSINESS PERMIT---------------------------- -->
               <div class="tab-pane fade" id="nav-brgyidh" role="tabpanel" aria-labelledby="nav-brgyidh-tab">
+                <div class="btn-add"> 
+                  <form action="/exportBackUpRequestIDs" method="POST">
+                    <button
+                    type="submit"
+                    class="btn addbtn submit"
+                  ><a style=" text-decoration: none;" type="submit" class="a-link">
+                    Export to Excel</a>
+                  </button>
+      
+                  <!-- <button
+                        type="button"
+                        class="btn addbtn submit" data-modal="modal-12" 
+                      ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                        Add Blotter</a>
+                      </button>
+       -->
+                    
+                    <button
+                      type="button"
+                      class="btn addbtn submit"
+                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL records?');"  >
+                      Delete All</a>
+                    </button>
+                   </form>
+                </div>
+                
                 <div class="tableFixHead record-content">
                                         
                                             
@@ -192,6 +298,32 @@
               </div>   
               
               <div class="tab-pane fade" id="nav-brgyclearanceh" role="tabpanel" aria-labelledby="nav-brgyclearanceh-tab">
+                <div class="btn-add"> 
+                  <form action="/exportBackUpRequestClearance" method="POST">
+                    <button
+                    type="submit"
+                    class="btn addbtn submit"
+                  ><a style=" text-decoration: none;" type="submit" class="a-link">
+                    Export to Excel</a>
+                  </button>
+      
+                  <!-- <button
+                        type="button"
+                        class="btn addbtn submit" data-modal="modal-12" 
+                      ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                        Add Blotter</a>
+                      </button>
+       -->
+                    
+                    <button
+                      type="button"
+                      class="btn addbtn submit"
+                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL records?');"  >
+                      Delete All</a>
+                    </button>
+                   </form>
+                </div>
+                
                 <div class="tableFixHead record-content"  >
                                                   
                                                       
@@ -227,6 +359,32 @@
               </div>
 
               <div class="tab-pane fade" id="nav-businessclearanceh" role="tabpanel" aria-labelledby="nav-businessclearanceh-tab">
+                <div class="btn-add"> 
+                  <form action="/exportBackUpRequestPermit" method="POST">
+                    <button
+                    type="submit"
+                    class="btn addbtn submit"
+                  ><a style=" text-decoration: none;" type="submit" class="a-link">
+                    Export to Excel</a>
+                  </button>
+      
+                  <!-- <button
+                        type="button"
+                        class="btn addbtn submit" data-modal="modal-12" 
+                      ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                        Add Blotter</a>
+                      </button>
+       -->
+                    
+                    <button
+                      type="button"
+                      class="btn addbtn submit"
+                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL records?');"  >
+                      Delete All</a>
+                    </button>
+                   </form>
+                </div>
+                
                 <div class="tableFixHead record-content">
                                                   
                                                       
@@ -264,6 +422,31 @@
                 
               <!-- -------------------INDIGENCY--------------------------- -->
               <div class="tab-pane fade" id="nav-indigencyh" role="tabpanel" aria-labelledby="nav-indigencyh-tab">
+                <div class="btn-add"> 
+                  <form action="/exportBackUpRequestIndigency" method="POST">
+                    <button
+                    type="submit"
+                    class="btn addbtn submit"
+                  ><a style=" text-decoration: none;" type="submit" class="a-link">
+                    Export to Excel</a>
+                  </button>
+      
+                  <!-- <button
+                        type="button"
+                        class="btn addbtn submit" data-modal="modal-12" 
+                      ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                        Add Blotter</a>
+                      </button>
+       -->
+                    
+                    <button
+                      type="button"
+                      class="btn addbtn submit"
+                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL records?');"  >
+                      Delete All</a>
+                    </button>
+                   </form>
+                </div>
                 <div class="tableFixHead record-content">
                                                   
                                                       
@@ -303,6 +486,31 @@
           
                 <!-- -------------------WIRING CLEARANCE--------------------------- -->
               <div class="tab-pane fade" id="nav-wiringh" role="tabpanel" aria-labelledby="nav-wiringh-tab">
+                <div class="btn-add"> 
+                  <form action="/exportBackUpRequestWiring" method="POST">
+                    <button
+                    type="submit"
+                    class="btn addbtn submit"
+                  ><a style=" text-decoration: none;" type="submit" class="a-link">
+                    Export to Excel</a>
+                  </button>
+      
+                  <!-- <button
+                        type="button"
+                        class="btn addbtn submit" data-modal="modal-12" 
+                      ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+                        Add Blotter</a>
+                      </button>
+       -->
+                    
+                    <button
+                      type="button"
+                      class="btn addbtn submit"
+                    ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL records?');"  >
+                      Delete All</a>
+                    </button>
+                   </form>
+                </div>
                 <div class="tableFixHead record-content">
                                                   
                                                       

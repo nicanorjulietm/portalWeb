@@ -14,6 +14,14 @@
         <div class="container-for-allusers"> 
        
           <div class="btn-add"> 
+            <form action="/exportBlotter" method="POST">
+              <button
+              type="submit"
+              class="btn addbtn submit"
+            ><a style=" text-decoration: none;" type="submit" class="a-link">
+              Export to Excel</a>
+            </button>
+
             <button
                   type="button"
                   class="btn addbtn submit" data-modal="modal-12" 
@@ -28,7 +36,7 @@
               ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL citizens users?');"  >
                 Delete All</a>
               </button>
-             
+             </form>
           </div>
 
             <!-- ============MODAL================ -->

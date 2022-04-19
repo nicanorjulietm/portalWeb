@@ -19,8 +19,18 @@
                 <!-- -------------------BRGY ID---------------------------- -->
                 <div class="tab-pane fade show active" id="nav-allrecord" role="tabpanel" aria-labelledby="nav-allrecord-tab">
                     <div class="container-for-allusers"> 
+
+                  
        
                         <div class="btn-add"> 
+                          <form action="/exportResidents" method="POST">
+                            <button
+                            type="submit"
+                            class="btn addbtn submit"
+                          ><a style=" text-decoration: none;" type="submit" class="a-link">
+                            Export to Excel</a>
+                          </button>
+
                           <button
                                 type="button"
                                 class="btn addbtn submit" data-modal="modal-12" 
@@ -35,8 +45,8 @@
                             ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick="return confirm('Are you sure you want to delete ALL Residents informations?');"  >
                               Delete All</a>
                             </button>
-                           
-                        </div>
+                            </form>
+                          </div>
               
                           <!-- ============MODAL================ -->
                         <div class="ms-modal md-effect-12 md-content-div" >

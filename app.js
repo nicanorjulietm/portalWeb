@@ -10,7 +10,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require("multer");
-
+const XLSX = require('xlsx');
 
 
 const { StringDecoder } = require("string_decoder");
@@ -703,7 +703,16 @@ Account.findOne({ _id: req.params.id },(err, user) => {
 
 
 app.get("/deleteinfo", (req, res, next)=> {
-  
+  BackUpWiringandExcavationClearance.deleteMany({}, (err, users)=>{ 
+  BackUpCertificateIndigency.deleteMany({}, (err, users)=>{ 
+  BackUpBusinessPermit.deleteMany({}, (err, users)=>{ 
+  BackUpRequestClearance.deleteMany({}, (err, users)=>{ 
+  BackUpRequestBrgyId.deleteMany({}, (err, users)=>{ 
+  BackUpBlotter.deleteMany({}, (err, users)=>{ 
+  BackUpResidents.deleteMany({}, (err, users)=>{ 
+  BackUpAccount.deleteMany({}, (err, users)=>{ 
+
+  WiringandExcavationClearance.deleteMany({}, (err, users)=> {  
   Residents.deleteMany({}, (err, users)=>{ 
   Blotter.deleteMany({}, (err, users)=>{
   CertificateIndigency.deleteMany({}, (err, users)=>{
@@ -718,7 +727,9 @@ app.get("/deleteinfo", (req, res, next)=> {
         console.log("Delete Successfully");
         res.redirect("/adminportal");
       }
-});});});});});});});});
+});});});});});});});}); });});});});});});});});});
+
+
 app.get("/updates-user",function (req, res){
   Update.find({}, function(err, myUpdates){
    res.render('./users/updates-user', {myUpdates, username: req.user.username, id: req.user.id});
@@ -814,6 +825,187 @@ app.post("/volunteer", function (req, res){
 
 });
 
+
+
+
+//EXPORT TO EXCEL
+app.post('/exportAllUsers',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  Account.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportdata.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportResidents',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  Residents.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportresidents.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportBlotter',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  Residents.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportblotter.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportBackUpAllUsers',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  BackUpAccount.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportBackupAccountRecords.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportBackUpResidents',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  BackUpResidents.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportBackupResidentsRecord.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportBackUpBlotter',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  BackUpBlotter.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportBackupBlotterRecord.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportBackUpRequestIDs',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  BackUpRequestBrgyId.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportBackupRequestIdsRecord.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportBackUpRequestClearance',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  BackUpRequestClearance.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportBackupRequestClearanceRecord.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+
+app.post('/exportBackUpRequestPermit',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  BackUpBusinessPermit.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportBackupRequestPermitRecord.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportBackUpRequestIndigency',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  BackUpCertificateIndigency.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportBackupRequestIndigencyRecord.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
+app.post('/exportBackUpRequestWiring',(req,res)=>{
+  var wb = XLSX.utils.book_new(); //new workbook
+  BackUpWiringandExcavationClearance.find((err,data)=>{
+      if(err){
+          console.log(err)
+      }else{
+          var temp = JSON.stringify(data);
+          temp = JSON.parse(temp);
+          var ws = XLSX.utils.json_to_sheet(temp);
+          var down = __dirname+'/public/exportBackupRequestWiringandExcavationRecord.xlsx'
+         XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+         XLSX.writeFile(wb,down);
+         res.download(down);
+      }
+  });
+});
 
 //ADMIN PERKS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //this is for Account User
