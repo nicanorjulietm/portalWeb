@@ -1,0 +1,699 @@
+<div class="d-flex align-items-start  sidebar-cont" >
+    <div
+      class="nav flex-column nav-pills me-3 sidebar-container"
+      id="v-pills-tab"
+      role="tablist"
+      aria-orientation="vertical" 
+    >
+      <div class="sidebar-brand">Barangay Portal
+          
+      </div>
+      <span  style="color: white;margin-left: 30px; " >   Employee Portal </span>
+      <hr>
+            <button
+              class="nav-btn active"
+              id="v-pills-home-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-home"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-home"
+              aria-selected="true"
+            ><i class="fa-solid fa-boxes-stacked fa-1x dash-icon"></i>
+            <span class="span-dash">Dashboard </span>
+            </button>
+  
+            <button
+            onclick=" return confirm('You dont have access to the Management Account.');" 
+            disabled
+              class="nav-btn"
+              id="v-pills-profile-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-profile"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-profile"
+              aria-selected="false"
+            ><i class="fa-solid fa-file-invoice fa-1x dash-icon"></i>
+            <span class="span-dash" onclick=" return confirm('You dont have access to the Management Account.');"  > Manage Account</span>
+            </button>
+  
+            <button
+              class="nav-btn"
+              id="v-pills-messages-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-messages"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-messages"
+              aria-selected="false"
+            >
+            
+            <i class="fa-solid fa-folder-open fa-1x dash-icon"></i>
+            <span class="span-dash"> Barangay Requests </span>
+            </button>
+  
+            <button
+            class="nav-btn"
+            id="v-pills-residents-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#v-pills-residents"
+            type="button"
+            role="tab"
+            aria-controls="v-pills-residents"
+            aria-selected="false"
+          ><i class="fa-solid fa-user-check fa-1x dash-icon"></i>
+          <span class="span-dash">Residents Record </span>  
+          </button>
+  
+            <button
+              class="nav-btn"
+              id="v-pills-projects-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-projects"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-projects"
+              aria-selected="false"
+            ><i class="fa-solid fa-scale-balanced fa-1x dash-icon"></i>
+           <span class="span-dash"> Blotter Records</span> 
+            </button>
+           
+            <button
+              class="nav-btn"
+              id="v-pills-suggestions-tab"
+              data-bs-toggle="pill"
+              data-bs-target="#v-pills-suggestions"
+              type="button"
+              role="tab"
+              aria-controls="v-pills-suggestions"
+              aria-selected="false"
+            ><i class="fa-solid fa-comment-dots fa-1x dash-icon"></i>
+           <span class="span-dash">  Get in Touch </span>
+            </button>
+  
+            <button
+            class="nav-btn"
+            id="v-pills-updates-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#v-pills-updates"
+            type="button"
+            role="tab"
+            aria-controls="v-pills-updates"
+            aria-selected="false"
+          >
+          <i class="fa-solid fa-marker fa-1x"></i>
+            <span class="span-dash"> Add New Things</span> 
+          </button>
+  
+            <button
+            class="nav-btn"
+            id="v-pills-backuprecords-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#v-pills-backuprecords"
+            type="button"
+            role="tab"
+            aria-controls="v-pills-backuprecords"
+            aria-selected="false"
+          ><i class="fa-solid fa-folder-tree fa-1x dash-icon"></i>
+          <span class="span-dash"> History Records </span>  
+          </button>
+  
+          <a style="padding: 45px 50px  10px; color: white;"> &copy; j3rm2.com</a>
+    </div>
+  
+    <!-- --------SIDEBAR MENUS ----------- -->
+  
+  <div class="tab-content" id="v-pills-tabContent">
+        <!-- --------ORIGINAL MENUS ----------- -->
+            <nav class="navbar navbar-expand-lg navbar-light" style="padding: 0;">
+              <div class="container">
+                <button
+                  class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarSupportedContent"  
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+                  <ul class="navbar-nav">
+             
+                    
+                
+                    <li class="nav-item dropdown navbar-distance" >
+                      <a class="nav-link dropdown-toggle nav-border-without" href="/adminportal" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa-solid fa-id-badge"></i> Hi! <%= username %>
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <!-- <li><a class="dropdown-item" href="/editinfo/:id">Profile</a></li> -->
+                        <li><a class="dropdown-item "  href="/usersprofile/<%= id %>">Edit Profile</a></li>
+                        <li><a class="dropdown-item" href="/changepassword/<%= id %>">Change Password</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">User View</a></li>
+                        <li><a class="dropdown-item" href="#">Employee View</a></li> -->
+                        <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+                    </li>
+                  
+                    <!-- <li class="nav-item navbar-distance">
+                      <a class="nav-link" href="/adminportal"> Hi! Administrator</a>
+                    </li> -->
+                  </ul>
+                </div>
+              </div>
+            </nav>
+            <!-- --------END OF ORIGINAL MENUS ----------- -->
+  
+  <!-- ==========START SIDEBAR CONTENT============ -->
+  
+    <!-- --------------FOR DASHBOARD (SIDEBAR)------------- -->
+      
+        <div
+          class="tab-pane fade show active"
+          id="v-pills-home"
+          role="tabpanel"
+          aria-labelledby="v-pills-home-tab"
+        >
+                
+                  <div class="card card-content">
+                    <div class="card-header">Dashboard</div>
+                    <div class="card-body">
+                      <div class="row">
+                       
+                        <div class="col-sm-3">
+                          <div class="card cardx">
+                                <div class="card-counter primary">
+                                  <i class="fa-solid fa-users"></i>
+                                  <span class="count-numbers"> <%= countAccounts %> </span>
+                                  <span class="count-name">Users </span>
+                                </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="card cardx">
+                                <div class="card-counter primary">
+                                  <i class="fa-solid fa-person"></i>
+                                  
+                                  <span class="count-numbers">  <%=  countResidents %></span>
+                                  <span class="count-name">Residents</span>
+                                </div>     
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="card cardx">
+                                <div class="card-counter primary">
+                                  <i class="fa-solid fa-file-lines"></i>
+                                 
+                                  <span class="count-numbers">  <%= requestCount %></span>
+                                  <span class="count-name">Requests</span>
+                                </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="card cardx">
+                                <div class="card-counter primary">
+                                  <i class="fa-solid fa-scale-balanced"></i>
+                                  <span class="count-numbers"> <%= countBlotter %> </span>
+                                  <span class="count-name">Blotters</span>
+                                </div>     
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="card card-content Dashboard-card" style="margin-top: 10px; ">
+                    
+              
+                      <div class="row">
+                       
+                        <div class="col-sm-7">
+  
+                          <div class="card officials-card">
+                            <div class="card-header">Add New Things</div>
+  
+                            <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin: 0; padding: 0;">
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" 
+                                data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Projects</button>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" 
+                                type="button" role="tab" aria-controls="profile" aria-selected="false">Updates</button>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" 
+                                type="button" role="tab" aria-controls="contact" aria-selected="false">Task</button>
+                              </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                              <div class="tab-pane fade show active" id="home" 
+                              role="tabpanel" aria-labelledby="home-tab" style="padding-bottom: 0;">
+                                <dir class="dash-content"> 
+                                <form action="" style="padding-top: 0;">
+                                  <label for="ProjectName"> Posted By: </label> <br>
+                                  <input class="form-control" name="projname"/>
+                                  <label for="ProjectName"> Project Name : </label> <br>
+                                  <input class="form-control" name="projname"/>
+                                  <label for="ProjectName"> Details : </label> <br>
+                                  <textarea class="form-control" aria-label="With textarea"></textarea>
+                                  <button class="submit" type="submit" style="width: 100%;">  Send Now</button>
+                                </form>
+                              </dir>
+                              </div>
+  
+                              <!-- --for updates!!--- -->
+                              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="dash-content">
+                                    
+                                  <form action="/updates" style="padding-top: 0; " method="POST">
+                                    <div class="row">
+                                      <div class="col-sm-6 ">
+                                        <label for="ProjectName"> Date Today: </label> <br>
+                                        <input class="form-control" type="text" name="datetodays" value="<%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %>"/>
+                                      </div>
+                                      <div class="col-sm-6 ">
+                                        <label for="ProjectName"> Posted By: </label> <br>
+                                       <input class="form-control"  type="text" name="postedby" value="<%= username %>"/>
+                                      </div>
+                                    </div>
+                                   
+                                  
+                                    <label for="ProjectName"> Title : </label> <br>
+                                    <input class="form-control"  type="text" name="title"/>
+                                    <label for="ProjectName"> Details : </label> <br>
+                                    <textarea class="form-control"  type="text" name="details" aria-label="With textarea"></textarea>
+                                    <button class="submit" type="submit" style="width: 100%;">  Save Now</button>
+                                  </form>
+                                </div>
+                               
+                              </div>
+                               <!-- --end of updates!!--- -->
+                               <!-- --for task!!--- -->
+                              <div class="tab-pane fade px-3" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <form action="/tasks" method="POST" style="padding-top: 0;">
+                                  <div class="row">
+                                    <div class="col-sm-6" >
+                                      <label for="ProjectName"> Date Today: </label> <br>
+                                      <input class="form-control" type="text" name="datetodays" value="<%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %>"/>
+                                    </div>
+                                    <div class="col-sm-6 ">
+                                      <label for="ProjectName"> Posted By: </label> <br>
+                                      <input class="form-control"type="text"  name="postedby"  value="<%= username %>"/>
+                                    </div>
+                                    <div class="col-sm-6
+                                    ">
+                                      <label for="ProjectName"> Assigned To: </label> <br>
+                                      <input class="form-control" type="text" name="assignedto" />
+                                    </div>
+                                    <div class="col-sm-6 ">
+                                      <label for="ProjectName"> Subject: </label> <br>
+                                      <input class="form-control" type="text" name="subject"/>
+                                    </div>
+                                  </div>
+                                
+                
+                                  <label for="ProjectName"> Description : </label> <br>
+                                  <textarea class="form-control" type="text" name="description" aria-label="With textarea"></textarea>
+                                  <button class="submit" type="submit" style="width: 100%;">  Save Now</button>
+                                </form>
+                              </div>
+                            </div>
+                            <!-- --end of task!!--- -->
+                          </div>
+                        </div>
+                        <div class="col-sm-5">
+                          <div class="card ">
+                                <div class="card-counter primary">
+                                  <i class="fa-solid fa-calendar-days"></i>
+                                  
+                                  <span class="count-numbers"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %></span>
+                                  <span class="count-name">Have a Nice day!</span>
+                                  
+                                </div>     
+                          </div>
+                          <div class="card " style="margin-top: 8px; padding: 5px;">
+                            <div class="card-counter primary">
+                              <i class="fa-solid fa-clock"></i>
+                              
+                              <span class="count-numbers" id="count-time"></span>
+                              <span class="count-name">Keep Smiling!</span>
+                              
+                            </div>     
+                            <!-- <div class="card-header">Contact Admin</div>
+                            
+                              
+                                <div class="form-group">
+                                  <label>Your username</label>
+                                  <div class="input-group mb-2 mb-sm-0 px-3">
+                                      <input type="email" value="" name="username" class="form-control" >
+                                  </div>
+                                </div>
+                            
+                                <div class="form-group">
+                                  <label>Message</label>
+                                  <div class="input-group mb-2 mb-sm-0 px-3">
+                                      <input type="text" class="form-control" name="msg">
+                                  </div>
+                                </div>
+                                <div class="text-center">
+                                  <button class="submit" type="submit">  Send Now</button>
+                                </div> -->
+                          </div>
+                        </div>
+                       
+                      </div>
+                    
+                  </div>
+                  <!-- --------------END OF DASHBOARD (SIDEBAR)------------- -->
+            </div>
+             
+  
+  
+  
+            <!-- --------------MANAGE ACCOUNT (SIDEBAR)------------- -->
+            <div
+              class="tab-pane fade"
+              id="v-pills-profile"
+              role="tabpanel"
+              aria-labelledby="v-pills-profile-tab"
+            >
+           
+                <div class="container">
+                    <ul class="nav nav-tabs justify-content-center divhome-tab" id="myTab" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="allusers-tab" data-bs-toggle="tab" data-bs-target="#allusers" type="button" role="tab" aria-controls="allusers" aria-selected="true">All Users</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="citizen-tab" data-bs-toggle="tab" data-bs-target="#citizen" type="button" role="tab" aria-controls="citizen" aria-selected="false">Barangay Citizens</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="employee-tab" data-bs-toggle="tab" data-bs-target="#employee" type="button" role="tab" aria-controls="employee" aria-selected="false">Barangay Employees</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin" type="button" role="tab" aria-controls="admin" aria-selected="false">Administrators</button>
+                      </li>
+                    </ul>
+                    <div class="tab-content" style="margin: 0 auto;" id="myTabContent">
+  
+                      <!-- --------ALL USERS TAB-------- -->
+                      <div class="tab-pane fade show active" id="allusers" role="tabpanel" aria-labelledby="allusers-tab">
+                        <div class="container-for-allusers"> 
+  
+  
+                       
+                          <div class="btn-add"> 
+  
+                            <form action="/exportAllUsers" method="POST">
+                            <button
+                            type="submit"
+                            class="btn addbtn submit"
+                          ><a style=" text-decoration: none;" type="submit" class="a-link">
+                            Export to Excel</a>
+                          </button>
+                      
+  
+                            <button
+                                  type="button"
+                                  class="btn addbtn submit"
+                                ><a style=" text-decoration: none;" class="a-link"  href="/createnewaccount" >
+                                  Add User</a>
+                                </button>
+  
+                              
+                              <button
+                                type="button"
+                                class="btn addbtn submit"
+                              ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfo" onclick=" return confirm('Are you sure you want to delete ALL citizens users?');"  >
+                                Delete All</a>
+                              </button>
+                            </form>
+                          </div>
+  
+  
+                     
+  
+                          
+                            <!-- =========MODAL FOR ADDUSER============= -->
+                            
+                           
+                             <div class="tableFixHead">
+                           
+                               
+                               <table class="table table-hover table-striped citizen-table">
+                                 <thead class="table-dark">
+                                     <!-- <th scope="col">#</th> -->
+                                     <th scope="col">Accout Role</th>
+                                     <th scope="col">Username</th>
+                                     <th scope="col">Full Name</th>
+                                     
+                                    
+                                     <th scope="col"></th>
+                                     <th scope="col"></th>
+                                   </tr>
+                                 </thead>
+                                 <tbody>
+                                  
+                                 <% allUser.forEach(function(users){ %>
+                                   <tr>
+                                     <th scope="row"><%= users.accountrole %></th>
+                                     <td><%= users.username %></td>
+                                     <td><%= users.fullname %></td>
+                                    
+                                  
+                                     <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
+                                       Edit
+                                     </a> </td>
+                                     <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick=" return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.lastname %> account?');"  >
+                                       
+                                    Delete </a> </td>
+                                   </tr>
+                                   <% }); %> 
+                                   
+                                 </tbody>
+                            </table>
+                           </div>
+  
+  
+                            </div>
+                      </div>
+                      <!-- --------ALL USERS TAB-------- -->
+                      <!-- -----CITIZEN TAB----- -->
+                      <div class="tab-pane fade" id="citizen" role="tabpanel" aria-labelledby="citizen-tab">
+                        <div class="tableFixHead">
+  
+                          
+                          <table class="table table-hover table-striped citizen-table">
+                            <thead class="table-dark">
+  
+  
+                                <!-- <th scope="col">#</th> -->
+                                <th scope="col">Accout Role</th>
+                                <th scope="col">Full Name</th>
+                               
+                                <th scope="col">Email</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                               <!-- ---------FOR ADMIN---------------- -->
+                            <% usersUser.forEach(function(users){ %>
+                              <tr>
+                                <th scope="row"><%= users.accountrole %></th>
+                                <td><%= users.fullname %></td>
+                               
+                                <td><%= users.email %></td>
+                                <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
+                                  Edit
+                                </a> </td>
+                                <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick=" return confirm('Are you sure you want to delete Ms/Mrs/Mr.  <%= users.firstname %>  account?');"  >
+                                  
+                               Delete </a> </td>
+                              </tr>
+                              <% }); %> 
+                             
+                            </tbody>
+                          </table>
+                        </div>
+  
+  
+  
+                      </div>
+                      <!-- -----END OF CITIZEN TAB----- -->
+                      <!-- ----- EMPLOYEE TAB----- -->
+                      <div class="tab-pane fade" id="employee" role="tabpanel" aria-labelledby="employee-tab">
+  
+                        <div class="tableFixHead">
+                          <table class="table table-hover table-striped citizen-table">
+                            <thead class="table-dark">
+                                <!-- <th scope="col">#</th> -->
+                                <th scope="col">Accout Role</th>
+                                <th scope="col">Full Name</th>
+                                
+                                <th scope="col">Email</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                               <!-- ---------FOR EMPLOYEE---------------- -->
+                            <% usersEmployee.forEach(function(users){ %>
+                              <tr>
+                                <th scope="row"><%= users.accountrole %></th>
+                                <td><%= users.fullname %></td>
+                               
+                                <td><%= users.email %></td>
+                                <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
+                                  Edit
+                                </a> </td>
+                                <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick=" return confirm('Are you sure you want to delete Ms/Mrs/Mr.  <%= users.firstname %>  account?');"  >
+                               Delete </a> </td>
+                              </tr>
+                              <% }); %> 
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <!-- -----END OF EMPLOYEE TAB----- -->
+  
+                      <!-- ----- ADMIN TAB----- -->
+                      <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+  
+                        <div class="tableFixHead">
+                          <table class="table table-hover citizen-table">
+                            <thead class="table-dark">
+                                <!-- <th scope="col">#</th> -->
+                                <th scope="col">Accout Role</th>
+                                <th scope="col">Full Name</th>
+                                
+                                <th scope="col">Email</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                               <!-- ---------FOR ADMIN---------------- -->
+                            <% usersAdmin.forEach(function(users){ %>
+                              <tr>
+                                <th scope="row"><%= users.accountrole %></th>
+                                <td><%= users.fullname %></td>
+                                
+                                <td><%= users.email %></td>
+                                <td> <a class="td-link"  href="/editinfo/<%= users._id %>" >
+                                  Edit
+                                </a> </td>
+                                <td> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick=" return confirm('Are you sure you want to delete Ms/Mrs/Mr.  <%= users.firstname %>  account?');"  >
+                                  
+                               Delete </a> </td>
+                              </tr>
+                              <% }); %> 
+                            </tbody>
+                          </table>
+                        </div>
+  
+  
+                      </div>
+                       <!-- ----- END OF ADMIN TAB----- -->
+                    </div>
+  
+                 </div>
+              </div>  
+               <!-- --------------END OF MANAGE ACCOUNT (SIDEBAR)------------- -->
+  
+           <!-- --------------REQUEST (SIDEBAR)------------- -->
+          <div
+            class="tab-pane fade"
+            id="v-pills-messages"
+            role="tabpanel"
+            aria-labelledby="v-pills-messages-tab"
+          >
+  
+                <%- include('../page-admin/request') %>
+  
+          </div>
+          <!-- --------------END OF REQUEST (SIDEBAR)------------- -->
+  
+           <!-- --------------RESIDENTS (SIDEBAR)------------- -->
+           <div
+           class="tab-pane fade"
+           id="v-pills-residents"
+           role="tabpanel"
+           aria-labelledby="v-pills-residents-tab"
+         >
+         <%- include('../page-admin/Residents') %>
+         </div>
+          <!-- --------------END OF RESIDENTS (SIDEBAR)------------- -->
+  
+            <!-- --------------PROJECT (SIDEBAR)------------- -->
+          <div
+            class="tab-pane fade"
+            id="v-pills-projects"
+            role="tabpanel"
+            aria-labelledby="v-pills-projects-tab"
+          >
+          <%- include('../page-admin/Blotter') %>
+          </div>
+           <!-- --------------END OF PROJECT  (SIDEBAR)------------- -->
+  
+            <!-- --------------SUGGESTIONS (SIDEBAR)------------- -->
+          <div
+          class="tab-pane fade"
+          id="v-pills-suggestions"
+          role="tabpanel"
+          aria-labelledby="v-pills-suggestions-tab"
+        >
+        <%- include('../page-admin/Suggestions') %>
+        </div>
+         <!-- --------------END OF SUGGESTIONS  (SIDEBAR)------------- -->
+  
+            <!-- --------------BACKUP RECORDS(SIDEBAR)------------- -->
+            <div
+            class="tab-pane fade"
+            id="v-pills-updates"
+            role="tabpanel"
+            aria-labelledby="v-pills-updates-tab"
+          >
+          <%- include('../page-admin/addnewthings') %>
+          </div>
+           <!-- --------------END OF BACKUP RECORDS (SIDEBAR)------------- -->
+  
+          <!-- --------------BACKUP RECORDS(SIDEBAR)------------- -->
+          <div
+            class="tab-pane fade"
+            id="v-pills-backuprecords"
+            role="tabpanel"
+            aria-labelledby="v-pills-backuprecords-tab"
+          >
+          <%- include('../page-admin/backuprecords') %>
+          </div>
+           <!-- --------------END OF BACKUP RECORDS (SIDEBAR)------------- -->
+        
+  
+           
+  <!-- ==========END OF SIDEBAR CONTENT============ -->
+  </div>
+  
+  
+  
+  
+  
+  
+  
+  <script>
+  var $th = $('.tableFixHead').find('thead th')
+  $('.tableFixHead').on('scroll', function() {
+  $th.css('transform', 'translateY('+ this.scrollTop +'px)');
+  });
+  
+  setInterval(myTimer, 1000);
+  
+  function myTimer() {
+    const d = new Date();
+    document.getElementById("count-time").innerHTML = d.toLocaleTimeString();
+  }
+  </script>

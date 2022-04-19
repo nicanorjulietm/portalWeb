@@ -11,7 +11,9 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const multer = require("multer");
 const XLSX = require('xlsx');
-
+const hbs = require('nodemailer-express-handlebars');
+const nodemailer = require('nodemailer');
+const path = require('path');
 
 const { StringDecoder } = require("string_decoder");
 // const encrypt = require("mongoose-encryption");
@@ -41,6 +43,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.static("uploads"));
 // const path = require('path');
+
+
+
 
 //image upload for brgyid
 var storage = multer.diskStorage({destination: function(req, file, cb){
@@ -297,6 +302,11 @@ app.get("/portal", function(req, res){
    res.redirect("/login");
    }
 });
+
+
+
+
+
 app.get("/reqbrgy-id-user", function (req, res) {
   
   res.render("./users/reqbrgy-id-user");
@@ -366,9 +376,9 @@ app.get("/tutorialsuser", function (req, res){
     res.render("./pages/businesspermit", {
       id: req.user.id,
       username: req.user.username,
-      lastname: req.user.lastname,
-      firstname: req.user.firstname,
-      middlename: req.user.middlename,
+     address: req.user.address,
+     phone: req.user.phone,
+      fullname: req.user.fullname,
       email: req.user.email
     });
   });
@@ -425,9 +435,7 @@ app.get("/tutorialsuser", function (req, res){
     res.redirect("/");
   });
   
-  app.get("/employeeportal", async (req, res) => {
-    res.redirect("employeeportal");
-  });
+
 
 
 app.post("/login", function (req, res) {
@@ -506,10 +514,78 @@ app.get("/deleteinfo/:id", (req, res, next)=> {
          next(err);
        } else {
          console.log("Delete Successfully");
-         res.redirect("/adminportal");
+         if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
          }
 });});});});});});});});});});});});});});});});});});});});
+
+
+app.get("/employeeportal", async (req, res) => {
+ 
+  const query = Account.find();  query.count(function (err, countAccounts) {
+    // const suggestionquery = Suggestion.find(); suggestionquery.count(function(err, countSuggestions){ 
+    const blotterquery = Blotter.find(); blotterquery.count(function(err, countBlotter){  
+      const residentsquery = Residents.find(); residentsquery.count(function(err, countResidents){  
   
+      // const accountPercentage = ((countAccounts * 0.10) * 100);
+      // const accountDegree = (accountPercentage * 3.6);  
+      BackUpRequestBrgyId.find().count(function(err, countRequestID){ 
+      BackUpRequestClearance.find().count(function(err, countRequestClearance){ 
+      BackUpBusinessPermit.find().count(function(err, countRequestPermit){ 
+      BackUpCertificateIndigency.find().count(function(err, countRequestIndigency){ 
+      BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
+      const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
+  
+     Task.find({}, function (err, myTasks){ 
+        Update.find({}, function (err, myUpdates){
+      BackUpBlotter.find({}, function(err, backupBlotters){ 
+      Blotter.find({request: 'Finished'}, function(err, blottersFinished){ 
+      Blotter.find({request: 'On-going'}, function(err, blottersOngoing){ 
+      Blotter.find({}, function(err, blotters){   
+      Residents.find({gender: 'Male'}, function(err, allMale){ 
+      Residents.find({gender: 'Female'}, function(err, allFemale){ 
+      BackUpResidents.find({}, function(err, allbackupResidents){ 
+      Residents.find({}, function(err, allResidents){ 
+      Suggestion.find({}, function(err, suggestions){ 
+      BackUpWiringandExcavationClearance.find({}, function(err, allWirings){ 
+      WiringandExcavationClearance.find({request: 'Approved'}, function(err, approvedWirings){ 
+      WiringandExcavationClearance.find({request: 'Pending'}, function(err, requestsWirings){ 
+      BackUpCertificateIndigency.find({}, function(err, allIndigency){ 
+      CertificateIndigency.find({request: 'Approved'}, function(err, approvedIndigency){ 
+      CertificateIndigency.find({request: 'Pending'}, function(err, requestsIndigency){ 
+      BackUpBusinessPermit.find({}, function(err, allPermit){ 
+      BusinessPermit.find({request: 'Approved'}, function(err, approvedBusinessPermit){ 
+      BusinessPermit.find({request: 'Pending'}, function(err, requestsBusinessPermit){ 
+      RequestClearance.find({request: 'Approved'}, function(err, approvedClearances){
+      RequestClearance.find({request: 'Pending'}, function(err, requestsClearances){ 
+      BackUpRequestClearance.find({}, function(err, allClearance){
+      RequestBrgyId.find({request: 'Approved'}, function(err, approvedIds){ 
+      RequestBrgyId.find({request: 'Pending'}, function(err, requestIds){ 
+        BackUpRequestBrgyId.find({}, function(err, allrequestIds){ 
+          BackUpAccount.find({}, function(err, allUserAccounts){
+        Account.find({}, function(err, allUser){
+          Account.find({ accountrole: 'citizen' }, function (err, usersUser) {
+            Account.find({ accountrole: 'employee' }, function (err, usersEmployee) {
+              Account.find({ accountrole: 'admin' }, function (err, usersAdmin) {
+                res.render('employeeportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
+                , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
+              ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
+            ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, 
+            username: req.user.username,
+            id: req.user.id,
+        fullname: req.user.fullname,
+        address: req.user.address,
+        phone: req.user.phone,
+        birthday: req.user.birthday,
+        email: req.user.email});
+              });
+            });
+          });
+        });
+      });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});}); });});
   
   
 app.get("/adminportal", function (req, res) {
@@ -520,10 +596,7 @@ app.get("/adminportal", function (req, res) {
     const residentsquery = Residents.find(); residentsquery.count(function(err, countResidents){  
 
     // const accountPercentage = ((countAccounts * 0.10) * 100);
-    // const accountDegree = (accountPercentage * 3.6);
-  
-
-  
+    // const accountDegree = (accountPercentage * 3.6);  
     BackUpRequestBrgyId.find().count(function(err, countRequestID){ 
     BackUpRequestClearance.find().count(function(err, countRequestClearance){ 
     BackUpBusinessPermit.find().count(function(err, countRequestPermit){ 
@@ -599,8 +672,14 @@ const id = req.params.id;
       console.log("Something went wrong to update your data");
       next(err);
     }else{
-      res.redirect("/adminportal"); 
-       }
+      if (req.user.accountrole === "admin") {
+        res.redirect("/adminportal"); 
+      } else if( req.user.accountrole === "employee"){
+        res.redirect("/employeeportal");
+      }
+     
+      
+    }
   })
 });
 
@@ -715,25 +794,42 @@ app.get("/deleteinfo", (req, res, next)=> {
         next(err);
       } else {
         console.log("Delete Successfully");
-        res.redirect("/adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
       }
 });});
 
-app.get("/deleteinfobrgyid", (req, res, next)=> {RequestBrgyId.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobrgyclearance", (req, res, next)=> {RequestClearance.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobrgypermit", (req, res, next)=> {BusinessPermit.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobrgyindigency", (req, res, next)=> {CertificateIndigency.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobrgywiring", (req, res, next)=> {WiringandExcavationClearance.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
+app.get("/deleteinfobrgyid", (req, res, next)=> {RequestBrgyId.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");   if (req.user.accountrole === "admin") {
+res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobrgyclearance", (req, res, next)=> {RequestClearance.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobrgypermit", (req, res, next)=> {BusinessPermit.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobrgyindigency", (req, res, next)=> {CertificateIndigency.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobrgywiring", (req, res, next)=> {WiringandExcavationClearance.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
 
-app.get("/deleteinfobackupalluser", (req, res, next)=> {BackUpAccount.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinforbackupresidents", (req, res, next)=> {BackUpResidents.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobackupblotter", (req, res, next)=> {BackUpBlotter.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
+app.get("/deleteinfobackupalluser", (req, res, next)=> {BackUpAccount.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinforbackupresidents", (req, res, next)=> {BackUpResidents.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobackupblotter", (req, res, next)=> {BackUpBlotter.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
 
-app.get("/deleteinfobackupbrgyid", (req, res, next)=> {BackUpRequestBrgyId.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobackupbrgyclearance", (req, res, next)=> {BackUpRequestClearance.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobackupbrgypermit", (req, res, next)=> {BackUpBusinessPermit.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobackupbrgyindigency", (req, res, next)=> {BackUpCertificateIndigency.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
-app.get("/deleteinfobackupbrgywiring", (req, res, next)=> {BackUpWiringandExcavationClearance.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully"); res.redirect("/adminportal"); }});});
+app.get("/deleteinfobackupbrgyid", (req, res, next)=> {BackUpRequestBrgyId.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobackupbrgyclearance", (req, res, next)=> {BackUpRequestClearance.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobackupbrgypermit", (req, res, next)=> {BackUpBusinessPermit.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobackupbrgyindigency", (req, res, next)=> {BackUpCertificateIndigency.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
+app.get("/deleteinfobackupbrgywiring", (req, res, next)=> {BackUpWiringandExcavationClearance.deleteMany({}, (err, users)=>{if(err){ console.log("Something went wrong");next(err);} else {console.log("Delete Successfully");  if (req.user.accountrole === "admin") {
+  res.redirect("/adminportal"); } else if( req.user.accountrole === "employee"){res.redirect("/employeeportal");} }});});
 
 
 
@@ -768,7 +864,11 @@ app.post("/tasks", function (req,res){
    if (err){
      console.log(err)
    }else{
-     res.redirect("adminportal")
+    if (req.user.accountrole === "admin") {
+      res.redirect("/adminportal"); 
+    } else if( req.user.accountrole === "employee"){
+      res.redirect("/employeeportal");
+    }
    }
  })
 
@@ -787,7 +887,11 @@ app.post("/updates", function (req,res){
    if (err){
      console.log(err)
    }else{
-     res.redirect("adminportal")
+    if (req.user.accountrole === "admin") {
+      res.redirect("/adminportal"); 
+    } else if( req.user.accountrole === "employee"){
+      res.redirect("/employeeportal");
+    }
    }
  })
 
@@ -834,6 +938,63 @@ app.post("/volunteer", function (req, res){
   })  
 
 });
+
+// initialize nodemailer
+var transporter = nodemailer.createTransport(
+  {
+      service: 'gmail',
+      auth:{
+          user: 'barangayportalx@gmail.com',
+          pass: 'HALETHEJAY1996'
+      }
+  }
+);
+
+
+//EMAIL
+app.post("/sendmail", (req, res) =>{
+  // point to the template folder
+const handlebarOptions = {
+  viewEngine: {
+      partialsDir: path.resolve('./emailfolder'),
+      defaultLayout: false,
+  },
+  viewPath: path.resolve('./emailfolder'),
+};
+
+// use a template file with nodemailer
+transporter.use('compile', hbs(handlebarOptions))
+
+
+
+
+var mailOptions = {
+  from: '<barangayportalx@gmail.com>', // sender address
+  to: 'julietnicanor1996@gmail.com', // list of receivers
+  subject: 'Hello Barangay Citizen!',
+  template: 'email', // the name of the template file i.e email.handlebars
+  context:{
+      name: "Citizen", // replace {{name}} with Adebola
+      company: 'My Company' // replace {{company}} with My Company
+  }
+};
+
+// trigger the sending of the E-mail
+transporter.sendMail(mailOptions, function(error, info){
+  if(error){
+      return console.log(error);
+  }
+  // console.log('Message sent: ' + info.response);
+  if (req.user.accountrole === "admin") {
+    res.redirect("/adminportal"); 
+  } else if( req.user.accountrole === "employee"){
+    res.redirect("/employeeportal");
+  }
+});
+});
+
+
+
 
 
 
@@ -1046,26 +1207,6 @@ app.route("/createnewaccount")
          
           }
   });   
-//   try{
-//     const accounts= new Account({
-//       username: req.body.username,
-//       email: req.body.email,
-//       fullname: req.body.fullname,
-//       password: req.body.password,
-//       accountrole: req.body.accountrole });
-//       await accounts.save();
-//       const backupaccounts= new BackUpAccount({
-//         username: req.body.username,
-//         email: req.body.email,
-//         fullname: req.body.fullname,
-//         password: req.body.password,
-//         accountrole: req.body.accountrole  });
-//         await backupaccounts.save();
-//         res.redirect("/adminportal");
-//       } catch(err){
-//         console.log(err)
-//         res.redirect("/createnewaccount");
-//       }
 
 });
   
@@ -1074,10 +1215,10 @@ app.get("/reqwiringsclearance", function (req, res) {
      res.render("./pages/reqwiringsclearance", {
       id: req.user.id,
        username: req.user.username,
-      lastname: req.user.lastname,
-      firstname: req.user.firstname,
-      middlename: req.user.middlename,
-      email: req.user.email
+      fullname: req.user.fullname,
+      email: req.user.email,
+      address: req.user.address,
+      phone: req.user.phone
     });
 });
 
@@ -1150,7 +1291,11 @@ app.post("/WiringandExcavationForm", upload, async function (req, res) {
       request: result });
      
         await backuprequestIDuser.save();
-        res.redirect("adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
       } catch(err){
         console.log(err)
         console.log(req.file);
@@ -1178,7 +1323,11 @@ app.route("/adminviewwirings/:id")
         console.log("Something went wrong to update your data");
         next(err);
       }else{
-        res.redirect("/adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
   
       }
     })
@@ -1246,10 +1395,18 @@ app.get("/adminviewwiringsapproved/:id", (req,res, next ) =>{
         zipcode: req.body.zipcode
       });
       await backupresidents.save();
-      res.redirect("adminportal")
+      if (req.user.accountrole === "admin") {
+        res.redirect("/adminportal"); 
+      } else if( req.user.accountrole === "employee"){
+        res.redirect("/employeeportal");
+      }
     } catch(err){
       console.log(err)
-      res.redirect("adminportal")
+      if (req.user.accountrole === "admin") {
+        res.redirect("/adminportal"); 
+      } else if( req.user.accountrole === "employee"){
+        res.redirect("/employeeportal");
+      }
     }
   })
 
@@ -1275,7 +1432,11 @@ app.route("/adminsviewresidents/:id")
           console.log("Something went wrong to update your data");
           next(err);
         }else{
-          res.redirect("/adminportal");
+          if (req.user.accountrole === "admin") {
+            res.redirect("/adminportal"); 
+          } else if( req.user.accountrole === "employee"){
+            res.redirect("/employeeportal");
+          }
     
         }
       })
@@ -1318,10 +1479,18 @@ app.post("/blotter", async function (req, res){
       incident: req.body.incident
     });
     await backupblotter.save();
-        res.redirect("adminportal")
+    if (req.user.accountrole === "admin") {
+      res.redirect("/adminportal"); 
+    } else if( req.user.accountrole === "employee"){
+      res.redirect("/employeeportal");
+    }
       } catch(err){
         console.log(err)
-        res.redirect("adminportal")
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
       }
 
 
@@ -1350,7 +1519,11 @@ app.post("/adminsviewblotter/:id", (req,res, next ) =>{
         console.log("Something went wrong to update your data");
         next(err);
       }else{
-        res.redirect("/adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
   
       }
     })
@@ -1375,10 +1548,11 @@ app.get("/reqindigency", function (req, res) {
   res.render("./pages/reqindigency", {
     id: req.user.id,
     username: req.user.username,
-    lastname: req.user.lastname,
-    firstname: req.user.firstname,
-    middlename: req.user.middlename,
-    email: req.user.email
+    fullname: req.user.fullname,
+    email: req.user.email,
+    phone: req.user.phone,
+    address: req.user.address,
+    birthday: req.user.birthday
   });
 });
 app.post("/reqindigency-req", upload, async function (req, res) {
@@ -1459,7 +1633,11 @@ app.post("/RequestIndigencyForm",upload, async function (req, res) {
        
         request: result});
         await backuprequestIDuser.save();
-        res.redirect("adminportal")
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
       } catch(err){
         console.log(err)
         console.log(req.file);
@@ -1489,7 +1667,11 @@ app.post("/adminviewreqindigency/:id", (req,res, next ) =>{
         console.log("Something went wrong to update your data");
         next(err);
       }else{
-        res.redirect("/adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
   
       }
     })
@@ -1582,7 +1764,11 @@ app.post("/BusinessPermitForm", upload, async function (req, res) {
       image: req.file.filename,
       request: result});
         await backuprequestIDuser.save();
-        res.redirect("adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
       } catch(err){
         console.log(err)
         console.log(req.file);
@@ -1612,7 +1798,11 @@ app.post("/adminviewbusinesspermit/:id", (req,res, next ) =>{
         console.log("Something went wrong to update your data");
         next(err);
       }else{
-        res.redirect("/adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
   
       }
     })
@@ -1713,7 +1903,11 @@ app.post("/RequestClearanceForm", upload, async function (req, res) {
         
         request: result});
         await backuprequestIDuser.save();
-        res.redirect("adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
       } catch(err){
         console.log(err)
         console.log(req.file);
@@ -1746,7 +1940,11 @@ app.post("/adminviewreqclearance/:id", (req,res, next ) =>{
         console.log("Something went wrong to update your data");
         next(err);
       }else{
-        res.redirect("/adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
   
       }
     })
@@ -1844,7 +2042,11 @@ app.post("/RequestIdForm", upload, async function (req, res) {
        
         request: result});
         await backuprequestIDuser.save();
-        res.redirect("adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
       } catch(err){
         console.log(err)
         console.log(req.file);
@@ -1857,9 +2059,12 @@ app.post("/RequestIdForm", upload, async function (req, res) {
 
 
 //--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY ID Application Form
-app.get("/adminviewreqid/:id", upload, (req,res, next ) =>{
+app.get("/adminviewreqid/:id", upload,   (req,res ) =>{
   const id = req.params.id;
-  RequestBrgyId.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
+
+
+   RequestBrgyId.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
+    
       if(err){
         console.log("Can't retrieve data and edit because of some database problem.")
         next(err);
@@ -1867,21 +2072,32 @@ app.get("/adminviewreqid/:id", upload, (req,res, next ) =>{
         res.render("./page-admin/adminviewreqid",  { users: users });
       }
 
-  });
-  
+    })
+ 
+
   });
 
-  app.post("/adminviewreqid/:id", upload, (req,res, next ) =>{
+  app.post("/adminviewreqid/:id", upload,  (req,res, next ) =>{
 
-    RequestBrgyId.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+
+   RequestBrgyId.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+      
+   
       if (err){
         console.log("Something went wrong to update your data");
         next(err);
       }else{
-        res.redirect("/adminportal");
+        if (req.user.accountrole === "admin") {
+          res.redirect("/adminportal"); 
+        } else if( req.user.accountrole === "employee"){
+          res.redirect("/employeeportal");
+        }
   
       }
-    })
+    }); 
+
+  
+
   });
 
 

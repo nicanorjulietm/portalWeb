@@ -1,7 +1,7 @@
 <%- include('../partials/header') %> <%- include('../partials/navbaruser') %>
 
 <div class="news-container container-fluid">
-  <div class="row row-news">
+  <div class="row row-news" style="margin-bottom: 40px;">
     <div class="col-lg-4 whats-happening px-0">
       <div class="box-fluid">
         <h1 class="news-h1 req-h1" style="font-size: 4.5rem;">Request for Business Permit</h1>
@@ -36,19 +36,24 @@
             <label class="form-label" style="padding-top: 15px;"
               >Full Name of Permittee<i> (Last Name, First Name, Middle Name) </i></label
             >
-            <input type="text" class="req-input" name="fullname" value="<%= lastname %> <%= firstname %> <%= middlename %>" required/>
+            <input type="text" class="req-input" name="fullname" value="<%= fullname %>" readonly required
+            onClick="return confirm('Please complete or Change your details in Profile before requesting your concern. ')"/>
+
           </div>
           <div class="col-12 req-distance">
             <label class="form-label">Personal Address</label>
-            <input type="text" class="req-input" name="address" required />
+            <input type="text" class="req-input" name="address"  value=" <%= address %>" readonly required
+            onClick="return confirm('Please complete or Change your details in Profile before requesting your concern. ')" />
           </div>
           <div class="col-md-6 req-distance">
             <label class="form-label">Email</label>
-            <input type="email" class="req-input" name="email" value="<%= email %>" required/>
+            <input type="email" class="req-input" name="email" value="<%= email %>" readonly required
+            onClick="return confirm('Please complete or Change your details in Profile before requesting your concern. ')" />
           </div>
           <div class="col-md-6 req-distance">
             <label class="form-label">Phone</label>
-            <input type="text" class="req-input" name="phone" required/>
+            <input type="text" class="req-input" name="phone" value="<%=phone%>" readonly required
+            onClick="return confirm('Please complete or Change your details in Profile before requesting your concern. ')" />
           </div>
           <div class="col-12 req-distance">
             <label class="form-label">Name of Business</label>
@@ -82,5 +87,11 @@
     </div>
   </div>
 </div>
+
+<%- include('../partials/news') %>
+<%- include('../partials/faq') %>
+<%- include('../partials/contacts') %>
+<%- include('../partials/footer') %>
+
 <%-
 include('../partials/scriptstag') %>

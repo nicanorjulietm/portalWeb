@@ -1,7 +1,7 @@
 <%- include('../partials/header') %> <%- include('../partials/navbar') %>
 
 <div class="news-container container-fluid">
-  <div class="row row-news">
+  <div class="row row-news" style="margin-bottom: 40px;">
     <div class="col-lg-4 whats-happening px-0">
       <div class="box-fluid">
         <h1 class="news-h1 req-h1" style="font-size: 3rem;">Request for Wiring and Exacavation Clearance</h1>
@@ -63,20 +63,12 @@
             <input type="text" class="req-input" name="ctc" required/>
           </div>
           <div class="col-12">
-            <label for="exampleFormControlFile1">Barangay ID Fee :</label>
+            <p> <i> Note: Complete your requirements in one PDF file. <a href="/tutorialsuser" style="color: teal"> Click here for more information</a> </i></p>
+            <label for="image">Requirements :</label>
             <input
               type="file"
               class="upload-file"
-              name="imgfilefee"
-              id="exampleFormControlFile1" 
-            />
-          </div>
-          <div class="col-12">
-            <label for="exampleFormControlFile1">Any Valid ID/PSA :</label>
-            <input
-              type="file"
-              class="upload-file"
-              name="imgfileidorpsa"
+              name="image"
               id="exampleFormControlFile1" 
             />
           </div>

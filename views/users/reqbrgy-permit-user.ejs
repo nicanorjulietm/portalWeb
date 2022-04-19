@@ -1,7 +1,7 @@
 <%- include('../partials/header') %> <%- include('../partials/navbar') %>
 
 <div class="news-container container-fluid">
-  <div class="row row-news">
+  <div class="row row-news" style="margin-bottom: 40px;">
     <div class="col-lg-4 whats-happening px-0">
       <div class="box-fluid">
         <h1 class="news-h1 req-h1" style="font-size: 4.5rem;">Request for Business Permit</h1>
@@ -58,7 +58,16 @@
             <label class="form-label">Business Address</label>
             <input type="text" class="req-input" name="businessaddress" required />
           </div>
-
+          <div class="col-12">
+            <p> <i> Note: Complete your requirements in one PDF file. <a href="/tutorialsuser" style="color: teal"> Click here for more information</a> </i></p>
+            <label for="image">Requirements :</label>
+            <input
+              type="file"
+              class="upload-file"
+              name="image"
+              id="exampleFormControlFile1" 
+            />
+          </div>
 
           
          
