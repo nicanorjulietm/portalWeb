@@ -139,7 +139,13 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                 <ul class="navbar-nav">
            
-                  
+                   <li class="nav-item navbar-distance">
+                    <a class="nav-link" href="/tutorialsforadmin" style="text-align: right;"> Tutorials </a>
+                  </li>
+                  <li class="nav-item navbar-distance">
+                    <a class="nav-link" href="/adminportal"> Dashboard</a>
+                  </li>
+              
               
                   <li class="nav-item dropdown navbar-distance" >
                     <a class="nav-link dropdown-toggle nav-border-without" href="/adminportal" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -150,8 +156,8 @@
                       <!-- <li><a class="dropdown-item" href="/editinfo/:id">Profile</a></li> -->
                       <li><a class="dropdown-item "  href="/usersprofile/<%= id %>">Edit Profile</a></li>
                       <li><a class="dropdown-item" href="/changepassword/<%= id %>">Change Password</a></li>
-                      <li><a class="dropdown-item" href="#">User View</a></li>
-                      <li><a class="dropdown-item" href="#">Employee View</a></li>
+                      <li><a class="dropdown-item" href="/adminview">User View</a></li>
+                      <!-- <li><a class="dropdown-item" href="#">Employee View</a></li> -->
                       <li><a class="dropdown-item" href="/logout">Sign out</a></li>
                   </li>
                 
@@ -323,18 +329,27 @@
                         </div>
                       </div>
                       <div class="col-sm-5">
-                        <div class="card ">
+                        <div class="card " style=" padding: 5px;">
                               <div class="card-counter primary">
-                                <i class="fa-solid fa-calendar-days"></i>
+                                <i class="fa-solid fa-file-invoice" style="margin-left: 30px;"></i>
                                 
-                                <span class="count-numbers"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %></span>
-                                <span class="count-name">Have a Nice day!</span>
+                                <span class="count-numbers"> Php <%= finance  %></span>
+                                <span class="count-name">Total Collection</span>
                                 
                               </div>     
                         </div>
-                        <div class="card " style="margin-top: 8px; padding: 5px;">
+                        <div class="card " style=" padding: 5px;">
                           <div class="card-counter primary">
-                            <i class="fa-solid fa-clock"></i>
+                            <i class="fa-solid fa-calendar-days" style="margin-left: 30px;"></i>
+                            
+                            <span class="count-numbers"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %></span>
+                            <span class="count-name">Have a Nice day!</span>
+                            
+                          </div>     
+                    </div>
+                        <div class="card " style=" padding: 5px;">
+                          <div class="card-counter primary">
+                            <i class="fa-solid fa-clock" style="margin-left: 30px;"></i>
                             
                             <span class="count-numbers" id="count-time"></span>
                             <span class="count-name">Keep Smiling!</span>

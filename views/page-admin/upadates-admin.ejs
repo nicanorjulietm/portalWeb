@@ -1,0 +1,51 @@
+<%- include('../partials/header') %> 
+<div class="page-loader">
+	<div class="load">
+		<div class="load-one"></div>
+		<div class="load-two"></div>
+		<div class="load-three"></div>
+	  </div>
+	</div>
+
+
+
+<%- include('../partials/navbaradmin') %> 
+<div class="bul-div" style="margin-bottom: 300px;">` 
+<div class="title-design"style="width: 100%; padding: 0;margin: 0;">
+  <h5 style="padding: 0;">Bulletin Forum</h5>
+  <p>View Everyday Updates here</p>
+  <hr style="width: 60%; margin: 0 auto;"/>
+
+</div>
+
+<div class="container">
+    <div class="row">
+
+      <% myUpdates.forEach(function(users){ %>
+      <div class="col-sm-3">
+        <div class="post-it">
+          <p class="sticky taped">
+           
+            <strong><%= users.title %> </strong><br>
+            <i> date today : <%= users.datetodays %> </i> <br>
+            <i> posted by : <%= users.postedby %> </i><br>
+            
+            <%= users.details %>
+          </p>
+         
+        </div>
+      </div>
+     
+     
+      <% }); %>
+    </div>
+  </div>
+</div>
+ <%- include('../partials/news') %> <%- include('../partials/faq')
+  %> <%- include('../partials/contacts') %> <%- include('../partials/footer') %> 
+  <%-
+  include('../partials/scriptstag') %>
+  
+  
+
+ 

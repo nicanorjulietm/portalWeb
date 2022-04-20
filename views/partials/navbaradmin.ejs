@@ -1,5 +1,5 @@
  <!-- --------ORIGINAL MENUS ----------- -->
- <div class="req-container-div"> 
+ <!-- <div class="req-container-div"> 
  <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="/adminportal">Barangay Portal</a>
@@ -27,6 +27,68 @@
              
           </li>
         
+--------END OF ORIGINAL MENUS ----------- -->
+
+
+  <nav class="navbar navbar-expand-lg navbar-light" style="padding: 0;">
+    <div class="container">
+      <a class="navbar-brand" href="/adminview">Barangay Portal</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"  
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/adminview">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#News">About</a>
+          </li>
+          <li class="nav-item">
+                      
+            <a class="nav-link"   href="/upadates-admin" >Bulletin</a>
+          </li>
+          <li class="nav-item">
+                      
+            <a class="nav-link"   href="/tutorialsforadmin" >Tutorials</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+
+
+
+
+   
+           <li class="nav-item navbar-distance">
+            <a class="nav-link" href="/adminportal"> Dashboard </a>
+          </li>
+          
+        <li class="nav-item navbar-distance">
+          <a class="nav-link nav-border-with" href="#contacts">Talk to Us</a>
+        </li>
+      
+          <li class="nav-item dropdown navbar-distance" >
+            <a class="nav-link dropdown-toggle nav-border-without" href="/adminportal" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              <i class="fa-solid fa-id-badge"></i> Hi! <%= username %>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <!-- <li><a class="dropdown-item" href="/editinfo/:id">Profile</a></li> -->
+              <li><a class="dropdown-item "  href="/usersprofile/<%= id %>">Edit Profile</a></li>
+              <li><a class="dropdown-item" href="/changepassword/<%= id %>">Change Password</a></li>
+              <li><a class="dropdown-item" href="/adminview">User View</a></li>
+              <!-- <li><a class="dropdown-item" href="#">Employee View</a></li> -->
+              <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+          </li>
+        
           <!-- <li class="nav-item navbar-distance">
             <a class="nav-link" href="/adminportal"> Hi! Administrator</a>
           </li> -->
@@ -34,5 +96,3 @@
       </div>
     </div>
   </nav>
-</div>
-  <!-- --------END OF ORIGINAL MENUS ----------- -->

@@ -337,14 +337,30 @@ app.get("/tutorialsuser", function (req, res){
     phone: req.user.phone,
     fullname: req.user.fullname,
     username: req.user.username,
-    lastname: req.user.lastname,
-    firstname: req.user.firstname,
-    middlename: req.user.middlename,
     email: req.user.email
    });
   });
   
-
+  app.get("/tutorialsforadmin", function (req, res){
+    res.render("tutorialsforadmin", {
+      id: req.user.id,
+      address: req.user.address,
+      phone: req.user.phone,
+      fullname: req.user.fullname,
+      email: req.user.email,
+      username: req.user.username,
+     });
+    });
+    app.get("/adminview", function (req, res){
+      res.render("adminview", {
+        id: req.user.id,
+        address: req.user.address,
+        phone: req.user.phone,
+        fullname: req.user.fullname,
+        email: req.user.email,
+        username: req.user.username,
+       });
+      });
 
   app.get("/reqbrgyid", function (req, res) {
    
@@ -432,10 +448,107 @@ app.get("/tutorialsuser", function (req, res){
 
   
   app.get("/contact-mail", async (req, res) => {
-    res.redirect("/");
+
+    // if(err){
+    //   console.log(err)
+    // }else {
+    //   if (req.user.accountrole === "admin") {
+    //     res.redirect("/adminview"); 
+    //   } else if( req.user.accountrole === "employee"){
+    //     res.redirect("/employeeportal");
+    //   } else if (req.user.accountrole === "citizen"){
+    //     res.redirect("/portal");
+    //   }
+    //   else {
+    //     res.redirect("/main")
+    //   }
+    // }
+
+  res.redirect("/")
+
   });
   
 
+  // if (req.user.accountrole === "admin") {
+  //   res.redirect("/adminview"); 
+  // } else if( req.user.accountrole === "employee"){
+  //   res.redirect("/employeeportal");
+  // } else if (req.user.accountrole === "citizen"){
+  //   res.redirect("/portal");
+  // }
+  // else {
+  //   res.redirect("/main")
+  // }
+// SUGGESTION FORM
+app.post("/contact-mail", async function (req, res) {
+  try { 
+    const contactUser = new Suggestion({
+          fullname: req.body.fullname,
+          email: req.body.email,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          text: req.body.message,
+        });
+        await contactUser.save();
+      const backupContact = new BackUpSuggestion({
+          fullname: req.body.fullname,
+          email: req.body.email,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          text: req.body.message,
+        });
+        await backupContact.save();
+        res.redirect("/")
+  }catch(err){
+    console.log(err)
+  }
+});
+app.get("/contact-mails", async (req, res) => {
+  if (req.user.accountrole === "admin") {
+        res.redirect("/adminview"); 
+      } else if( req.user.accountrole === "employee"){
+        res.redirect("/employeeportal");
+      } else if (req.user.accountrole === "citizen"){
+        res.redirect("/portal");
+      }
+      else {
+        res.redirect("/main")
+      }
+
+});
+
+app.post("/contact-mails", async function (req, res) {
+  try { 
+    const contactUser = new Suggestion({
+          fullname: req.body.fullname,
+          email: req.body.email,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          text: req.body.message,
+        });
+        await contactUser.save();
+      const backupContact = new BackUpSuggestion({
+          fullname: req.body.fullname,
+          email: req.body.email,
+          phone: req.body.phone,
+          subject: req.body.subject,
+          text: req.body.message,
+        });
+        await backupContact.save();
+        if (req.user.accountrole === "admin") {
+              res.redirect("/adminview"); 
+            } else if( req.user.accountrole === "employee"){
+              res.redirect("/employeeportal");
+            } else if (req.user.accountrole === "citizen"){
+              res.redirect("/portal");
+            }
+            else {
+              res.redirect("/main")
+            }
+  }catch(err){
+    console.log(err)
+  }
+});
 
 
 app.post("/login", function (req, res) {
@@ -538,6 +651,9 @@ app.get("/employeeportal", async (req, res) => {
       BackUpCertificateIndigency.find().count(function(err, countRequestIndigency){ 
       BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
       const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
+
+      const finance = requestCount * 200;
+
   
      Task.find({}, function (err, myTasks){ 
         Update.find({}, function (err, myUpdates){
@@ -573,7 +689,7 @@ app.get("/employeeportal", async (req, res) => {
                 res.render('employeeportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
                 , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
               ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-            ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, 
+            ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, finance,
             username: req.user.username,
             id: req.user.id,
         fullname: req.user.fullname,
@@ -603,6 +719,7 @@ app.get("/adminportal", function (req, res) {
     BackUpCertificateIndigency.find().count(function(err, countRequestIndigency){ 
     BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
     const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
+    const finance = requestCount * 200;
 
    Task.find({}, function (err, myTasks){ 
       Update.find({}, function (err, myUpdates){
@@ -638,7 +755,7 @@ app.get("/adminportal", function (req, res) {
               res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
               , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
             ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-          ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, 
+          ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, finance, 
           username: req.user.username,
           id: req.user.id,
       fullname: req.user.fullname,
@@ -839,6 +956,12 @@ app.get("/deleteinfobackupbrgywiring", (req, res, next)=> {BackUpWiringandExcava
 app.get("/updates-user",function (req, res){
   Update.find({}, function(err, myUpdates){
    res.render('./users/updates-user', {myUpdates, username: req.user.username, id: req.user.id});
+  })
+ });
+
+ app.get("/upadates-admin",function (req, res){
+  Update.find({}, function(err, myUpdates){
+   res.render('./page-admin/upadates-admin', {myUpdates, username: req.user.username, id: req.user.id});
   })
  });
 
@@ -2116,31 +2239,6 @@ app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
   
   });
 
-
-// SUGGESTION FORM
-app.post("/contact-mail", async function (req, res) {
-  try { 
-    const contactUser = new Suggestion({
-          fullname: req.body.fullname,
-          email: req.body.email,
-          phone: req.body.phone,
-          subject: req.body.subject,
-          text: req.body.message,
-        });
-        await contactUser.save();
-      const backupContact = new BackUpSuggestion({
-          fullname: req.body.fullname,
-          email: req.body.email,
-          phone: req.body.phone,
-          subject: req.body.subject,
-          text: req.body.message,
-        });
-        await backupContact.save();
-        res.redirect("/")
-  }catch(err){
-    console.log(err)
-  }
-});
 
 //---------------------------------------
 

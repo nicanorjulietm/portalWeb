@@ -327,23 +327,32 @@
                           </div>
                         </div>
                         <div class="col-sm-5">
-                          <div class="card ">
-                                <div class="card-counter primary">
-                                  <i class="fa-solid fa-calendar-days"></i>
-                                  
-                                  <span class="count-numbers"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %></span>
-                                  <span class="count-name">Have a Nice day!</span>
-                                  
-                                </div>     
-                          </div>
-                          <div class="card " style="margin-top: 8px; padding: 5px;">
+                          <div class="card " style=" padding: 5px;">
                             <div class="card-counter primary">
-                              <i class="fa-solid fa-clock"></i>
+                              <i class="fa-solid fa-file-invoice" style="margin-left: 30px;"></i>
                               
-                              <span class="count-numbers" id="count-time"></span>
-                              <span class="count-name">Keep Smiling!</span>
+                              <span class="count-numbers"> Php <%= finance  %></span>
+                              <span class="count-name">Total Collection</span>
                               
                             </div>     
+                      </div>
+                      <div class="card " style=" padding: 5px;">
+                        <div class="card-counter primary">
+                          <i class="fa-solid fa-calendar-days" style="margin-left: 30px;"></i>
+                          
+                          <span class="count-numbers"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(new Date()) %></span>
+                          <span class="count-name">Have a Nice day!</span>
+                          
+                        </div>     
+                  </div>
+                      <div class="card " style=" padding: 5px;">
+                        <div class="card-counter primary">
+                          <i class="fa-solid fa-clock" style="margin-left: 30px;"></i>
+                          
+                          <span class="count-numbers" id="count-time"></span>
+                          <span class="count-name">Keep Smiling!</span>
+                          
+                        </div>     
                             <!-- <div class="card-header">Contact Admin</div>
                             
                               
