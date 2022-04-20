@@ -76,7 +76,8 @@
                                         <th scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
                                       <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
                                         <i class="fa-solid fa-xmark"></i> </a> </td>
-                                        <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
+                                        <td style="width: 10px;text-align: center;"> <a class="td-link" href="/send-message-request-id/<%= users._id %>"  target="_blank">
+                                          <!-- <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#"> -->
                                           <i class="fa-solid fa-paper-plane"></i></a> </td>
                                       </tr>
                                       <% }); %> 

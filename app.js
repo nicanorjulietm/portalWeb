@@ -72,6 +72,17 @@ mongoose.connect("mongodb://localhost:27017/barangayportalDB", {
   useNewUrlParser: true,
 });
 
+// initialize nodemailer
+var transporter = nodemailer.createTransport(
+  {
+      service: 'gmail',
+      auth:{
+          user: 'barangayportalx@gmail.com',
+          pass: 'HALETHEJAY1996'
+      }
+  }
+);
+
 
 
 const useraccountsSchema = new mongoose.Schema ({
@@ -329,6 +340,8 @@ app.get("/reqbrgy-wande-user", function (req, res) {
 app.get("/tutorials", function (req, res){
 res.render("tutorials")
 });
+
+
 
 app.get("/tutorialsuser", function (req, res){
   res.render("tutorialsuser", {
@@ -652,7 +665,7 @@ app.get("/employeeportal", async (req, res) => {
       BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
       const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
 
-      const finance = requestCount * 200;
+      const finance = Math.round(requestCount * 200).toFixed(2);
 
   
      Task.find({}, function (err, myTasks){ 
@@ -719,7 +732,7 @@ app.get("/adminportal", function (req, res) {
     BackUpCertificateIndigency.find().count(function(err, countRequestIndigency){ 
     BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
     const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
-    const finance = requestCount * 200;
+    const finance = Math.round(requestCount * 200).toFixed(2);
 
    Task.find({}, function (err, myTasks){ 
       Update.find({}, function (err, myUpdates){
@@ -1062,16 +1075,6 @@ app.post("/volunteer", function (req, res){
 
 });
 
-// initialize nodemailer
-var transporter = nodemailer.createTransport(
-  {
-      service: 'gmail',
-      auth:{
-          user: 'barangayportalx@gmail.com',
-          pass: 'HALETHEJAY1996'
-      }
-  }
-);
 
 
 //EMAIL
@@ -1107,11 +1110,13 @@ transporter.sendMail(mailOptions, function(error, info){
   if(error){
       return console.log(error);
   }
-  // console.log('Message sent: ' + info.response);
+  
   if (req.user.accountrole === "admin") {
     res.redirect("/adminportal"); 
+    console.log('Message sent: ' + info.response);
   } else if( req.user.accountrole === "employee"){
     res.redirect("/employeeportal");
+    console.log('Message sent: ' + info.response);
   }
 });
 });
@@ -2238,6 +2243,23 @@ app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
   });
   
   });
+
+
+
+  app.get("/send-message-request-id/:id", function (req, res){
+    RequestBrgyId.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
+    
+      if(err){
+        console.log("Can't retrieve data and edit because of some database problem.")
+        next(err);
+      } else {
+        res.render("./page-admin/requestidmsg",  { users: users });
+      }
+
+    })
+  
+   });
+   
 
 
 //---------------------------------------
