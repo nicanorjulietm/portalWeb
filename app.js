@@ -68,7 +68,10 @@ app.use(session({
   }));
   app.use(passport.initialize());
   app.use(passport.session());
-mongoose.connect(process.env.DATABASE || process.env.DATABASELOCAL, {
+// mongoose.connect(process.env.DATABASE || process.env.DATABASELOCAL, {
+//   useNewUrlParser: true,
+// });
+mongoose.connect("mongodb+srv://admin:secr3t!@cluster0.fcls7.mongodb.net/barangayportalDB", {
   useNewUrlParser: true,
 });
 
@@ -2676,3 +2679,4 @@ app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
 app.listen(process.env.PORT || 3000, function(){
   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
+
