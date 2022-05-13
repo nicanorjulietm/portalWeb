@@ -51,7 +51,8 @@ app.use(express.static("uploads"));
 var storage = multer.diskStorage({destination: function(req, file, cb){
     // cb(null, './uploads');
     // cb(null, path.resolve(__dirname, 'uploads'));
-    cb(null, path.join(__dirname, '/public/uploads'));
+    cb(null, path.join(__dirname, '/public/uploads/'));
+   
   }, 
   filename: function(req, file, cb){
     cb(null, file.fieldname +"_"+ Date.now() +"_"+ file.originalname);
