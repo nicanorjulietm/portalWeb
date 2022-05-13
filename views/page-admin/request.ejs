@@ -13,7 +13,7 @@
       aria-controls="nav-indigency" aria-selected="false">Certificate for Indigency</button>
       
       <button class="nav-link" id="nav-wiring-tab" data-bs-toggle="tab" data-bs-target="#nav-wiring" type="button" role="tab" aria-controls="nav-wiring" aria-selected="false"> Wiring and Excavation Clearance</button>
-     
+      <!-- <button class="nav-link" id="nav-finish-tab" data-bs-toggle="tab" data-bs-target="#nav-finish" type="button" role="tab" aria-controls="nav-finish" aria-selected="false">Finished Transactions </button> -->
     </div>
   </nav>
   <div class="tab-content request-tab" id="nav-tabContent" >
@@ -212,10 +212,10 @@
                                 <tbody>      
                                 <% approvedClearances.forEach(function(users){ %>
                                   <tr>
-                                    <th scope="row"><a class="request-link" href="/adminviewreqidapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
+                                    <th scope="row"><a class="request-link" href="/adminviewreqclearance/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
                                   <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
                                     <i class="fa-solid fa-xmark"></i> </a> </td>
-                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link" href="/send-message-request-clearance/<%= users._id %>">
                                       <i class="fa-solid fa-paper-plane"></i></a> </td>
                                   </tr>
                                   <% }); %> 
@@ -302,7 +302,7 @@
                                     <th scope="row"><a class="request-link" href="/adminviewbusinesspermitapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
                                   <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
                                     <i class="fa-solid fa-xmark"></i> </a> </td>
-                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link" href="/send-message-request-permit/<%= users._id %>">
                                       <i class="fa-solid fa-paper-plane"></i></a> </td>
                                   </tr>
                                   <% }); %> 
@@ -390,7 +390,7 @@
                                     <th scope="row"><a class="request-link" href="/adminviewreqindigencyapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
                                   <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
                                     <i class="fa-solid fa-xmark"></i> </a> </td>
-                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link" href="/send-message-request-indigency/<%= users._id %>">
                                       <i class="fa-solid fa-paper-plane"></i></a> </td>
                                   </tr>
                                   <% }); %> 
@@ -480,7 +480,7 @@
                                     <th scope="row"><a class="request-link" href="/adminviewwiringsapproved/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>      
                                   <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> account?');"  >
                                     <i class="fa-solid fa-xmark"></i> </a> </td>
-                                    <td style="width: 10px;text-align: center;"> <a class="td-link ms-trigger"  data-modal="modal-12" href="#">
+                                    <td style="width: 10px;text-align: center;"> <a class="td-link" href="/send-message-request-wiring/<%= users._id %>">
                                       <i class="fa-solid fa-paper-plane"></i></a> </td>
                                   </tr>
                                   <% }); %> 
@@ -505,6 +505,75 @@
                   </div>
                  
                  </div>
+
+
+
+
+    </div>
+     <!-- -------------------END OF WIRING CLEARANCE--------------------------- -->
+
+           <!-- -------------------WIRING CLEARANCE--------------------------- -->
+    <div class="tab-pane fade" id="nav-finish" role="tabpanel" aria-labelledby="nav-finish-tab">
+      <div class="btn-add"> 
+        <form action="/exportBackUpRequestWiring" method="POST">
+          <button
+          type="submit"
+          class="btn addbtn submit"
+        ><a style=" text-decoration: none;" type="submit" class="a-link">
+          Export to Excel</a>
+        </button>
+
+        <!-- <button
+              type="button"
+              class="btn addbtn submit" data-modal="modal-12" 
+            ><a style=" text-decoration: none;" class="a-link ms-trigger"  href="#" data-modal="modal-12"  >
+              Add Blotter</a>
+            </button>
+-->
+          
+          <button
+            type="button"
+            class="btn addbtn submit"
+          ><a style=" text-decoration: none;" class="a-link"  href="/deleteinfobackupbrgywiring" 
+          onclick="return confirm('Are you sure you want to delete ALL Back Up Wiring and Excavation Records?');"  >
+            Delete All</a>
+          </button>
+         </form>
+      </div>
+      <div class="tableFixHead record-content">
+                                        
+                                            
+        <table class="table table-hover table-striped">
+          <thead class="table-dark">
+              <!-- <th scope="col">#</th> -->
+              <th scope="col">Date Applied </th>  
+              <th scope="col"> Request</th>
+              <th scope="col"> Full Name </th>
+             
+              <!-- <th scope="col"> View </th> -->
+              <th scope="col"> Remove </th>
+              
+            </tr>
+          </thead>
+          <tbody>      
+            
+          <% allFinished.forEach(function(users){ %>
+            <tr>
+              <td scope="row"> <%= users.dateapply %> </td> 
+                      
+              <td scope="row"><a class="request-link" href="/adminviewreqid/<%= users._id %>" target="_blank" >  <%= users.fullname %> </a></th>  
+              <td scope="row"> <%= users.email %> </td>
+                  
+            <td style="width: 10px; text-align: center;"> <a class="td-link" href="/deleteinfo/<%= users._id %>" onclick="return confirm('Are you sure you want to delete Ms/Mrs/Mr. <%= users.fullname %> request?');"  >
+              <i class="fa-solid fa-xmark"></i> </a> </td>
+            
+            </tr>
+            <% }); %> 
+            
+          </tbody>
+        </table>
+      </div>
+
 
 
 

@@ -130,7 +130,7 @@ const requestforbrgyidSchema = {
   purposeofreq: String,
   ctc: String,
   request: String,
- 
+  concern: String,
   image: {
    type: String, required: true, },
 
@@ -149,6 +149,7 @@ const requestforbrgyclearanceSchema = {
   civilstatus: String,
   purposeofreq: String,
   ctc: String,
+  concern: String,
   image: {
     type: String, required: true, },
   request: String,
@@ -165,6 +166,7 @@ const businesspermitSchema = {
   address: String,
   email: String,
   phone: Number,
+  concern: String,
   businessname: String,
   businessaddress: String,
   request: String,
@@ -185,6 +187,7 @@ const certificateofindigencySchema = {
   birthday: String,
   datestarted: String,
   purposeofreq: String,
+  concern: String,
   ctc: String,
   request: String,
 
@@ -203,6 +206,7 @@ const wiringandexcavationclearanceSchema = {
   birthday: String,
   datestarted: String,
   purposeofreq: String,
+  concern: String,
   ctc: String,
   
   image: {    type: String, required: true, },
@@ -427,29 +431,29 @@ app.get("/tutorialsuser", function (req, res){
   });
  
   app.get("/RequestIndigencyForm", function (req, res) {
-    res.render("./page-admin/RequestIndigencyForm");
+    res.render("./page-admin/RequestIndigencyForm", {id: req.user.id,  username: req.user.username,});
   });
   app.get("/WiringandExcavationForm", function (req, res) {
-    res.render("./page-admin/WiringandExcavationForm");
+    res.render("./page-admin/WiringandExcavationForm", {id: req.user.id,  username: req.user.username,});
   });
   app.get("/RequestClearanceForm", function (req, res) {
-    res.render("./page-admin/RequestClearanceForm");
+    res.render("./page-admin/RequestClearanceForm", {id: req.user.id,  username: req.user.username,});
   });
   app.get("/BusinessPermitForm", function (req, res) {
-    res.render("./page-admin/BusinessPermitForm");
+    res.render("./page-admin/BusinessPermitForm", {id: req.user.id,  username: req.user.username,});
   });
   app.get("/donate", function (req, res) {
-    res.render("./pages/donate");
+    res.render("./pages/donate", {id: req.user.id,  username: req.user.username,});
   });
   
   app.get("/registeraccount", function (req, res) {
-    res.render("register");
+    res.render("register", {id: req.user.id,  username: req.user.username,});
   });
   app.get("/register", function (req, res) {
     res.render("register");
   });
   app.get("/usersprofile", function (req, res) {
-    res.render("usersprofile");
+    res.render("usersprofile", {id: req.user.id,  username: req.user.username,});
   });
 
   app.get("/logout", function(req, res){
@@ -590,17 +594,18 @@ app.post("/login", function (req, res) {
 
 app.post("/registeraccount",  function(req, res){
 
+   const  accountrole = "citizen"
   const backupaccount = new BackUpAccount({
     username: req.body.username,
     email: req.body.email,
     fullname: req.body.fullname,
     
-    accountrole: req.body.accountrole });
+    accountrole: accountrole});
       Account.register({
         username: req.body.username,
         email: req.body.email,
         fullname: req.body.fullname,
-        accountrole: req.body.accountrole
+        accountrole: accountrole
       }, req.body.password,   function(err, user){
         if(err){
         console.log(err);
@@ -667,7 +672,13 @@ app.get("/employeeportal", async (req, res) => {
 
       const finance = Math.round(requestCount * 200).toFixed(2);
 
-  
+        //finished transactions
+        CertificateIndigency.find({request:'Finshed'}, function(err, allFinished){
+          WiringandExcavationClearance.find({request: 'Finshed'}, function(err, allFinished){ 
+            BusinessPermit.find({request: 'Finshed'}, function(err, allFinished){ 
+              RequestBrgyId.find({request: 'Finshed'}, function(err, allFinished){ 
+                RequestClearance.find({request: 'Finshed'}, function(err, allFinished){ 
+
      Task.find({}, function (err, myTasks){ 
         Update.find({}, function (err, myUpdates){
       BackUpBlotter.find({}, function(err, backupBlotters){ 
@@ -702,7 +713,7 @@ app.get("/employeeportal", async (req, res) => {
                 res.render('employeeportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
                 , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
               ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-            ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, finance,
+            ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, finance, allFinished,
             username: req.user.username,
             id: req.user.id,
         fullname: req.user.fullname,
@@ -714,7 +725,7 @@ app.get("/employeeportal", async (req, res) => {
             });
           });
         });
-      });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});}); });});
+      });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});}); });});  });});}); });}); 
   
   
 app.get("/adminportal", function (req, res) {
@@ -733,6 +744,14 @@ app.get("/adminportal", function (req, res) {
     BackUpWiringandExcavationClearance.find().count(function(err, countRequestWiring){ 
     const requestCount = (countRequestID + countRequestClearance + countRequestPermit + countRequestIndigency + countRequestWiring);
     const finance = Math.round(requestCount * 200).toFixed(2);
+
+      //finished transactions
+      CertificateIndigency.find({request:'Finished'}, function(err, allFinished){
+        WiringandExcavationClearance.find({request: 'Finished'}, function(err, allFinished){ 
+          BusinessPermit.find({request: 'Finished'}, function(err, allFinished){ 
+            RequestBrgyId.find({request: 'Finished'}, function(err, allFinisheds){ 
+              RequestClearance.find({request: 'Finished'}, function(err, allFinished){ 
+           
 
    Task.find({}, function (err, myTasks){ 
       Update.find({}, function (err, myUpdates){
@@ -768,7 +787,7 @@ app.get("/adminportal", function (req, res) {
               res.render('adminportal', { allUser, usersUser,usersEmployee, usersAdmin, requestIds, approvedIds, requestsClearances, approvedClearances, requestsBusinessPermit
               , approvedBusinessPermit, approvedIndigency, requestsIndigency, approvedWirings, requestsWirings, countAccounts,  suggestions
             ,allrequestIds, allClearance, allPermit,allIndigency,allWirings, blotters, blottersOngoing,blottersFinished, countBlotter,backupBlotters
-          ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, finance, 
+          ,allUserAccounts, requestCount,  myTasks, allResidents, myUpdates, allbackupResidents, countResidents, allFemale, allMale, finance, allFinished,allFinisheds,
           username: req.user.username,
           id: req.user.id,
       fullname: req.user.fullname,
@@ -780,7 +799,7 @@ app.get("/adminportal", function (req, res) {
           });
         });
       });
-    });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});}); });});
+    });});});});});});}); });});});});});});});});});});});});});});});});});});});}); });});});});});});}); });});  }); }); }); }); });
 
 
 // EDIT USER for Manage Account
@@ -1073,52 +1092,6 @@ app.post("/volunteer", function (req, res){
    }
   })  
 
-});
-
-
-
-//EMAIL
-app.post("/sendmail", (req, res) =>{
-  // point to the template folder
-const handlebarOptions = {
-  viewEngine: {
-      partialsDir: path.resolve('./emailfolder'),
-      defaultLayout: false,
-  },
-  viewPath: path.resolve('./emailfolder'),
-};
-
-// use a template file with nodemailer
-transporter.use('compile', hbs(handlebarOptions))
-
-
-
-
-var mailOptions = {
-  from: '<barangayportalx@gmail.com>', // sender address
-  to: 'julietnicanor1996@gmail.com', // list of receivers
-  subject: 'Hello Barangay Citizen!',
-  template: 'email', // the name of the template file i.e email.handlebars
-  context:{
-      name: "Citizen", // replace {{name}} with Adebola
-      company: 'My Company' // replace {{company}} with My Company
-  }
-};
-
-// trigger the sending of the E-mail
-transporter.sendMail(mailOptions, function(error, info){
-  if(error){
-      return console.log(error);
-  }
-  
-  if (req.user.accountrole === "admin") {
-    res.redirect("/adminportal"); 
-    console.log('Message sent: ' + info.response);
-  } else if( req.user.accountrole === "employee"){
-    res.redirect("/employeeportal");
-    console.log('Message sent: ' + info.response);
-  }
-});
 });
 
 
@@ -1475,6 +1448,75 @@ app.get("/adminviewwiringsapproved/:id", (req,res, next ) =>{
     });
 
 
+    
+    app.get("/send-message-request-wiring/:id", function (req, res){
+      WiringandExcavationClearance.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
+      
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          
+          res.render("./page-admin/requestwiringmessage",  { users: users });
+        }
+  
+      })
+    
+     });
+     
+  app.post("/send-message-request-wiring/:id", upload,  (req,res, next ) =>{
+  
+  
+   WiringandExcavationClearance.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+         
+      
+         if (err){
+           console.log("Something went wrong to update your data");
+           next(err);
+         }else{        
+           
+          var mailOptions = {
+          
+            from: '<barangayportalx@gmail.com>', // sender address
+            to: req.body.email, // list of receivers
+            subject: 'Request for Wiring and Excavation Permit <Barangay Portal>' ,
+            template: 'email', // the name of the template file i.e email.handlebars
+            context:{
+                name: 'Nks', // replace {{name}} with Adebola
+                company: 'My Company', // replace {{company}} with My Company
+               
+            },
+            attachments: [{ filename: "terms.pdf", path: "./attachments/terms.pdf"},{ filename: "wiringandexcavtionpermit.pdf", path: "./attachments/excavation.pdf"  }],
+            // html:  "<p><b>Hello Mr/Ms/Mrs. </b> ${name}, </p> <br> <br> I got your request now! <br><br>Thank you for using our website and following the protocol. Before proceeding to the next step I would like you to visit the link attached to this email and read our Terms and Conditions in receiving this file. I hope you understand and please do follow the steps carefully. <br> <br> Your appointment schedule will be __________and look for Mrs. Eskima, our admin for printing ids. Print this email for validation and bring it with you. <br><br>Thank you very much!<br><br>Sincerely, <br>Barangay Portal"
+            html: req.body.text
+            ,
+           
+          };
+          
+          // trigger the sending of the E-mail
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            
+            if (req.user.accountrole === "admin") {
+              res.redirect("/adminportal"); 
+              console.log('Message sent: ' + info.response);
+            } else if( req.user.accountrole === "employee"){
+              res.redirect("/employeeportal");
+              console.log('Message sent: ' + info.response);
+            }
+          });
+          
+     
+         }
+       }); 
+   
+     
+   
+     });
+
+
 // --------------------------------------------------------------------RESIDENT INFORMATION
 
   app.post("/residents", async function(req, res){
@@ -1657,19 +1699,19 @@ app.post("/adminsviewblotter/:id", (req,res, next ) =>{
     })
   });
 
-app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
-    const id = req.params.id;
-    RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
-        if(err){
-          console.log("Can't retrieve data and edit because of some database problem.")
-          next(err);
-        } else {
-          res.render("./page-admin/adminviewreqclearanceapproved",  { users: users });
-        }
+// app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
+//     const id = req.params.id;
+//     RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+//         if(err){
+//           console.log("Can't retrieve data and edit because of some database problem.")
+//           next(err);
+//         } else {
+//           res.render("./page-admin/adminviewreqclearanceapproved",  { users: users });
+//         }
         
-    });
+//     });
     
-    });
+//     });
 
 // -------------------------------------------------------------------------------------REQUEST FOR CERTIFICATION OF INDIGENCY-- use for user
 app.get("/reqindigency", function (req, res) {
@@ -1820,6 +1862,74 @@ app.post("/adminviewreqindigency/:id", (req,res, next ) =>{
     
     });
 
+    
+    app.get("/send-message-request-indigency/:id", function (req, res){
+      CertificateIndigency.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
+      
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          
+          res.render("./page-admin/requestindigencymsg",  { users: users });
+        }
+  
+      })
+    
+     });
+     
+  app.post("/send-message-request-indigency/:id", upload,  (req,res, next ) =>{
+  
+  
+   CertificateIndigency.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+         
+      
+         if (err){
+           console.log("Something went wrong to update your data");
+           next(err);
+         }else{        
+           
+          var mailOptions = {
+          
+            from: '<barangayportalx@gmail.com>', // sender address
+            to: req.body.email, // list of receivers
+            subject: 'Request for Certification of Indigency <Barangay Portal>' ,
+            template: 'email', // the name of the template file i.e email.handlebars
+            context:{
+                name: 'Nks', // replace {{name}} with Adebola
+                company: 'My Company', // replace {{company}} with My Company
+               
+            },
+            attachments: [{ filename: "terms.pdf", path: "./attachments/terms.pdf"},{ filename: "certindigency.pdf", path: "./attachments/indigency.pdf"  }],
+            // html:  "<p><b>Hello Mr/Ms/Mrs. </b> ${name}, </p> <br> <br> I got your request now! <br><br>Thank you for using our website and following the protocol. Before proceeding to the next step I would like you to visit the link attached to this email and read our Terms and Conditions in receiving this file. I hope you understand and please do follow the steps carefully. <br> <br> Your appointment schedule will be __________and look for Mrs. Eskima, our admin for printing ids. Print this email for validation and bring it with you. <br><br>Thank you very much!<br><br>Sincerely, <br>Barangay Portal"
+            html: req.body.text
+            ,
+           
+          };
+          
+          // trigger the sending of the E-mail
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            
+            if (req.user.accountrole === "admin") {
+              res.redirect("/adminportal"); 
+              console.log('Message sent: ' + info.response);
+            } else if( req.user.accountrole === "employee"){
+              res.redirect("/employeeportal");
+              console.log('Message sent: ' + info.response);
+            }
+          });
+          
+     
+         }
+       }); 
+   
+     
+   
+     });
+
 
 
 // -------------------------------------------------------------------------------------REQUEST FOR BUSINESS PERMIT-- use for user
@@ -1951,6 +2061,74 @@ app.post("/adminviewbusinesspermit/:id", (req,res, next ) =>{
     
     });
 
+
+    app.get("/send-message-request-permit/:id", function (req, res){
+      BusinessPermit.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
+      
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          
+          res.render("./page-admin/requestpermitmsg",  { users: users });
+        }
+  
+      })
+    
+     });
+     
+  app.post("/send-message-request-permit/:id", upload,  (req,res, next ) =>{
+  
+  
+    BusinessPermit.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+         
+      
+         if (err){
+           console.log("Something went wrong to update your data");
+           next(err);
+         }else{        
+           
+          var mailOptions = {
+          
+            from: '<barangayportalx@gmail.com>', // sender address
+            to: req.body.email, // list of receivers
+            subject: 'Request for Barangay Business Permit <Barangay Portal>' ,
+            template: 'email', // the name of the template file i.e email.handlebars
+            context:{
+                name: 'Nks', // replace {{name}} with Adebola
+                company: 'My Company', // replace {{company}} with My Company
+               
+            },
+            attachments: [{ filename: "terms.pdf", path: "./attachments/terms.pdf" }, { filename: "businesspermit.pdf", path: "./attachments/business.pdf"  }],
+            // html:  "<p><b>Hello Mr/Ms/Mrs. </b> ${name}, </p> <br> <br> I got your request now! <br><br>Thank you for using our website and following the protocol. Before proceeding to the next step I would like you to visit the link attached to this email and read our Terms and Conditions in receiving this file. I hope you understand and please do follow the steps carefully. <br> <br> Your appointment schedule will be __________and look for Mrs. Eskima, our admin for printing ids. Print this email for validation and bring it with you. <br><br>Thank you very much!<br><br>Sincerely, <br>Barangay Portal"
+            html: req.body.text
+            ,
+           
+          };
+          
+          // trigger the sending of the E-mail
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            
+            if (req.user.accountrole === "admin") {
+              res.redirect("/adminportal"); 
+              console.log('Message sent: ' + info.response);
+            } else if( req.user.accountrole === "employee"){
+              res.redirect("/employeeportal");
+              console.log('Message sent: ' + info.response);
+            }
+          });
+          
+     
+         }
+       }); 
+   
+     
+   
+     });
+
 // ------------------------------------------------------------------------------------------REQUEST FOR BRGY CLEARANCE FORM -- use for user
 
 
@@ -2047,38 +2225,78 @@ app.post("/RequestClearanceForm", upload, async function (req, res) {
 
 
 //--------ADMIN VIEW for Updating and Viewing REQUEST FOR BRGY  CLEARANCE Application Form
-app.get("/adminviewreqclearance/:id", (req,res, next ) =>{
-  const id = req.params.id;
-  RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
-      if(err){
-        console.log("Can't retrieve data and edit because of some database problem.")
-        next(err);
-      } else {
-        res.render("./page-admin/adminviewreqclearance",  { users: users });
-      }
+// app.get("/adminviewreqclearance/:id", (req,res, next ) =>{
+//   const id = req.params.id;
+//   RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+//       if(err){
+//         console.log("Can't retrieve data and edit because of some database problem.")
+//         next(err);
+//       } else {
+//         res.render("./page-admin/adminviewreqclearance",  { users: users });
+//       }
       
-  });
+//   });
   
-  });
+//   });
+  
+//   app.post("/adminviewreqclearance/:id", (req,res, next ) =>{
 
-app.post("/adminviewreqclearance/:id", (req,res, next ) =>{
 
-    RequestClearance.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
-      if (err){
-        console.log("Something went wrong to update your data");
-        next(err);
-      }else{
-        if (req.user.accountrole === "admin") {
-          res.redirect("/adminportal"); 
-        } else if( req.user.accountrole === "employee"){
-          res.redirect("/employeeportal");
+//     RequestClearance.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+//        if (err){
+//          console.log("Something went wrong to update your data");
+//          next(err);
+//        }else{
+//          if (req.user.accountrole === "admin") {
+//            res.redirect("/adminportal"); 
+//          } else if( req.user.accountrole === "employee"){
+//            res.redirect("/employeeportal");
+//          }
+   
+//        }
+//      }); 
+//    });
+
+   app.get("/adminviewreqclearance/:id", upload,   (req,res ) =>{
+    const id = req.params.id;
+  
+  
+    RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
+      
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          res.render("./page-admin/adminviewreqid",  { users: users });
         }
   
-      }
-    })
-  });
-
-app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
+      })
+   
+  
+    });
+  
+    app.post("/adminviewreqclearance/:id", upload,  (req,res, next ) =>{
+  
+  
+     RequestClearance.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+        
+     
+        if (err){
+          console.log("Something went wrong to update your data");
+          next(err);
+        }else{
+          if (req.user.accountrole === "admin") {
+            res.redirect("/adminportal"); 
+          } else if( req.user.accountrole === "employee"){
+            res.redirect("/employeeportal");
+          }
+        }
+      }); 
+    });
+  
+  
+    //--------ADMIN VIEW for APPROVED REQUEST FOR BRGY ID Application Form
+  app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
     const id = req.params.id;
     RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
         if(err){
@@ -2091,6 +2309,92 @@ app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
     });
     
     });
+  
+    
+
+  
+// app.get("/adminviewreqclearanceapproved/:id", (req,res, next ) =>{
+//     const id = req.params.id;
+//     RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body, {new:true}, (err, users)=>{
+//         if(err){
+//           console.log("Can't retrieve data and edit because of some database problem.")
+//           next(err);
+//         } else {
+//           res.render("./page-admin/adminviewreqclearanceapproved",  { users: users });
+//         }
+        
+//     });
+    
+//     });
+
+
+app.get("/send-message-request-clearance/:id", function (req, res){
+      RequestClearance.findOneAndUpdate({_id: req.params.id}, req.body,  {new:true}, (err, users)=>{
+      
+        if(err){
+          console.log("Can't retrieve data and edit because of some database problem.")
+          next(err);
+        } else {
+          
+          res.render("./page-admin/requestclearancemsg",  { users: users });
+        }
+  
+      })
+    
+     });
+     
+  app.post("/send-message-request-clearance/:id", upload,  (req,res, next ) =>{
+  
+  
+      RequestClearance.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+         
+      
+         if (err){
+           console.log("Something went wrong to update your data");
+           next(err);
+         }else{        
+           
+          var mailOptions = {
+          
+            from: '<barangayportalx@gmail.com>', // sender address
+            to: req.body.email, // list of receivers
+            subject: 'Request for Barangay Clearance <Barangay Portal>!' ,
+            template: 'email', // the name of the template file i.e email.handlebars
+            context:{
+                name: 'Nks', // replace {{name}} with Adebola
+                company: 'My Company', // replace {{company}} with My Company
+               
+            },
+            attachments: [{ filename: "terms.pdf", path: "./attachments/terms.pdf" }, { filename: "clearance.pdf", path: "./attachments/clearance.pdf"  }],
+            // html:  "<p><b>Hello Mr/Ms/Mrs. </b> ${name}, </p> <br> <br> I got your request now! <br><br>Thank you for using our website and following the protocol. Before proceeding to the next step I would like you to visit the link attached to this email and read our Terms and Conditions in receiving this file. I hope you understand and please do follow the steps carefully. <br> <br> Your appointment schedule will be __________and look for Mrs. Eskima, our admin for printing ids. Print this email for validation and bring it with you. <br><br>Thank you very much!<br><br>Sincerely, <br>Barangay Portal"
+            html: req.body.text
+            ,
+           
+          };
+          
+          // trigger the sending of the E-mail
+          transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            
+            if (req.user.accountrole === "admin") {
+              res.redirect("/adminportal"); 
+              console.log('Message sent: ' + info.response);
+            } else if( req.user.accountrole === "employee"){
+              res.redirect("/employeeportal");
+              console.log('Message sent: ' + info.response);
+            }
+          });
+          
+     
+         }
+       }); 
+   
+     
+   
+     });
+  
 
 
 // ------------------------------------------------------------------------------------------------REQUEST FOR ID FORM -- use for user
@@ -2244,6 +2548,56 @@ app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
   
   });
 
+  
+// //EMAIL
+// app.post("/sendmail", (req, res) =>{
+//   // point to the template folder
+// const handlebarOptions = {
+//   viewEngine: {
+//       partialsDir: path.resolve('./emailfolder'),
+//       defaultLayout: false,
+//   },
+//   viewPath: path.resolve('./emailfolder'),
+// };
+
+// // use a template file with nodemailer
+// transporter.use('compile', hbs(handlebarOptions))
+
+
+
+
+// var mailOptions = {
+
+//   from: '<barangayportalx@gmail.com>', // sender address
+//   to: 'julietnicanor1996@gmail.com', // list of receivers
+//   subject: 'Hello Barangay Citizen!',
+//   template: 'email', // the name of the template file i.e email.handlebars
+//   context:{
+//       name: "Citizen", // replace {{name}} with Adebola
+//       company: 'My Company', // replace {{company}} with My Company
+     
+//   },
+//   attachments: [{ filename: "terms.pdf", path: "./attachments/terms.pdf" }],
+// };
+
+// // trigger the sending of the E-mail
+// transporter.sendMail(mailOptions, function(error, info){
+//   if(error){
+//       return console.log(error);
+//   }
+  
+//   if (req.user.accountrole === "admin") {
+//     res.redirect("/adminportal"); 
+//     console.log('Message sent: ' + info.response);
+//   } else if( req.user.accountrole === "employee"){
+//     res.redirect("/employeeportal");
+//     console.log('Message sent: ' + info.response);
+//   }
+// });
+// });
+
+
+
 
 
   app.get("/send-message-request-id/:id", function (req, res){
@@ -2253,6 +2607,7 @@ app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
         console.log("Can't retrieve data and edit because of some database problem.")
         next(err);
       } else {
+        
         res.render("./page-admin/requestidmsg",  { users: users });
       }
 
@@ -2260,6 +2615,57 @@ app.get("/adminviewreqidapproved/:id", (req,res, next ) =>{
   
    });
    
+   app.post("/send-message-request-id/:id", upload,  (req,res, next ) =>{
+
+
+    RequestBrgyId.findByIdAndUpdate({_id: req.params.id}, req.body, (err, users) => {
+       
+    
+       if (err){
+         console.log("Something went wrong to update your data");
+         next(err);
+       }else{        
+         
+        var mailOptions = {
+        
+          from: '<barangayportalx@gmail.com>', // sender address
+          to: req.body.email, // list of receivers
+          subject: 'Request for Barangay ID <Barangay Portal>' ,
+          template: 'email', // the name of the template file i.e email.handlebars
+          context:{
+              name: 'Nks', // replace {{name}} with Adebola
+              company: 'My Company', // replace {{company}} with My Company
+             
+          },
+          attachments: [{ filename: "terms.pdf", path: "./attachments/terms.pdf" }, {filename: "appointmentslip.pdf", path: "./attachments/appointmentslip.pdf" }],
+          // html:  "<p><b>Hello Mr/Ms/Mrs. </b> ${name}, </p> <br> <br> I got your request now! <br><br>Thank you for using our website and following the protocol. Before proceeding to the next step I would like you to visit the link attached to this email and read our Terms and Conditions in receiving this file. I hope you understand and please do follow the steps carefully. <br> <br> Your appointment schedule will be __________and look for Mrs. Eskima, our admin for printing ids. Print this email for validation and bring it with you. <br><br>Thank you very much!<br><br>Sincerely, <br>Barangay Portal"
+          html: req.body.text
+          ,
+         
+        };
+        
+        // trigger the sending of the E-mail
+        transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+              return console.log(error);
+          }
+          
+          if (req.user.accountrole === "admin") {
+            res.redirect("/adminportal"); 
+            console.log('Message sent: ' + info.response);
+          } else if( req.user.accountrole === "employee"){
+            res.redirect("/employeeportal");
+            console.log('Message sent: ' + info.response);
+          }
+        });
+        
+   
+       }
+     }); 
+ 
+   
+ 
+   });
 
 
 //---------------------------------------
