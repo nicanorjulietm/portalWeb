@@ -68,7 +68,7 @@ app.use(session({
   }));
   app.use(passport.initialize());
   app.use(passport.session());
-mongoose.connect("mongodb://localhost:27017/barangayportalDB", {
+mongoose.connect(process.env.DATABASE || process.env.DATABASELOCAL, {
   useNewUrlParser: true,
 });
 
