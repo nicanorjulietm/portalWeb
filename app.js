@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.static("uploads"));
 // const path = require('path');
-app.use(express.static("/public/uploads"));
+
 
 
 
@@ -51,7 +51,7 @@ app.use(express.static("/public/uploads"));
 var storage = multer.diskStorage({destination: function(req, file, cb){
     // cb(null, './uploads');
     // cb(null, path.resolve(__dirname, 'uploads'));
-    cb(null, path.join(__dirname, '/public/uploads/'));
+    cb(null, path.join(__dirname, './uploads'));
    
   }, 
   filename: function(req, file, cb){
